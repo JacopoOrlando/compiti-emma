@@ -24,9 +24,17 @@ const MatchingGame = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get context from location state - DEBUG ENGLISH ROUTING
-  const subject = location.state?.subject || 'matematica';
-  const topic = location.state?.topic || 'operazioni';
+  // Get context from location state - FIXED FALLBACKS
+  const subject = location.state?.subject || 'italiano';
+  const topic = location.state?.topic || 'lettura-associazione';
+  
+  // DEBUG: Log the current context
+  console.log('🔍 MatchingGame Context:', { 
+    subject, 
+    topic, 
+    locationState: location.state,
+    pathname: location.pathname 
+  });
   
   const [leftItems, setLeftItems] = useState<DragItem[]>([]);
   const [rightItems, setRightItems] = useState<DragItem[]>([]);
@@ -80,7 +88,9 @@ const MatchingGame = () => {
   ];
 
   const getCurrentPairs = () => {
-    // Context-aware content selection - UPDATED FOR NEW CURRICULUM
+    // Context-aware content selection - FIXED FOR NEW TOPIC IDS
+    console.log('📋 getCurrentPairs called with:', { subject, topic });
+    
     if (subject === 'english') {
       if (topic === 'colors-instructions') return colorPairs;
       if (topic === 'descriptive-texts') return englishVocabPairs;
@@ -104,7 +114,7 @@ const MatchingGame = () => {
         case 'math': return mathPairs;
         case 'words': return wordPairs;
         case 'colors': return colorPairs;
-        default: return mathPairs;
+        default: return wordPairs; // Changed default to wordPairs for Italian content
       }
     }
   };
