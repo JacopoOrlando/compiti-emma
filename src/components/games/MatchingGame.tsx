@@ -18,6 +18,7 @@ interface DragItem {
   id: string;
   text: string;
   emoji: string;
+  pairId: string; // ADDED: To track which pair this item belongs to
   isMatched: boolean;
 }
 
@@ -82,8 +83,8 @@ const MatchingGame = () => {
 
   // Get game content based on subject and topic
   const gameContent = getGameContent(subject || "", topic || "");
-  const currentPairs = gameContent?.matching.map(pair => ({
-    id: Math.random().toString(),
+  const currentPairs = gameContent?.matching.map((pair, index) => ({
+    id: `pair-${index}`,
     left: { text: pair.left, emoji: pair.emoji || "🎯" },
     right: { text: pair.right, emoji: pair.emoji || "✨" },
     subject: subject || "default"
@@ -91,9 +92,25 @@ const MatchingGame = () => {
 
   const initializeGame = () => {
     const pairs = currentPairs;
-    const shuffledRight = [...pairs.map(p => ({ ...p.right, id: p.id, isMatched: false }))].sort(() => Math.random() - 0.5);
     
-    setLeftItems(pairs.map(p => ({ ...p.left, id: p.id, isMatched: false })));
+    const leftItems = pairs.map((pair, index) => ({
+      ...pair.left,
+      id: `left-${index}`,
+      pairId: pair.id,
+      isMatched: false
+    }));
+
+    const rightItems = pairs.map((pair, index) => ({
+      ...pair.right,
+      id: `right-${index}`,
+      pairId: pair.id,
+      isMatched: false
+    }));
+
+    // Shuffle only the right items to create the matching challenge
+    const shuffledRight = [...rightItems].sort(() => Math.random() - 0.5);
+    
+    setLeftItems(leftItems);
     setRightItems(shuffledRight);
     setMatches({});
     setScore(0);
@@ -179,15 +196,16 @@ const MatchingGame = () => {
   const performMatch = (targetItem: DragItem) => {
     if (!draggedItem) return;
 
-    const isCorrectMatch = draggedItem.id === targetItem.id;
+    // FIXED: Check if the pairId matches, not the item id
+    const isCorrectMatch = draggedItem.pairId === targetItem.pairId;
     
     if (isCorrectMatch) {
-      setMatches(prev => ({ ...prev, [draggedItem.id]: targetItem.id }));
+      setMatches(prev => ({ ...prev, [draggedItem.pairId]: targetItem.pairId }));
       setLeftItems(prev => prev.map(item => 
-        item.id === draggedItem.id ? { ...item, isMatched: true } : item
+        item.pairId === draggedItem.pairId ? { ...item, isMatched: true } : item
       ));
       setRightItems(prev => prev.map(item => 
-        item.id === targetItem.id ? { ...item, isMatched: true } : item
+        item.pairId === targetItem.pairId ? { ...item, isMatched: true } : item
       ));
       setScore(prev => prev + 1);
       

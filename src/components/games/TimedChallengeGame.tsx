@@ -243,6 +243,13 @@ const TimedChallengeGame = () => {
     
     const correct = selectedAnswer === currentQuestion.correctIndex;
     
+    console.log('Answer validation:', {
+      selectedAnswer,
+      correctIndex: currentQuestion.correctIndex,
+      isCorrect: correct,
+      question: currentQuestion.question
+    });
+    
     if (correct) {
       const bonusPoints = Math.ceil(timeLeft * 2); // Bonus for speed
       const totalPoints = currentQuestion.points + bonusPoints;
