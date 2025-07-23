@@ -12,6 +12,64 @@ export interface GameContent {
 }
 
 export const gameContentMap: Record<string, Record<string, GameContent>> = {
+  italiano: {
+    "lettura-associazione": {
+      matching: [
+        { left: "Gatto", right: "🐱", emoji: "🐾" },
+        { left: "Cane", right: "🐕", emoji: "🐾" },
+        { left: "Casa", right: "🏠", emoji: "🏘️" },
+        { left: "Sole", right: "☀️", emoji: "🌅" },
+        { left: "Acqua", right: "💧", emoji: "🌊" },
+        { left: "Fiore", right: "🌸", emoji: "🌺" },
+        { left: "Mela", right: "🍎", emoji: "🍏" },
+        { left: "Libro", right: "📚", emoji: "📖" }
+      ],
+      memory: [
+        { content: "Gatto", emoji: "🐱" },
+        { content: "Cane", emoji: "🐕" },
+        { content: "Casa", emoji: "🏠" },
+        { content: "Sole", emoji: "☀️" },
+        { content: "Acqua", emoji: "💧" },
+        { content: "Fiore", emoji: "🌸" },
+        { content: "Mela", emoji: "🍎" },
+        { content: "Libro", emoji: "📚" }
+      ],
+      timed: [
+        { question: "Qual è l'animale che miagola?", options: ["Cane", "Gatto", "Pesce", "Uccello"], correct: 1, points: 10, timeLimit: 15 },
+        { question: "Dove vive una famiglia?", options: ["Albero", "Casa", "Mare", "Cielo"], correct: 1, points: 10, timeLimit: 15 },
+        { question: "Cosa fa luce nel cielo?", options: ["Luna", "Stella", "Sole", "Nuvola"], correct: 2, points: 10, timeLimit: 15 },
+        { question: "Cosa si beve quando si ha sete?", options: ["Acqua", "Pietra", "Foglia", "Libro"], correct: 0, points: 10, timeLimit: 15 }
+      ]
+    },
+    "ascolto-comprensione": {
+      matching: [
+        { left: "Mamma", right: "👩", emoji: "👪" },
+        { left: "Papà", right: "👨", emoji: "👪" },
+        { left: "Bambino", right: "👶", emoji: "👪" },
+        { left: "Nonna", right: "👵", emoji: "👪" },
+        { left: "Nonno", right: "👴", emoji: "👪" },
+        { left: "Scuola", right: "🏫", emoji: "🎒" },
+        { left: "Parco", right: "🌳", emoji: "🌲" },
+        { left: "Gelato", right: "🍦", emoji: "🍧" }
+      ],
+      memory: [
+        { content: "Mamma", emoji: "👩" },
+        { content: "Papà", emoji: "👨" },
+        { content: "Bambino", emoji: "👶" },
+        { content: "Nonna", emoji: "👵" },
+        { content: "Nonno", emoji: "👴" },
+        { content: "Scuola", emoji: "🏫" },
+        { content: "Parco", emoji: "🌳" },
+        { content: "Gelato", emoji: "🍦" }
+      ],
+      timed: [
+        { question: "Chi cucina la cena in famiglia?", options: ["Mamma", "Cane", "Tavolo", "Libro"], correct: 0, points: 10, timeLimit: 15 },
+        { question: "Dove si va a imparare?", options: ["Mare", "Scuola", "Cielo", "Gelato"], correct: 1, points: 10, timeLimit: 15 },
+        { question: "Cosa si mangia d'estate?", options: ["Sciarpa", "Cappotto", "Gelato", "Guanti"], correct: 2, points: 10, timeLimit: 15 },
+        { question: "Dove si gioca all'aperto?", options: ["Parco", "Frigorifero", "Armadio", "Televisore"], correct: 0, points: 10, timeLimit: 15 }
+      ]
+    }
+  },
   matematica: {
     "numeri-fino-20": {
       matching: [

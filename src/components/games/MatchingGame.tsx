@@ -351,7 +351,7 @@ const MatchingGame = () => {
         </div>
 
         {/* Game Area - Enhanced for touch */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-8">
           {/* Left Column */}
           <Card className="p-4 md:p-6 border-4 border-fun-blue/30">
             <h3 className="text-xl md:text-2xl font-bold mb-4 text-center text-foreground flex items-center justify-center gap-2">
