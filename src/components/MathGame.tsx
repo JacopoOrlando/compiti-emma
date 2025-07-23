@@ -9,7 +9,7 @@ import { toast } from "sonner";
 interface Question {
   num1: number;
   num2: number;
-  operation: '+' | '-' | '*' | '÷';
+  operation: '+' | '-' | '×' | '÷';
   answer: number;
   type?: 'basic' | 'advanced' | 'problems';
 }
@@ -26,7 +26,7 @@ const MathGame = () => {
 
   const generateBasicQuestion = (): Question => {
     // Aumentiamo la difficoltà per la seconda elementare
-    const operations = ['+', '-', '*'] as const;
+    const operations = ['+', '-', '×'] as const;
     const operation = operations[Math.floor(Math.random() * operations.length)];
     let num1, num2, answer;
     
@@ -41,7 +41,7 @@ const MathGame = () => {
         num2 = Math.floor(Math.random() * 40) + 10; // 10-49
         answer = num1 - num2;
         break;
-      case '*':
+      case '×':
         num1 = Math.floor(Math.random() * 9) + 2; // 2-10
         num2 = Math.floor(Math.random() * 9) + 2; // 2-10
         answer = num1 * num2;
@@ -52,7 +52,7 @@ const MathGame = () => {
   };
 
   const generateAdvancedQuestion = (): Question => {
-    const operations = ['+', '-', '*', '÷'] as const;
+    const operations = ['+', '-', '×', '÷'] as const;
     const operation = operations[Math.floor(Math.random() * operations.length)];
     let num1, num2, answer;
     
@@ -67,7 +67,7 @@ const MathGame = () => {
         num2 = Math.floor(Math.random() * 50) + 1;
         answer = num1 - num2;
         break;
-      case '*':
+      case '×':
         num1 = Math.floor(Math.random() * 12) + 1;
         num2 = Math.floor(Math.random() * 12) + 1;
         answer = num1 * num2;
@@ -86,7 +86,7 @@ const MathGame = () => {
     const problems = [
       { text: "Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?", num1: 15, num2: 8, operation: '-' as const, answer: 7 },
       { text: "In classe ci sono 12 bambini e 14 bambine. Quanti bambini ci sono in totale?", num1: 12, num2: 14, operation: '+' as const, answer: 26 },
-      { text: "Sara compra 3 pacchi di figurine. Ogni pacco contiene 8 figurine. Quante figurine ha in totale?", num1: 3, num2: 8, operation: '*' as const, answer: 24 },
+      { text: "Sara compra 3 pacchi di figurine. Ogni pacco contiene 8 figurine. Quante figurine ha in totale?", num1: 3, num2: 8, operation: '×' as const, answer: 24 },
       { text: "Un autobus trasporta 45 persone. Alla fermata scendono 18 persone. Quante persone rimangono?", num1: 45, num2: 18, operation: '-' as const, answer: 27 }
     ];
     
@@ -102,7 +102,7 @@ const MathGame = () => {
     switch (type) {
       case 'double':
         const num = Math.floor(Math.random() * 25) + 1;
-        return { num1: num, num2: 2, operation: '*', answer: num * 2, type: 'basic' };
+        return { num1: num, num2: 2, operation: '×', answer: num * 2, type: 'basic' };
       case 'half':
         const evenNum = (Math.floor(Math.random() * 25) + 1) * 2;
         return { num1: evenNum, num2: 2, operation: '÷', answer: evenNum / 2, type: 'basic' };
@@ -156,7 +156,9 @@ const MathGame = () => {
   };
 
   const handleNextQuestion = () => {
-    setCurrentQuestion(generateQuestion());
+    const newQuestion = generateQuestion();
+    console.log("Generated new question:", newQuestion);
+    setCurrentQuestion(newQuestion);
     setUserAnswer("");
     setShowResult(false);
     setIsCorrect(false);
@@ -167,7 +169,9 @@ const MathGame = () => {
     setQuestionsAnswered(0);
     setUserAnswer("");
     setShowResult(false);
-    setCurrentQuestion(generateQuestion());
+    const newQuestion = generateQuestion();
+    console.log("Restart - new question:", newQuestion);
+    setCurrentQuestion(newQuestion);
   };
 
   const progress = (questionsAnswered / 10) * 100;
