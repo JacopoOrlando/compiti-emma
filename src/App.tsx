@@ -39,7 +39,13 @@ const App = () => (
                 <Route path="/:subject/:topic/:level" element={<Level />} />
                 <Route path="/:subject/:topic/:level/:exercise" element={<Exercise />} />
                 
-                {/* Game routes - updated with context */}
+                {/* Game routes - subject-specific */}
+                <Route path="/:subject/:topic/games" element={<GameSelector />} />
+                <Route path="/:subject/:topic/games/matching" element={<MatchingGame />} />
+                <Route path="/:subject/:topic/games/memory" element={<MemoryGame />} />
+                <Route path="/:subject/:topic/games/timed" element={<TimedChallengeGame />} />
+                
+                {/* Legacy game routes - keep for backward compatibility */}
                 <Route path="/games" element={<GameSelector />} />
                 <Route path="/games/matching" element={<MatchingGame />} />
                 <Route path="/games/memory" element={<MemoryGame />} />

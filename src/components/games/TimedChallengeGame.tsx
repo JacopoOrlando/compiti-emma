@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Timer } from "lucide-react";
 import { toast } from "sonner";
 import { getGameContent } from "@/lib/gameContent";
@@ -18,10 +18,11 @@ interface ChallengeQuestion {
 const TimedChallengeGame = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { subject: urlSubject, topic: urlTopic } = useParams<{ subject: string; topic: string }>();
   
-  // Get context from location state
-  const subject = location.state?.subject || 'matematica';
-  const topic = location.state?.topic || 'operazioni';
+  // Get context from URL params (preferred) or location state (fallback)
+  const subject = urlSubject || location.state?.subject || 'italiano';
+  const topic = urlTopic || location.state?.topic || 'lettura-associazione';
   
   const [currentQuestion, setCurrentQuestion] = useState<ChallengeQuestion | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);

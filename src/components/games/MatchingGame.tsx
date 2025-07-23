@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Target, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 import { getGameContent } from "@/lib/gameContent";
@@ -25,10 +25,11 @@ interface DragItem {
 const MatchingGame = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { subject: urlSubject, topic: urlTopic } = useParams<{ subject: string; topic: string }>();
   
-  // Get context from location state - FIXED FALLBACKS
-  const subject = location.state?.subject || 'italiano';
-  const topic = location.state?.topic || 'lettura-associazione';
+  // Get context from URL params (preferred) or location state (fallback)
+  const subject = urlSubject || location.state?.subject || 'italiano';
+  const topic = urlTopic || location.state?.topic || 'lettura-associazione';
   
   const [leftItems, setLeftItems] = useState<DragItem[]>([]);
   const [rightItems, setRightItems] = useState<DragItem[]>([]);

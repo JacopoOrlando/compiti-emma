@@ -33,7 +33,7 @@ const Exercise = () => {
       description: "Trascina e collega gli elementi correlati",
       icon: Target,
       color: "bg-fun-blue",
-      route: "/games/matching",
+      route: `/${subject}/${topic}/games/matching`,
       difficulty: "Facile",
       estimatedTime: "5-10 min"
     },
@@ -43,7 +43,7 @@ const Exercise = () => {
       description: "Trova le coppie nascoste girando le carte",
       icon: Brain,
       color: "bg-fun-green",
-      route: "/games/memory",
+      route: `/${subject}/${topic}/games/memory`,
       difficulty: "Medio",
       estimatedTime: "10-15 min"
     },
@@ -53,7 +53,7 @@ const Exercise = () => {
       description: "Rispondi il più velocemente possibile",
       icon: Clock,
       color: "bg-fun-orange",
-      route: "/games/timed",
+      route: `/${subject}/${topic}/games/timed`,
       difficulty: "Difficile",
       estimatedTime: "5-8 min"
     }
@@ -65,15 +65,8 @@ const Exercise = () => {
   const exerciseTitle = exercise?.replace('-', ' ')?.split(' ')?.map(word => word.charAt(0).toUpperCase() + word.slice(1))?.join(' ') || '';
 
   const handleGameStart = (gameRoute: string) => {
-    navigate(gameRoute, { 
-      state: { 
-        subject, 
-        topic, 
-        level, 
-        exercise,
-        fullContext: { subject, topic, level, exercise }
-      } 
-    });
+    // Navigate directly to the subject-specific route (no state needed)
+    navigate(gameRoute);
   };
 
   return (

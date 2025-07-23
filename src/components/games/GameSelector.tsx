@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { 
   Target, Brain, Timer, 
   Book, Gamepad2, Star, Play, Volume2, Home
@@ -26,10 +26,11 @@ interface GameSelectorProps {
 const GameSelector = ({ subject, topic }: GameSelectorProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { subject: urlSubject, topic: urlTopic } = useParams<{ subject: string; topic: string }>();
   
-  // Get subject and topic from either props or location state
-  const currentSubject = subject || location.state?.subject;
-  const currentTopic = topic || location.state?.topic;
+  // Get subject and topic from URL params (preferred), props, or location state
+  const currentSubject = urlSubject || subject || location.state?.subject;
+  const currentTopic = urlTopic || topic || location.state?.topic;
 
   const gameStyles: GameStyle[] = [
     {
@@ -38,7 +39,7 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
       description: "Trascina e collega per imparare divertendoti",
       icon: Target,
       color: "bg-fun-blue",
-      route: "/games/matching",
+      route: currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/matching` : "/games/matching",
       difficulty: "Facile",
       ageGroup: "6+ anni",
       estimatedTime: "5-10 min"
@@ -49,7 +50,7 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
       description: "Trova le coppie e allena la memoria",
       icon: Brain,
       color: "bg-fun-purple",
-      route: "/games/memory",
+      route: currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/memory` : "/games/memory",
       difficulty: "Medio", 
       ageGroup: "7+ anni",
       estimatedTime: "5-15 min"
@@ -60,7 +61,7 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
       description: "Rispondi velocemente per più punti!",
       icon: Timer,
       color: "bg-fun-orange",
-      route: "/games/timed",
+      route: currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/timed` : "/games/timed",
       difficulty: "Difficile",
       ageGroup: "8+ anni",
       estimatedTime: "3-8 min"
