@@ -32,6 +32,118 @@ const Topic = () => {
   }));
 
   function getDescriptionForLevel(subject: string, topic: string, level: number): string {
+    // MATEMATICA - Comprehensive curriculum
+    if (subject === 'matematica') {
+      if (topic === 'numeri-fino-20') {
+        if (level <= 3) return 'Conta e scrivi numeri fino a 10';
+        if (level <= 6) return 'Confronta numeri con >, <, = fino a 20';
+        return 'Ordina numeri crescenti e decrescenti fino a 20';
+      }
+      if (topic === 'addizioni-fino-20') {
+        if (level <= 3) return 'Conta elementi e scrivi la somma';
+        if (level <= 6) return 'Addizioni sulla linea dei numeri';
+        return 'Addizioni complesse fino a 20';
+      }
+      if (topic === 'sottrazioni-fino-20') {
+        if (level <= 3) return 'Cancella elementi e calcola la sottrazione';
+        if (level <= 6) return 'Sottrazioni sulla linea dei numeri';
+        return 'Sottrazioni complesse fino a 20';
+      }
+      if (topic === 'problemi-fino-20') {
+        if (level <= 3) return 'Problemi semplici con addizione';
+        if (level <= 6) return 'Problemi con addizione e sottrazione';
+        return 'Illustra e risolvi problemi complessi';
+      }
+      if (topic === 'spazio-figure-20') {
+        if (level <= 3) return 'Confine, interno ed esterno delle forme';
+        if (level <= 6) return 'Linee aperte e chiuse, figure piane';
+        return 'Coordinate sulla griglia e forme 3D';
+      }
+      if (topic === 'numeri-fino-100') {
+        if (level <= 3) return 'Leggi e scrivi numeri fino a 50';
+        if (level <= 6) return 'Precedente e successivo, sequenze numeriche';
+        return 'Componi e scomponi in decine e unità';
+      }
+      if (topic === 'operazioni-fino-100') {
+        if (level <= 3) return 'Addizioni e sottrazioni mentali semplici';
+        if (level <= 6) return 'Moltiplicazioni e divisioni base';
+        return 'Operazioni in colonna con prova';
+      }
+      if (topic === 'problemi-fino-100') {
+        if (level <= 3) return 'Problemi con dati utili e inutili';
+        if (level <= 6) return 'Colora operazione corretta e calcola';
+        return 'Problemi complessi con più operazioni';
+      }
+      if (topic === 'misure-generali') {
+        if (level <= 3) return 'Valore delle monete e confronti';
+        if (level <= 6) return 'Calcola resto e disegna monete necessarie';
+        return 'Equivalenze di lunghezza, peso e capacità';
+      }
+      if (topic === 'numeri-oltre-1000') {
+        if (level <= 3) return 'Scrivi numeri in cifre e lettere';
+        if (level <= 6) return 'Forma combinazioni e ordinale';
+        return 'Migliaia, centinaia, decine e unità';
+      }
+      if (topic === 'frazioni') {
+        if (level <= 3) return 'Frazioni proprie, improprie e apparenti';
+        if (level <= 6) return 'Calcola frazione di un numero';
+        return 'Frazione complementare e frazioni decimali';
+      }
+      if (topic === 'numeri-decimali') {
+        if (level <= 3) return 'Scrivi numeri decimali da frazioni';
+        if (level <= 6) return 'Scomponi numeri decimali per valore posizionale';
+        return 'Ordina numeri decimali crescenti e decrescenti';
+      }
+      if (topic === 'geometria-avanzata') {
+        if (level <= 3) return 'Linee perpendicolari, parallele e incidenti';
+        if (level <= 6) return 'Angoli acuti, ottusi e retti';
+        return 'Perimetro e area di quadrilateri';
+      }
+    }
+    
+    // SCIENZE - Natural sciences curriculum
+    if (subject === 'scienze') {
+      if (topic === 'esseri-viventi-non-viventi') {
+        if (level <= 3) return 'Collega parti del corpo ai sensi';
+        if (level <= 6) return 'Identifica esseri viventi e non viventi';
+        return 'Caratteristiche distintive degli esseri viventi';
+      }
+      if (topic === 'cicli-vitali') {
+        if (level <= 3) return 'Numera fasi del ciclo di vita delle piante';
+        if (level <= 6) return 'Classificazione animali: mammiferi, ovipari';
+        return 'Cicli vitali complessi e nutrizione animale';
+      }
+      if (topic === 'caratteristiche-viventi') {
+        if (level <= 3) return 'Vertebrati e invertebrati - definizioni';
+        if (level <= 6) return 'Funzioni delle piante: radici, fotosintesi';
+        return 'Respirazione animali, dieta onnivora, ecosistemi';
+      }
+      if (topic === 'classificazione-piante-animali') {
+        if (level <= 3) return 'Alghe, muschi e felci - caratteristiche';
+        if (level <= 6) return 'Angiosperme e gimnosperme';
+        return 'Classifica animali vertebrati e invertebrati';
+      }
+    }
+    
+    // TECNOLOGIA - Technology curriculum
+    if (subject === 'tecnologia') {
+      if (topic === 'materiali-oggetti') {
+        if (level <= 3) return 'Scrivi materiale e scopo degli oggetti';
+        if (level <= 6) return 'Caratteristiche dei materiali';
+        return 'Collega oggetti ai materiali di costruzione';
+      }
+      if (topic === 'strumenti-misura') {
+        if (level <= 3) return 'Bilancia per pesare, metro per misurare';
+        if (level <= 6) return 'Termometro, cronometro e altri strumenti';
+        return 'Scegli strumento appropriato per ogni azione';
+      }
+      if (topic === 'ciclo-vita-prodotti') {
+        if (level <= 3) return 'Materie prime e produzione';
+        if (level <= 6) return 'Confezionamento, trasporto e vendita';
+        return 'Riciclo e smaltimento - ciclo completo';
+      }
+    }
+    
     // ITALIANO - Detailed curriculum descriptions
     if (subject === 'italiano') {
       if (topic === 'lettura-associazione') {
@@ -121,25 +233,6 @@ const Topic = () => {
         if (level <= 6) return 'Food and drinks - I like/don\'t like';
         return 'Express preferences and explain choices';
       }
-    }
-    
-    // MATEMATICA - Keep existing math content
-    if (subject === 'matematica' && topic === 'operazioni') {
-      if (level <= 3) return 'Addizioni semplici con numeri piccoli (1-10)';
-      if (level <= 6) return 'Sottrazioni e addizioni con numeri più grandi (1-50)';
-      return 'Problemi complessi con tutte le operazioni (1-100)';
-    }
-    
-    if (subject === 'matematica' && topic === 'geometria') {
-      if (level <= 3) return 'Forme base: cerchio, quadrato, triangolo';
-      if (level <= 6) return 'Figure complesse e spazi';
-      return 'Perimetri, aree e misure avanzate';
-    }
-    
-    if (subject === 'matematica' && topic === 'misure') {
-      if (level <= 3) return 'Centimetri, metri e ore';
-      if (level <= 6) return 'Peso, capacità e tempo';
-      return 'Conversioni e misure complesse';
     }
     
     // Fallback descriptions

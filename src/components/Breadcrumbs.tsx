@@ -19,11 +19,39 @@ const Breadcrumbs = () => {
       // Traduzioni specifiche
       const translations: Record<string, string> = {
         // Main subjects
+        'matematica': '🧮 Matematica',
+        'scienze': '🧬 Scienze',
+        'tecnologia': '🔧 Tecnologia',
         'italiano': '📚 Italiano',
         'storia': '🏛️ Storia', 
         'geografia': '🌍 Geografia',
         'english': '🇬🇧 English',
-        'matematica': '🧮 Matematica',
+        
+        // Mathematics topics
+        'numeri-fino-20': '🔢 Numeri fino a 20',
+        'addizioni-fino-20': '➕ Addizioni fino a 20',
+        'sottrazioni-fino-20': '➖ Sottrazioni fino a 20',
+        'problemi-fino-20': '🧩 Problemi fino a 20',
+        'spazio-figure-20': '📐 Spazio e Figure',
+        'numeri-fino-100': '💯 Numeri fino a 100',
+        'operazioni-fino-100': '🔢 Operazioni fino a 100',
+        'problemi-fino-100': '🧩 Problemi fino a 100',
+        'misure-generali': '📏 Misure',
+        'numeri-oltre-1000': '🔢 Numeri oltre 1000',
+        'frazioni': '🧩 Frazioni',
+        'numeri-decimali': '🔢 Numeri Decimali',
+        'geometria-avanzata': '📐 Geometria Avanzata',
+        
+        // Sciences topics
+        'esseri-viventi-non-viventi': '🌱 Esseri Viventi e Non Viventi',
+        'cicli-vitali': '🔄 Cicli Vitali',
+        'caratteristiche-viventi': '🧬 Caratteristiche Viventi',
+        'classificazione-piante-animali': '📊 Classificazione',
+        
+        // Technology topics
+        'materiali-oggetti': '🧱 Materiali e Oggetti',
+        'strumenti-misura': '⚖️ Strumenti di Misura',
+        'ciclo-vita-prodotti': '♻️ Ciclo Vita Prodotti',
         
         // Italian topics
         'lettura-associazione': '📖 Lettura e Associazione',
@@ -47,11 +75,6 @@ const Breadcrumbs = () => {
         'colors-instructions': '🎨 Colors & Instructions',
         'descriptive-texts': '📝 Descriptive Texts',
         'vocabulary-preferences': '⭐ Vocabulary & Preferences',
-        
-        // Math topics (keep existing)
-        'operazioni': '➕ Operazioni',
-        'geometria': '📐 Geometria',
-        'misure': '📏 Misure',
         
         // Levels
         'livello1': '🎯 Livello 1',

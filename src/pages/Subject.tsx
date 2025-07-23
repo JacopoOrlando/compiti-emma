@@ -4,6 +4,167 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, Calculator, History, Globe, PenTool, Shapes, Ruler, Volume2, FileText, Palette } from "lucide-react";
 
 const subjects = {
+  matematica: {
+    title: "Matematica",
+    description: "Scopri i numeri, le operazioni e la geometria con Emma!",
+    color: "bg-fun-blue",
+    topics: [
+      { 
+        id: "numeri-fino-20", 
+        title: "Numeri fino a 20", 
+        description: "Conta, confronta e ordina i numeri fino a 20",
+        icon: Calculator,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "addizioni-fino-20", 
+        title: "Addizioni fino a 20", 
+        description: "Impara le addizioni con numeri fino a 20",
+        icon: PenTool,
+        color: "bg-fun-green"
+      },
+      { 
+        id: "sottrazioni-fino-20", 
+        title: "Sottrazioni fino a 20", 
+        description: "Impara le sottrazioni con numeri fino a 20",
+        icon: Shapes,
+        color: "bg-fun-orange"
+      },
+      { 
+        id: "problemi-fino-20", 
+        title: "Problemi fino a 20", 
+        description: "Risolvi problemi con addizioni e sottrazioni",
+        icon: BookOpen,
+        color: "bg-fun-purple"
+      },
+      { 
+        id: "spazio-figure-20", 
+        title: "Spazio e Figure", 
+        description: "Forme, linee e orientamento nello spazio",
+        icon: Shapes,
+        color: "bg-fun-pink"
+      },
+      { 
+        id: "numeri-fino-100", 
+        title: "Numeri fino a 100", 
+        description: "Leggi, scrivi e confronta numeri fino a 100",
+        icon: Calculator,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "operazioni-fino-100", 
+        title: "Operazioni fino a 100", 
+        description: "Addizioni, sottrazioni, moltiplicazioni e divisioni",
+        icon: PenTool,
+        color: "bg-fun-green"
+      },
+      { 
+        id: "problemi-fino-100", 
+        title: "Problemi fino a 100", 
+        description: "Risolvi problemi più complessi",
+        icon: BookOpen,
+        color: "bg-fun-purple"
+      },
+      { 
+        id: "misure-generali", 
+        title: "Misure", 
+        description: "Monete, lunghezza, peso e capacità",
+        icon: Ruler,
+        color: "bg-fun-orange"
+      },
+      { 
+        id: "numeri-oltre-1000", 
+        title: "Numeri oltre 1000", 
+        description: "Grandi numeri: migliaia, centinaia, decine e unità",
+        icon: Calculator,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "frazioni", 
+        title: "Frazioni", 
+        description: "Frazioni proprie, improprie e apparenti",
+        icon: Shapes,
+        color: "bg-fun-pink"
+      },
+      { 
+        id: "numeri-decimali", 
+        title: "Numeri Decimali", 
+        description: "Numeri con la virgola e frazioni decimali",
+        icon: PenTool,
+        color: "bg-fun-green"
+      },
+      { 
+        id: "geometria-avanzata", 
+        title: "Geometria Avanzata", 
+        description: "Angoli, poligoni, perimetri e aree",
+        icon: Shapes,
+        color: "bg-fun-purple"
+      }
+    ]
+  },
+  scienze: {
+    title: "Scienze",
+    description: "Esplora il mondo della natura e della tecnologia!",
+    color: "bg-fun-green",
+    topics: [
+      { 
+        id: "esseri-viventi-non-viventi", 
+        title: "Esseri Viventi e Non Viventi", 
+        description: "Scopri la differenza tra esseri viventi e non viventi",
+        icon: Globe,
+        color: "bg-fun-green"
+      },
+      { 
+        id: "cicli-vitali", 
+        title: "Cicli Vitali e Classificazione", 
+        description: "Cicli di vita delle piante e classificazione animali",
+        icon: BookOpen,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "caratteristiche-viventi", 
+        title: "Caratteristiche degli Esseri Viventi", 
+        description: "Vertebrati, invertebrati e ecosistemi",
+        icon: Shapes,
+        color: "bg-fun-purple"
+      },
+      { 
+        id: "classificazione-piante-animali", 
+        title: "Classificazione Piante e Animali", 
+        description: "Alghe, muschi, felci e classificazione animale",
+        icon: Globe,
+        color: "bg-fun-orange"
+      }
+    ]
+  },
+  tecnologia: {
+    title: "Tecnologia",
+    description: "Scopri materiali, strumenti e il ciclo di vita dei prodotti!",
+    color: "bg-fun-orange",
+    topics: [
+      { 
+        id: "materiali-oggetti", 
+        title: "Materiali e Oggetti", 
+        description: "Riconosci materiali e le loro caratteristiche",
+        icon: Shapes,
+        color: "bg-fun-orange"
+      },
+      { 
+        id: "strumenti-misura", 
+        title: "Strumenti di Misura", 
+        description: "Bilancia, metro, termometro e altri strumenti",
+        icon: Ruler,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "ciclo-vita-prodotti", 
+        title: "Ciclo di Vita dei Prodotti", 
+        description: "Dalla materia prima al riciclo",
+        icon: Globe,
+        color: "bg-fun-green"
+      }
+    ]
+  },
   italiano: {
     title: "Italiano",
     description: "Impara la lingua italiana con lettura, ascolto e riflessione linguistica!",
@@ -169,7 +330,7 @@ const Subject = () => {
           <div className="space-y-2">
             <Button onClick={() => navigate('/')} variant="fun">🏠 Torna a Casa</Button>
             <p className="text-sm text-muted-foreground">
-              Materie disponibili: <strong>italiano</strong>, <strong>storia</strong>, <strong>geografia</strong>, <strong>english</strong>
+              Materie disponibili: <strong>matematica</strong>, <strong>scienze</strong>, <strong>tecnologia</strong>, <strong>italiano</strong>, <strong>storia</strong>, <strong>geografia</strong>, <strong>english</strong>
             </p>
           </div>
         </div>

@@ -23,6 +23,41 @@ const subjects = [
     icon: Home,
   },
   {
+    title: "Matematica",
+    icon: Calculator,
+    topics: [
+      { title: "Numeri fino a 20", url: "/matematica/numeri-fino-20", icon: Calculator },
+      { title: "Addizioni fino a 20", url: "/matematica/addizioni-fino-20", icon: PenTool },
+      { title: "Sottrazioni fino a 20", url: "/matematica/sottrazioni-fino-20", icon: Shapes },
+      { title: "Problemi fino a 20", url: "/matematica/problemi-fino-20", icon: BookOpen },
+      { title: "Spazio e Figure", url: "/matematica/spazio-figure-20", icon: Shapes },
+      { title: "Numeri fino a 100", url: "/matematica/numeri-fino-100", icon: Calculator },
+      { title: "Operazioni fino a 100", url: "/matematica/operazioni-fino-100", icon: PenTool },
+      { title: "Frazioni", url: "/matematica/frazioni", icon: Shapes },
+      { title: "Numeri Decimali", url: "/matematica/numeri-decimali", icon: PenTool },
+      { title: "Geometria Avanzata", url: "/matematica/geometria-avanzata", icon: Shapes },
+    ]
+  },
+  {
+    title: "Scienze",
+    icon: Globe,
+    topics: [
+      { title: "Esseri Viventi e Non Viventi", url: "/scienze/esseri-viventi-non-viventi", icon: Globe },
+      { title: "Cicli Vitali", url: "/scienze/cicli-vitali", icon: BookOpen },
+      { title: "Caratteristiche Viventi", url: "/scienze/caratteristiche-viventi", icon: Shapes },
+      { title: "Classificazione", url: "/scienze/classificazione-piante-animali", icon: Globe },
+    ]
+  },
+  {
+    title: "Tecnologia",
+    icon: Shapes,
+    topics: [
+      { title: "Materiali e Oggetti", url: "/tecnologia/materiali-oggetti", icon: Shapes },
+      { title: "Strumenti di Misura", url: "/tecnologia/strumenti-misura", icon: Ruler },
+      { title: "Ciclo Vita Prodotti", url: "/tecnologia/ciclo-vita-prodotti", icon: Globe },
+    ]
+  },
+  {
     title: "Italiano",
     icon: BookOpen,
     topics: [

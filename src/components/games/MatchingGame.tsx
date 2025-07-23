@@ -80,9 +80,30 @@ const MatchingGame = () => {
   ];
 
   const getCurrentPairs = () => {
-    // Context-aware content selection - UPDATED FOR NEW ROUTING
-    
-    if (subject === 'english') {
+    // Context-aware content selection - COMPREHENSIVE CURRICULUM
+    if (subject === 'matematica') {
+      if (topic === 'numeri-fino-20') return mathPairs;
+      if (topic === 'addizioni-fino-20') return mathPairs; 
+      if (topic === 'sottrazioni-fino-20') return mathPairs;
+      if (topic === 'problemi-fino-20') return mathPairs;
+      if (topic === 'numeri-fino-100') return mathPairs;
+      if (topic === 'operazioni-fino-100') return mathPairs;
+      if (topic === 'frazioni') return colorPairs; // Fractions with visual aids
+      if (topic === 'numeri-decimali') return englishVocabPairs; // Number concepts
+      if (topic === 'geometria-avanzata') return englishStoryPairs; // Geometric shapes
+      return mathPairs;
+    } else if (subject === 'scienze') {
+      if (topic === 'esseri-viventi-non-viventi') return wordPairs; // Living/non-living classification
+      if (topic === 'cicli-vitali') return englishStoryPairs; // Life cycle sequences  
+      if (topic === 'caratteristiche-viventi') return colorPairs; // Animal characteristics
+      if (topic === 'classificazione-piante-animali') return englishVocabPairs; // Classification matching
+      return wordPairs;
+    } else if (subject === 'tecnologia') {
+      if (topic === 'materiali-oggetti') return wordPairs; // Material-object matching
+      if (topic === 'strumenti-misura') return englishVocabPairs; // Tool-purpose matching
+      if (topic === 'ciclo-vita-prodotti') return englishStoryPairs; // Process sequences
+      return wordPairs;
+    } else if (subject === 'english') {
       if (topic === 'colors-instructions') return colorPairs;
       if (topic === 'descriptive-texts') return englishVocabPairs;
       if (topic === 'vocabulary-preferences') return englishStoryPairs;
@@ -97,8 +118,6 @@ const MatchingGame = () => {
       return englishStoryPairs; // Historical story elements
     } else if (subject === 'geografia') {
       return colorPairs; // Geographic elements and colors
-    } else if (subject === 'matematica') {
-      return mathPairs;
     } else {
       // Default based on gameType for legacy support
       switch (gameType) {
@@ -124,11 +143,13 @@ const MatchingGame = () => {
   };
 
   useEffect(() => {
-    // Set appropriate game type based on subject context - UPDATED
-    if (subject === 'english') {
-      setGameType('words');
-    } else if (subject === 'matematica') {
+    // Set appropriate game type based on subject context - COMPREHENSIVE
+    if (subject === 'matematica') {
       setGameType('math');
+    } else if (subject === 'scienze' || subject === 'tecnologia') {
+      setGameType('words');
+    } else if (subject === 'english') {
+      setGameType('words');
     } else if (subject === 'italiano') {
       setGameType('words');
     } else if (subject === 'storia' || subject === 'geografia') {
