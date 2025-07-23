@@ -22,36 +22,36 @@ const ReadingGame = () => {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  // Frasi complete per seconda elementare
+  // Frasi più complesse per seconda elementare
   const sentenceQuestions: WordQuestion[] = [
     {
-      word: "IL GATTO DORME SUL DIVANO",
-      image: "🐱💤",
-      options: ["Il gatto mangia", "Il gatto dorme sul divano", "Il gatto corre", "Il gatto gioca"],
+      word: "IL GATTO BIANCO DORME COMODAMENTE SUL DIVANO ROSSO",
+      image: "🐱💤🛋️",
+      options: ["Il gatto mangia sul tavolo", "Il gatto bianco dorme comodamente sul divano rosso", "Il cane corre nel giardino", "Il gatto gioca con la palla"],
       correctIndex: 1
     },
     {
-      word: "LA BAMBINA LEGGE UN LIBRO",
-      image: "👧📖",
-      options: ["La bambina canta", "La bambina disegna", "La bambina legge un libro", "La bambina balla"],
+      word: "LA BAMBINA CURIOSA LEGGE ATTENTAMENTE UN LIBRO INTERESSANTE",
+      image: "👧📖✨",
+      options: ["La bambina canta una canzone", "La bambina disegna un fiore", "La bambina curiosa legge attentamente un libro interessante", "La bambina balla nella stanza"],
       correctIndex: 2
     },
     {
-      word: "IL SOLE SPLENDE NEL CIELO",
-      image: "☀️🌤️",
-      options: ["Il sole splende nel cielo", "La luna brilla", "Le stelle cadono", "La neve cade"],
+      word: "IL SOLE SPLENDE BRILLANTEMENTE NEL CIELO AZZURRO",
+      image: "☀️🌤️💙",
+      options: ["Il sole splende brillantemente nel cielo azzurro", "La luna brilla di notte", "Le stelle cadono velocemente", "La neve cade silenziosamente"],
       correctIndex: 0
     },
     {
-      word: "I BAMBINI GIOCANO NEL PARCO",
-      image: "👦👧🌳",
-      options: ["I bambini studiano", "I bambini dormono", "I bambini mangiano", "I bambini giocano nel parco"],
+      word: "I BAMBINI ALLEGRI GIOCANO FELICEMENTE NEL GRANDE PARCO VERDE",
+      image: "👦👧🌳🎮",
+      options: ["I bambini studiano in biblioteca", "I bambini dormono nel letto", "I bambini mangiano la merenda", "I bambini allegri giocano felicemente nel grande parco verde"],
       correctIndex: 3
     },
     {
-      word: "LA MAMMA CUCINA IN CUCINA",
-      image: "👩‍🍳🍳",
-      options: ["La mamma cucina in cucina", "Il papà lavora", "La nonna riposa", "Il nonno legge"],
+      word: "LA MAESTRA GENTILE SPIEGA CHIARAMENTE LA LEZIONE INTERESSANTE",
+      image: "👩‍🏫📚✨",
+      options: ["La maestra gentile spiega chiaramente la lezione interessante", "Il dottore visita il paziente", "La nonna cucina la torta", "Il nonno legge il giornale"],
       correctIndex: 0
     }
   ];
@@ -117,32 +117,38 @@ const ReadingGame = () => {
         {
           word: "DINOSAURO",
           image: "🦕",
-          options: ["CANE", "GATTO", "DINOSAURO", "ELEFANTE"],
-          correctIndex: 2
+          options: ["COCCODRILLO", "DINOSAURO", "ELEFANTE", "RINOCERONTE"],
+          correctIndex: 1
         },
         {
-          word: "AUTOMOBILE",
+          word: "AUTOMOBILE", 
           image: "🚗",
-          options: ["BICICLETTA", "AUTOMOBILE", "TRENO", "AEREO"],
+          options: ["MOTOCICLETTA", "AUTOMOBILE", "AUTOBUS", "CAMION"],
           correctIndex: 1
         },
         {
           word: "FARFALLA",
-          image: "🦋",
-          options: ["FARFALLA", "UCCELLO", "INSETTO", "APE"],
+          image: "🦋", 
+          options: ["FARFALLA", "LIBELLULA", "UCCELLINO", "PIPISTRELLO"],
           correctIndex: 0
         },
         {
-          word: "COMPUTER",
-          image: "💻",
-          options: ["TELEFONO", "TELEVISORE", "COMPUTER", "RADIO"],
+          word: "ASTRONAUTA",
+          image: "👨‍🚀",
+          options: ["PILOTA", "DOTTORE", "ASTRONAUTA", "POMPIERE"],
           correctIndex: 2
         },
         {
-          word: "GIRAFFA",
-          image: "🦒",
-          options: ["CAVALLO", "ZEBRA", "LEONE", "GIRAFFA"],
+          word: "GIRASOLE",
+          image: "🌻",
+          options: ["MARGHERITA", "TULIPANO", "ROSA", "GIRASOLE"],
           correctIndex: 3
+        },
+        {
+          word: "PRINCIPESSA",
+          image: "👸",
+          options: ["PRINCIPESSA", "REGINA", "BALLERINA", "MAESTRA"],
+          correctIndex: 0
         }
       ];
     }

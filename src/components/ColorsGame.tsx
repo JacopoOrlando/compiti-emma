@@ -113,38 +113,38 @@ const ColorsGame = () => {
       case 'mixing': return mixingQuestions;
       default: return [
         {
-          color: "#FF0000",
-          colorName: "ROSSO",
-          options: ["BLU", "ROSSO", "VERDE", "GIALLO"],
+          color: "#8B4513",
+          colorName: "MARRONE SCURO",
+          options: ["NERO", "MARRONE SCURO", "GRIGIO CHIARO", "VIOLA INTENSO"],
           correctIndex: 1,
           type: 'colors' as const
         },
         {
-          color: "#0000FF",
-          colorName: "BLU",
-          options: ["BLU", "VIOLA", "ROSSO", "ROSA"],
-          correctIndex: 0,
-          type: 'colors' as const
-        },
-        {
-          color: "#00FF00",
-          colorName: "VERDE",
-          options: ["GIALLO", "ARANCIONE", "VERDE", "BLU"],
+          color: "#4B0082",
+          colorName: "INDACO",
+          options: ["BLU NAVY", "VIOLA SCURO", "INDACO", "NERO PROFONDO"],
           correctIndex: 2,
           type: 'colors' as const
         },
         {
-          color: "#FFFF00",
-          colorName: "GIALLO",
-          options: ["VERDE", "ARANCIONE", "ROSSO", "GIALLO"],
-          correctIndex: 3,
+          color: "#FF69B4",
+          colorName: "ROSA ACCESO",
+          options: ["ROSA PALLIDO", "ROSA ACCESO", "VIOLA CHIARO", "ROSSO INTENSO"],
+          correctIndex: 1,
           type: 'colors' as const
         },
         {
-          color: "#800080",
-          colorName: "VIOLA",
-          options: ["VIOLA", "ROSA", "BLU", "ROSSO"],
-          correctIndex: 0,
+          color: "#32CD32",
+          colorName: "VERDE LIME",
+          options: ["VERDE SCURO", "GIALLO VERDE", "VERDE LIME", "BLU VERDE"],
+          correctIndex: 2,
+          type: 'colors' as const
+        },
+        {
+          color: "#FF6347",
+          colorName: "ROSSO POMODORO",
+          options: ["ARANCIONE SCURO", "ROSSO POMODORO", "ROSA INTENSO", "MARRONE ROSSO"],
+          correctIndex: 1,
           type: 'colors' as const
         }
       ];
