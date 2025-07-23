@@ -160,8 +160,8 @@ const MathGame = () => {
         description: "Stai andando alla grande!",
       });
     } else {
-      toast("🎯 Bravo! La risposta era " + currentQuestion.answer, {
-        description: "Continua a praticare!",
+      toast("❌ Ops! La risposta era " + currentQuestion.answer, {
+        description: "Riprova con la prossima!",
       });
     }
     
@@ -315,8 +315,8 @@ const MathGame = () => {
             </div>
           ) : (
             <div className="space-y-6">
-              <div className={`text-4xl font-bold ${isCorrect ? 'text-fun-green' : 'text-fun-orange'}`}>
-                {isCorrect ? '🎉 Corretto!' : '🎯 Bravo!'}
+              <div className={`text-4xl font-bold ${isCorrect ? 'text-fun-green' : 'text-red-500'}`}>
+                {isCorrect ? '🎉 Corretto!' : '❌ Sbagliato!'}
               </div>
               <div className="text-2xl text-muted-foreground">
                 La risposta è: <span className="font-bold text-primary">{currentQuestion.answer}</span>
