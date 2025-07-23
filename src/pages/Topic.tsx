@@ -31,7 +31,7 @@ const Topic = () => {
     stars: Math.floor(Math.random() * 4), // Stelle simulate
   }));
 
-  function getDescriptionForLevel(subject: string | undefined, topic: string | undefined, level: number): string {
+  function getDescriptionForLevel(subject: string, topic: string, level: number): string {
     if (subject === 'matematica' && topic === 'operazioni') {
       if (level <= 3) return 'Addizioni semplici con numeri piccoli';
       if (level <= 6) return 'Sottrazioni e addizioni con numeri più grandi';
@@ -72,20 +72,28 @@ const Topic = () => {
   };
 
   const handleStartLevel = (levelId: number) => {
-    // Reindirizza ai giochi esistenti per casi specifici
+    // Route to appropriate games based on subject and topic
     if (subject === 'matematica' && topic === 'operazioni') {
       navigate('/math');
     } else if (subject === 'italiano' && topic === 'lettura') {
       navigate('/reading');
     } else if (subject === 'italiano' && topic === 'arte') {
       navigate('/colors');
-    } else if (subject === 'english' && (topic === 'vocabulary' || topic === 'stories')) {
-      navigate('/reading'); // Usa il gioco di lettura per l'inglese
+    } else if (subject === 'english' && topic === 'vocabulary') {
+      navigate('/reading'); // English vocabulary game
+    } else if (subject === 'english' && topic === 'stories') {
+      navigate('/reading'); // English stories game
     } else if (subject === 'english' && topic === 'conversation') {
-      navigate('/reading'); // Per ora usa reading, in futuro possiamo fare un gioco specifico
+      navigate('/reading'); // English conversation practice
+    } else if (subject === 'english' && topic === 'culture') {
+      navigate('/reading'); // English culture lessons
+    } else if (subject === 'matematica') {
+      navigate('/math'); // All other math topics
+    } else if (subject === 'italiano') {
+      navigate('/reading'); // All other Italian topics
     } else {
-      // Per tutte le altre sezioni, ora hanno contenuto
-      navigate('/math'); // Default fallback per ora
+      // Safe fallback - return to subject page
+      navigate(`/${subject}`);
     }
   };
 

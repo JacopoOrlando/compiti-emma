@@ -54,7 +54,7 @@ export default function Index() {
             variant="fun" 
             size="lg" 
             className="text-2xl py-6 px-12 animate-pulse-gentle"
-            onClick={() => navigate('/matematica')}
+            onClick={() => document.getElementById('subjects')?.scrollIntoView({ behavior: 'smooth' })}
           >
             Inizia l'Avventura Magica! 🦄✨
           </Button>
@@ -62,7 +62,7 @@ export default function Index() {
       </section>
 
       {/* Subjects */}
-      <section className="py-16 px-6">
+      <section id="subjects" className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
             🌈 Scegli la tua Materia Magica! 🦄

@@ -49,9 +49,9 @@ const subjects = [
     icon: Languages,
     topics: [
       { title: "Vocabulary", url: "/english/vocabulary", icon: BookOpen },
-      { title: "Stories", url: "/english/stories", icon: Palette },
-      { title: "Speaking", url: "/english/conversation", icon: Calculator },
-      { title: "Culture", url: "/english/culture", icon: Home },
+      { title: "Stories", url: "/english/stories", icon: BookOpen },
+      { title: "Speaking", url: "/english/conversation", icon: Languages },
+      { title: "Culture", url: "/english/culture", icon: Globe },
     ]
   }
 ];
