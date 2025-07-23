@@ -7,6 +7,8 @@ import Layout from "./components/Layout";
 import Index from "./pages/Index";
 import Subject from "./pages/Subject";
 import Topic from "./pages/Topic";
+import Level from "./pages/Level";
+import Exercise from "./pages/Exercise";
 import NotFound from "./pages/NotFound";
 import MathGame from "./components/MathGame";
 import ReadingGame from "./components/ReadingGame";
@@ -30,14 +32,16 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/:subject" element={<Subject />} />
             <Route path="/:subject/:topic" element={<Topic />} />
+            <Route path="/:subject/:topic/:level" element={<Level />} />
+            <Route path="/:subject/:topic/:level/:exercise" element={<Exercise />} />
             
-            {/* Game routes */}
+            {/* Game routes - updated with context */}
             <Route path="/games" element={<GameSelector />} />
             <Route path="/games/matching" element={<MatchingGame />} />
             <Route path="/games/memory" element={<MemoryGame />} />
             <Route path="/games/timed" element={<TimedChallengeGame />} />
             
-            {/* Legacy routes - mantengo per compatibilità */}
+            {/* Legacy routes - keep for backward compatibility */}
             <Route path="/math" element={<MathGame />} />
             <Route path="/reading" element={<ReadingGame />} />
             <Route path="/colors" element={<ColorsGame />} />

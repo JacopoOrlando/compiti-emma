@@ -52,6 +52,28 @@ const Breadcrumbs = () => {
         'operazioni': '➕ Operazioni',
         'geometria': '📐 Geometria',
         'misure': '📏 Misure',
+        
+        // Levels
+        'livello1': '🎯 Livello 1',
+        'livello2': '🎯 Livello 2',
+        'livello3': '🎯 Livello 3',
+        'livello4': '🎯 Livello 4',
+        'livello5': '🎯 Livello 5',
+        'livello6': '🎯 Livello 6',
+        'livello7': '🎯 Livello 7',
+        'livello8': '🎯 Livello 8',
+        'livello9': '🎯 Livello 9',
+        'livello10': '🎯 Livello 10',
+        
+        // Exercise types
+        'comprensione': '🧠 Comprensione',
+        'associazione-parole': '🔗 Associazione Parole',
+        'narrativa': '📖 Narrativa',
+        'grammatica': '✏️ Grammatica',
+        'ortografia': '📝 Ortografia',
+        'descrizioni': '📝 Descrizioni',
+        'ascolto-colori': '🎨 Ascolto e Colori',
+        'istruzioni': '📋 Istruzioni',
       };
       
       return {

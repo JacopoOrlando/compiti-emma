@@ -158,8 +158,8 @@ const Topic = () => {
   };
 
   const handleStartLevel = (levelId: number) => {
-    // Show game selector for choice of different game styles
-    navigate('/games', { state: { subject, topic, level: levelId } });
+    // Navigate to level page instead of directly to games
+    navigate(`/${subject}/${topic}/livello${levelId}`);
   };
 
   const topicTitle = topic?.charAt(0).toUpperCase() + topic?.slice(1) || '';

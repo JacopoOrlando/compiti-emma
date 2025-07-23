@@ -30,14 +30,6 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
   // Get subject and topic from either props or location state
   const currentSubject = subject || location.state?.subject;
   const currentTopic = topic || location.state?.topic;
-  
-  // DEBUG: Add visible debugging info to see what's happening
-  console.log('🔍 GameSelector Context:', { 
-    currentSubject, 
-    currentTopic, 
-    locationState: location.state,
-    pathname: location.pathname 
-  });
 
   const gameStyles: GameStyle[] = [
     {
@@ -169,14 +161,6 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
               </span>
             </div>
           )}
-          
-          {/* DEBUG INFO - Shows current context */}
-          <div className="bg-yellow-100 border border-yellow-400 p-4 rounded-lg text-sm mb-6">
-            <strong>🔧 Debug Context:</strong><br/>
-            Subject: <code>{currentSubject || 'undefined'}</code><br/>
-            Topic: <code>{currentTopic || 'undefined'}</code><br/>
-            Location State: <code>{JSON.stringify(location.state || {})}</code>
-          </div>
         </div>
 
         {/* Simplified Game Selection - Better for children */}

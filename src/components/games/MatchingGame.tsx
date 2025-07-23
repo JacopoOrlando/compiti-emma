@@ -28,14 +28,6 @@ const MatchingGame = () => {
   const subject = location.state?.subject || 'italiano';
   const topic = location.state?.topic || 'lettura-associazione';
   
-  // DEBUG: Log the current context
-  console.log('🔍 MatchingGame Context:', { 
-    subject, 
-    topic, 
-    locationState: location.state,
-    pathname: location.pathname 
-  });
-  
   const [leftItems, setLeftItems] = useState<DragItem[]>([]);
   const [rightItems, setRightItems] = useState<DragItem[]>([]);
   const [matches, setMatches] = useState<Record<string, string>>({});
@@ -88,8 +80,7 @@ const MatchingGame = () => {
   ];
 
   const getCurrentPairs = () => {
-    // Context-aware content selection - FIXED FOR NEW TOPIC IDS
-    console.log('📋 getCurrentPairs called with:', { subject, topic });
+    // Context-aware content selection - UPDATED FOR NEW ROUTING
     
     if (subject === 'english') {
       if (topic === 'colors-instructions') return colorPairs;
