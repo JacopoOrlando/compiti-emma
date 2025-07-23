@@ -24,51 +24,51 @@ const ReadingGame = () => {
 
   const wordQuestions: WordQuestion[] = [
     {
-      word: "CAT",
+      word: "GATTO",
       image: "🐱",
-      options: ["DOG", "CAT", "BIRD", "FISH"],
+      options: ["CANE", "GATTO", "UCCELLO", "PESCE"],
       correctIndex: 1
     },
     {
-      word: "SUN",
+      word: "SOLE",
       image: "☀️",
-      options: ["MOON", "STAR", "SUN", "CLOUD"],
+      options: ["LUNA", "STELLA", "SOLE", "NUVOLA"],
       correctIndex: 2
     },
     {
-      word: "TREE",
+      word: "ALBERO",
       image: "🌳",
-      options: ["TREE", "FLOWER", "GRASS", "LEAF"],
+      options: ["ALBERO", "FIORE", "ERBA", "FOGLIA"],
       correctIndex: 0
     },
     {
-      word: "BOOK",
+      word: "LIBRO",
       image: "📚",
-      options: ["PEN", "PAPER", "BOOK", "DESK"],
+      options: ["PENNA", "CARTA", "LIBRO", "SCRIVANIA"],
       correctIndex: 2
     },
     {
-      word: "APPLE",
+      word: "MELA",
       image: "🍎",
-      options: ["ORANGE", "BANANA", "GRAPE", "APPLE"],
+      options: ["ARANCIA", "BANANA", "UVA", "MELA"],
       correctIndex: 3
     },
     {
-      word: "HOUSE",
+      word: "CASA",
       image: "🏠",
-      options: ["HOUSE", "CAR", "BIKE", "PLANE"],
+      options: ["CASA", "AUTO", "BICI", "AEREO"],
       correctIndex: 0
     },
     {
-      word: "BALL",
+      word: "PALLA",
       image: "⚽",
-      options: ["TOY", "BALL", "GAME", "PLAY"],
+      options: ["GIOCO", "PALLA", "PARTITA", "GIOCARE"],
       correctIndex: 1
     },
     {
-      word: "HEART",
+      word: "CUORE",
       image: "❤️",
-      options: ["STAR", "CIRCLE", "HEART", "SQUARE"],
+      options: ["STELLA", "CERCHIO", "CUORE", "QUADRATO"],
       correctIndex: 2
     }
   ];
@@ -105,12 +105,12 @@ const ReadingGame = () => {
     
     if (correct) {
       setScore(score + 1);
-      toast("🌟 Perfect! You read it correctly!", {
-        description: "Great reading skills!",
+      toast("🌟 Perfetto! Hai letto correttamente!", {
+        description: "Ottime capacità di lettura!",
       });
     } else {
-      toast("📖 Good try! The word was " + currentQuestion.word, {
-        description: "Keep practicing reading!",
+      toast("📖 Bravo! La parola era " + currentQuestion.word, {
+        description: "Continua a praticare la lettura!",
       });
     }
     
@@ -147,7 +147,7 @@ const ReadingGame = () => {
             className="flex items-center gap-2"
           >
             <Home className="w-4 h-4" />
-            Home
+            Casa
           </Button>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 bg-fun-green/20 px-4 py-2 rounded-full">
@@ -160,7 +160,7 @@ const ReadingGame = () => {
               className="flex items-center gap-2"
             >
               <RotateCcw className="w-4 h-4" />
-              Restart
+              Ricomincia
             </Button>
           </div>
         </div>
@@ -168,7 +168,7 @@ const ReadingGame = () => {
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium">Progress</span>
+            <span className="text-sm font-medium">Progresso</span>
             <span className="text-sm text-muted-foreground">{questionsAnswered}/10</span>
           </div>
           <Progress value={progress} className="h-3" />
@@ -177,7 +177,7 @@ const ReadingGame = () => {
         {/* Question Card */}
         <Card className="p-8 text-center shadow-card border-4 border-fun-green/20">
           <h2 className="text-2xl font-bold mb-8 text-foreground">
-            Reading Time! 📚
+            Ora di Lettura! 📚
           </h2>
           
           <div className="mb-8">
@@ -185,7 +185,7 @@ const ReadingGame = () => {
               {currentQuestion.image}
             </div>
             <div className="flex items-center justify-center gap-4 mb-6">
-              <span className="text-lg text-muted-foreground">What word matches this picture?</span>
+              <span className="text-lg text-muted-foreground">Quale parola corrisponde a questa immagine?</span>
               <Button
                 variant="outline"
                 size="sm"
@@ -193,7 +193,7 @@ const ReadingGame = () => {
                 className="flex items-center gap-2"
               >
                 <Volume2 className="w-4 h-4" />
-                Listen
+                Ascolta
               </Button>
             </div>
           </div>
@@ -220,16 +220,16 @@ const ReadingGame = () => {
                 disabled={selectedAnswer === null}
                 className="text-xl py-4 px-8"
               >
-                Check Answer! ✓
+                Controlla Risposta! ✓
               </Button>
             </div>
           ) : (
             <div className="space-y-6">
               <div className={`text-4xl font-bold ${isCorrect ? 'text-fun-green' : 'text-fun-orange'}`}>
-                {isCorrect ? '🎉 Great Reading!' : '📖 Keep Trying!'}
+                {isCorrect ? '🎉 Brava Lettura!' : '📖 Continua a Provare!'}
               </div>
               <div className="text-2xl text-muted-foreground">
-                The word is: <span className="font-bold text-fun-green">{currentQuestion.word}</span>
+                La parola è: <span className="font-bold text-fun-green">{currentQuestion.word}</span>
               </div>
               <Button 
                 variant="success" 
@@ -237,7 +237,7 @@ const ReadingGame = () => {
                 onClick={handleNextQuestion}
                 className="text-xl py-4 px-8"
               >
-                Next Word! 📖
+                Prossima Parola! 📖
               </Button>
             </div>
           )}
@@ -246,9 +246,9 @@ const ReadingGame = () => {
         {/* Encouragement */}
         <div className="mt-8 text-center">
           <p className="text-lg text-muted-foreground">
-            {score >= 8 ? "📚 You're an amazing reader!" : 
-             score >= 5 ? "⭐ Wonderful reading! Keep going!" :
-             "🌟 You're learning to read so well!"}
+            {score >= 8 ? "📚 Sei un lettore incredibile!" : 
+             score >= 5 ? "⭐ Lettura meravigliosa! Continua!" :
+             "🌟 Stai imparando a leggere benissimo!"}
           </p>
         </div>
       </div>

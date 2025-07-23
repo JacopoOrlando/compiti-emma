@@ -25,50 +25,50 @@ const ColorsGame = () => {
   const colorQuestions: ColorQuestion[] = [
     {
       color: "#FF0000",
-      colorName: "RED",
-      options: ["BLUE", "RED", "GREEN", "YELLOW"],
+      colorName: "ROSSO",
+      options: ["BLU", "ROSSO", "VERDE", "GIALLO"],
       correctIndex: 1
     },
     {
       color: "#0000FF",
-      colorName: "BLUE",
-      options: ["BLUE", "PURPLE", "RED", "PINK"],
+      colorName: "BLU",
+      options: ["BLU", "VIOLA", "ROSSO", "ROSA"],
       correctIndex: 0
     },
     {
       color: "#00FF00",
-      colorName: "GREEN",
-      options: ["YELLOW", "ORANGE", "GREEN", "BLUE"],
+      colorName: "VERDE",
+      options: ["GIALLO", "ARANCIONE", "VERDE", "BLU"],
       correctIndex: 2
     },
     {
       color: "#FFFF00",
-      colorName: "YELLOW",
-      options: ["GREEN", "ORANGE", "RED", "YELLOW"],
+      colorName: "GIALLO",
+      options: ["VERDE", "ARANCIONE", "ROSSO", "GIALLO"],
       correctIndex: 3
     },
     {
       color: "#800080",
-      colorName: "PURPLE",
-      options: ["PURPLE", "PINK", "BLUE", "RED"],
+      colorName: "VIOLA",
+      options: ["VIOLA", "ROSA", "BLU", "ROSSO"],
       correctIndex: 0
     },
     {
       color: "#FFA500",
-      colorName: "ORANGE",
-      options: ["RED", "YELLOW", "ORANGE", "PINK"],
+      colorName: "ARANCIONE",
+      options: ["ROSSO", "GIALLO", "ARANCIONE", "ROSA"],
       correctIndex: 2
     },
     {
       color: "#FFC0CB",
-      colorName: "PINK",
-      options: ["PURPLE", "RED", "PINK", "WHITE"],
+      colorName: "ROSA",
+      options: ["VIOLA", "ROSSO", "ROSA", "BIANCO"],
       correctIndex: 2
     },
     {
       color: "#000000",
-      colorName: "BLACK",
-      options: ["GRAY", "BLACK", "BROWN", "WHITE"],
+      colorName: "NERO",
+      options: ["GRIGIO", "NERO", "MARRONE", "BIANCO"],
       correctIndex: 1
     }
   ];
@@ -96,12 +96,12 @@ const ColorsGame = () => {
     
     if (correct) {
       setScore(score + 1);
-      toast("🌈 Amazing! You know your colors!", {
-        description: "You're a color expert!",
+      toast("🌈 Incredibile! Conosci i tuoi colori!", {
+        description: "Sei un esperto di colori!",
       });
     } else {
-      toast("🎨 Good try! This color is " + currentQuestion.colorName, {
-        description: "Keep learning colors!",
+      toast("🎨 Bravo! Questo colore è " + currentQuestion.colorName, {
+        description: "Continua a imparare i colori!",
       });
     }
     
@@ -138,7 +138,7 @@ const ColorsGame = () => {
             className="flex items-center gap-2"
           >
             <Home className="w-4 h-4" />
-            Home
+            Casa
           </Button>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 bg-fun-purple/20 px-4 py-2 rounded-full">
@@ -151,7 +151,7 @@ const ColorsGame = () => {
               className="flex items-center gap-2"
             >
               <RotateCcw className="w-4 h-4" />
-              Restart
+              Ricomincia
             </Button>
           </div>
         </div>
@@ -159,7 +159,7 @@ const ColorsGame = () => {
         {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium">Progress</span>
+            <span className="text-sm font-medium">Progresso</span>
             <span className="text-sm text-muted-foreground">{questionsAnswered}/10</span>
           </div>
           <Progress value={progress} className="h-3" />
@@ -169,7 +169,7 @@ const ColorsGame = () => {
         <Card className="p-8 text-center shadow-card border-4 border-fun-purple/20">
           <h2 className="text-2xl font-bold mb-8 text-foreground flex items-center justify-center gap-2">
             <Palette className="w-8 h-8" />
-            Colors & Shapes! 🌈
+            Colori e Forme! 🌈
           </h2>
           
           <div className="mb-8">
@@ -180,7 +180,7 @@ const ColorsGame = () => {
               ></div>
             </div>
             <div className="text-lg text-muted-foreground mb-6">
-              What color is this?
+              Che colore è questo?
             </div>
           </div>
 
@@ -206,16 +206,16 @@ const ColorsGame = () => {
                 disabled={selectedAnswer === null}
                 className="text-xl py-4 px-8"
               >
-                Check Answer! ✓
+                Controlla Risposta! ✓
               </Button>
             </div>
           ) : (
             <div className="space-y-6">
               <div className={`text-4xl font-bold ${isCorrect ? 'text-fun-purple' : 'text-fun-orange'}`}>
-                {isCorrect ? '🎨 Perfect!' : '🌈 Good Try!'}
+                {isCorrect ? '🎨 Perfetto!' : '🌈 Bravo!'}
               </div>
               <div className="text-2xl text-muted-foreground">
-                This color is: <span className="font-bold text-fun-purple">{currentQuestion.colorName}</span>
+                Questo colore è: <span className="font-bold text-fun-purple">{currentQuestion.colorName}</span>
               </div>
               <div className="flex justify-center">
                 <div 
@@ -229,7 +229,7 @@ const ColorsGame = () => {
                 onClick={handleNextQuestion}
                 className="text-xl py-4 px-8"
               >
-                Next Color! 🎨
+                Prossimo Colore! 🎨
               </Button>
             </div>
           )}
@@ -238,9 +238,9 @@ const ColorsGame = () => {
         {/* Encouragement */}
         <div className="mt-8 text-center">
           <p className="text-lg text-muted-foreground">
-            {score >= 8 ? "🎨 You're a color master!" : 
-             score >= 5 ? "⭐ Great job with colors!" :
-             "🌈 You're learning colors beautifully!"}
+            {score >= 8 ? "🎨 Sei un maestro dei colori!" : 
+             score >= 5 ? "⭐ Ottimo lavoro con i colori!" :
+             "🌈 Stai imparando i colori magnificamente!"}
           </p>
         </div>
       </div>
