@@ -8,26 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 245 100% 97%;
+    --foreground: 220 15% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 235 85% 65%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 290 75% 75%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 20% 95%;
+    --muted-foreground: 220 15% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 100% 65%;
+    --accent-foreground: 220 15% 20%;
+
+    /* Kids-friendly color palette */
+    --fun-blue: 210 100% 60%;
+    --fun-purple: 260 85% 70%;
+    --fun-green: 140 80% 55%;
+    --fun-orange: 25 100% 65%;
+    --fun-yellow: 45 100% 65%;
+    --fun-pink: 320 85% 75%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(235 85% 65%), hsl(260 85% 70%));
+    --gradient-secondary: linear-gradient(135deg, hsl(45 100% 65%), hsl(25 100% 65%));
+    --gradient-success: linear-gradient(135deg, hsl(140 80% 55%), hsl(160 75% 60%));
+    --gradient-fun: linear-gradient(135deg, hsl(320 85% 75%), hsl(260 85% 70%), hsl(210 100% 60%));
+
+    /* Shadows */
+    --shadow-fun: 0 10px 25px -5px hsl(235 85% 65% / 0.3);
+    --shadow-hover: 0 15px 30px -5px hsl(235 85% 65% / 0.4);
+    --shadow-card: 0 4px 15px -2px hsl(235 85% 65% / 0.15);
+
+    /* Animations */
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
