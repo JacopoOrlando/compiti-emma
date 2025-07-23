@@ -74,14 +74,14 @@ const MathGame = () => {
 
   const generateProblemQuestion = (): Question => {
     const problems = [
-      { text: "Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?", answer: 7 },
-      { text: "In classe ci sono 12 bambini e 14 bambine. Quanti bambini ci sono in totale?", answer: 26 },
-      { text: "Sara compra 3 pacchi di figurine. Ogni pacco contiene 8 figurine. Quante figurine ha in totale?", answer: 24 },
-      { text: "Un autobus trasporta 45 persone. Alla fermata scendono 18 persone. Quante persone rimangono?", answer: 27 }
+      { text: "Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?", num1: 15, num2: 8, operation: '-' as const, answer: 7 },
+      { text: "In classe ci sono 12 bambini e 14 bambine. Quanti bambini ci sono in totale?", num1: 12, num2: 14, operation: '+' as const, answer: 26 },
+      { text: "Sara compra 3 pacchi di figurine. Ogni pacco contiene 8 figurine. Quante figurine ha in totale?", num1: 3, num2: 8, operation: '*' as const, answer: 24 },
+      { text: "Un autobus trasporta 45 persone. Alla fermata scendono 18 persone. Quante persone rimangono?", num1: 45, num2: 18, operation: '-' as const, answer: 27 }
     ];
     
     const problem = problems[Math.floor(Math.random() * problems.length)];
-    return { num1: 0, num2: 0, operation: '+', answer: problem.answer, type: 'problems' };
+    return { num1: problem.num1, num2: problem.num2, operation: problem.operation, answer: problem.answer, type: 'problems' };
   };
 
   const generateMentalQuestion = (): Question => {
@@ -112,10 +112,18 @@ const MathGame = () => {
 
   useEffect(() => {
     setCurrentQuestion(generateQuestion());
+  }, [gameType]); // Aggiungiamo gameType come dipendenza
+
+  useEffect(() => {
+    if (!currentQuestion) {
+      setCurrentQuestion(generateQuestion());
+    }
   }, []);
 
   const handleAnswerSubmit = () => {
     if (!currentQuestion || userAnswer === "") return;
+    
+    console.log("User answer:", userAnswer, "Correct answer:", currentQuestion.answer, "Type:", typeof userAnswer, typeof currentQuestion.answer);
     
     const numAnswer = parseInt(userAnswer);
     const correct = numAnswer === currentQuestion.answer;
