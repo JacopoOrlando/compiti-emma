@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Calculator, Star, Trophy, Heart, Globe } from "lucide-react";
@@ -7,6 +8,7 @@ import unicornCelebration from "@/assets/unicorn-celebration.jpg";
 
 export default function Index() {
   const navigate = useNavigate();
+  const [showProgress, setShowProgress] = useState(false);
 
   const subjects = [
     {

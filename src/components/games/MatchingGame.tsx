@@ -342,12 +342,12 @@ const MatchingGame = () => {
                   draggable={!item.isMatched}
                   onDragStart={() => handleDragStart(item)}
                   onTouchStart={() => handleTouchStart(item)}
-                  className={`p-4 md:p-6 border-4 rounded-xl cursor-pointer transition-all duration-300 touch-manipulation ${
+                  className={`p-4 md:p-6 border-4 rounded-xl cursor-pointer transition-all duration-300 touch-manipulation animate-fade-in ${
                     item.isMatched
-                      ? 'bg-fun-green/30 border-fun-green scale-95 opacity-60'
+                      ? 'bg-fun-green/30 border-fun-green scale-95 opacity-60 animate-pulse'
                       : draggedItem?.id === item.id
-                      ? 'bg-fun-blue/30 border-fun-blue scale-105 shadow-xl'
-                      : 'bg-muted border-dashed border-primary hover:border-primary hover:bg-primary/5 hover:scale-105 active:scale-95'
+                      ? 'bg-fun-blue/30 border-fun-blue scale-105 shadow-xl animate-bounce'
+                      : 'bg-muted border-dashed border-primary hover:border-primary hover:bg-primary/5 hover:scale-105 active:scale-95 hover-scale'
                   }`}
                 >
                   <div className="flex items-center gap-3 justify-center">
