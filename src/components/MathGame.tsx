@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useNavigate } from "react-router-dom";
-import { Star, Home, RotateCcw, ChevronRight } from "lucide-react";
+import { Star, Home, RotateCcw, ChevronRight, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import InteractiveVisualExercise from "./InteractiveVisualExercise";
+import unicornCelebration from "@/assets/unicorn-celebration.jpg";
+import rainbowPattern from "@/assets/rainbow-pattern.jpg";
 
 interface Question {
   num1: number;
@@ -22,7 +25,7 @@ const MathGame = () => {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
-  const [gameType, setGameType] = useState<'basic' | 'advanced' | 'problems' | 'mental'>('basic');
+  const [gameType, setGameType] = useState<'basic' | 'advanced' | 'problems' | 'mental' | 'visual'>('basic');
 
   const generateBasicQuestion = (): Question => {
     const operations = ['+', '-', '×'] as const;
@@ -248,7 +251,11 @@ const MathGame = () => {
   if (!currentQuestion) return null;
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-background p-6"
+         style={gameType === 'visual' ? { 
+           backgroundImage: `linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(219, 39, 119, 0.1)), url(${rainbowPattern})`,
+           backgroundSize: 'cover'
+         } : {}}>
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -287,7 +294,7 @@ const MathGame = () => {
 
         {/* Game Type Selector */}
         <div className="mb-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
             <Button
               variant={gameType === 'basic' ? 'fun' : 'outline'}
               onClick={() => setGameType('basic')}
@@ -316,82 +323,115 @@ const MathGame = () => {
             >
               ⚡ Calcolo Mentale
             </Button>
+            <Button
+              variant={gameType === 'visual' ? 'fun' : 'outline'}
+              onClick={() => setGameType('visual')}
+              className="text-sm py-2"
+            >
+              🦄 Visuale Magico
+            </Button>
           </div>
         </div>
 
-        {/* Question Card */}
-        <Card className="p-8 text-center shadow-card border-4 border-primary/20">
-          <h2 className="text-2xl font-bold mb-8 text-foreground">
-            {gameType === 'basic' && '🧮 Matematica Base!'}
-            {gameType === 'advanced' && '🚀 Matematica Avanzata!'}
-            {gameType === 'problems' && '🧠 Risolvi il Problema!'}
-            {gameType === 'mental' && '⚡ Calcolo Mentale!'}
-          </h2>
-          
-          <div className="mb-8">
-            {gameType === 'problems' ? (
-              <div className="text-lg mb-6 p-4 bg-muted/30 rounded-xl">
-                {currentQuestion.type === 'problems' && (
-                  <p className="text-left">
-                    Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?
-                  </p>
-                )}
+        {/* Visual Exercise or Math Question */}
+        {gameType === 'visual' ? (
+          <Card className="p-6 shadow-card border-4 border-primary/20 bg-white/90 backdrop-blur-sm">
+            <h2 className="text-2xl font-bold mb-6 text-center text-foreground">
+              🦄 Esercizi Magici di Emma! 🌈
+            </h2>
+            <InteractiveVisualExercise
+              exerciseType={['counting', 'matching', 'sorting'][Math.floor(Math.random() * 3)] as 'counting' | 'matching' | 'sorting'}
+              targetValue={Math.floor(Math.random() * 5) + 3}
+              onComplete={(correct) => {
+                if (correct) {
+                  setScore(score + 1);
+                  setQuestionsAnswered(questionsAnswered + 1);
+                }
+              }}
+            />
+          </Card>
+        ) : (
+          <Card className="p-8 text-center shadow-card border-4 border-primary/20">
+            <h2 className="text-2xl font-bold mb-8 text-foreground">
+              {gameType === 'basic' && '🧮 Matematica Base!'}
+              {gameType === 'advanced' && '🚀 Matematica Avanzata!'}
+              {gameType === 'problems' && '🧠 Risolvi il Problema!'}
+              {gameType === 'mental' && '⚡ Calcolo Mentale!'}
+            </h2>
+            
+            <div className="mb-8">
+              {gameType === 'problems' ? (
+                <div className="text-lg mb-6 p-4 bg-muted/30 rounded-xl">
+                  {currentQuestion.type === 'problems' && (
+                    <p className="text-left">
+                      Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <div className="text-6xl font-bold mb-6 text-primary animate-pulse-gentle">
+                  {currentQuestion.num1} {currentQuestion.operation} {currentQuestion.num2} = ?
+                </div>
+              )}
+            </div>
+
+            {!showResult ? (
+              <div className="space-y-6">
+                <input
+                  type="number"
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  className="w-32 h-16 text-3xl text-center border-4 border-primary/30 rounded-xl focus:border-primary focus:outline-none"
+                  placeholder="?"
+                  autoFocus
+                />
+                <div>
+                  <Button 
+                    variant="fun" 
+                    size="lg" 
+                    onClick={handleAnswerSubmit}
+                    disabled={userAnswer === ""}
+                    className="text-xl py-4 px-8"
+                  >
+                    Controlla Risposta! ✓
+                  </Button>
+                </div>
               </div>
             ) : (
-              <div className="text-6xl font-bold mb-6 text-primary animate-pulse-gentle">
-                {currentQuestion.num1} {currentQuestion.operation} {currentQuestion.num2} = ?
-              </div>
-            )}
-          </div>
-
-          {!showResult ? (
-            <div className="space-y-6">
-              <input
-                type="number"
-                value={userAnswer}
-                onChange={(e) => setUserAnswer(e.target.value)}
-                className="w-32 h-16 text-3xl text-center border-4 border-primary/30 rounded-xl focus:border-primary focus:outline-none"
-                placeholder="?"
-                autoFocus
-              />
-              <div>
+              <div className="space-y-6">
+                <div className={`text-4xl font-bold ${isCorrect ? 'text-fun-green' : 'text-red-500'}`}>
+                  {isCorrect ? '🎉 Corretto!' : '❌ Sbagliato!'}
+                </div>
+                <div className="text-2xl text-muted-foreground">
+                  La risposta è: <span className="font-bold text-primary">{currentQuestion.answer}</span>
+                </div>
                 <Button 
-                  variant="fun" 
+                  variant="game" 
                   size="lg" 
-                  onClick={handleAnswerSubmit}
-                  disabled={userAnswer === ""}
-                  className="text-xl py-4 px-8"
+                  onClick={handleNextQuestion}
+                  className="text-xl py-4 px-8 flex items-center gap-2"
                 >
-                  Controlla Risposta! ✓
+                  Prossima Domanda <ChevronRight className="w-5 h-5" />
                 </Button>
               </div>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              <div className={`text-4xl font-bold ${isCorrect ? 'text-fun-green' : 'text-red-500'}`}>
-                {isCorrect ? '🎉 Corretto!' : '❌ Sbagliato!'}
-              </div>
-              <div className="text-2xl text-muted-foreground">
-                La risposta è: <span className="font-bold text-primary">{currentQuestion.answer}</span>
-              </div>
-              <Button 
-                variant="game" 
-                size="lg" 
-                onClick={handleNextQuestion}
-                className="text-xl py-4 px-8 flex items-center gap-2"
-              >
-                Prossima Domanda <ChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
-          )}
-        </Card>
+            )}
+          </Card>
+        )}
 
-        {/* Encouragement */}
+        {/* Encouragement with Emma's theme */}
         <div className="mt-8 text-center">
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <img 
+              src={unicornCelebration} 
+              alt="Emma's unicorn" 
+              className="w-12 h-12 rounded-full animate-pulse-gentle" 
+            />
+            <Sparkles className="w-6 h-6 text-purple-500 animate-pulse" />
+          </div>
           <p className="text-lg text-muted-foreground">
-            {score >= 8 ? "🏆 Sei una superstar della matematica!" : 
-             score >= 5 ? "⭐ Ottimo lavoro! Continua così!" :
-             "🌟 Stai imparando benissimo!"}
+            {score >= 8 ? "🦄 Emma dice: Sei una superstar della matematica!" : 
+             score >= 5 ? "🌈 Emma dice: Ottimo lavoro! Continua così!" :
+             "✨ Emma dice: Stai imparando benissimo!"}
           </p>
         </div>
       </div>

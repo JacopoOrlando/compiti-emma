@@ -2,7 +2,9 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Calculator, Palette, Star, Trophy, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "@/assets/hero-kids-learning.jpg";
+import heroImage from "@/assets/rainbow-unicorns-hero.jpg";
+import unicornCelebration from "@/assets/unicorn-celebration.jpg";
+import rainbowPattern from "@/assets/rainbow-pattern.jpg";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -44,10 +46,10 @@ const HomePage = () => {
         </div>
         <div className="relative z-10 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-bounce-gentle">
-            🌟 Imparare è Divertente! 🌟
+            🦄 Compiti di Emma 🌈
           </h1>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Benvenuto nella tua magica avventura di apprendimento! Gioca, risolvi puzzle e diventa un super studente!
+            Benvenuti nel mondo magico di Emma! Impara con arcobaleni, unicorni e tanta magia! ✨
           </p>
           <Button 
             variant="fun" 
@@ -55,7 +57,7 @@ const HomePage = () => {
             className="text-2xl py-6 px-12 animate-pulse-gentle"
             onClick={() => navigate('/math')}
           >
-            Inizia a Imparare! 🚀
+            Inizia l'Avventura Magica! 🦄✨
           </Button>
         </div>
       </section>
@@ -64,7 +66,7 @@ const HomePage = () => {
       <section className="py-16 px-6">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
-            Scegli la tua Avventura!
+            🌈 Scegli la tua Avventura Magica! 🦄
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -80,7 +82,7 @@ const HomePage = () => {
                 <h3 className="text-2xl font-bold mb-4 text-foreground">{area.title}</h3>
                 <p className="text-muted-foreground mb-6 text-lg">{area.description}</p>
                 <Button variant="game" className="w-full">
-                  Giochiamo! 🎮
+                  Iniziamo! 🌟🦄
                 </Button>
               </Card>
             ))}
