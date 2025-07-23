@@ -18,17 +18,38 @@ const Breadcrumbs = () => {
       
       // Traduzioni specifiche
       const translations: Record<string, string> = {
-        'matematica': '🧮 Matematica',
-        'italiano': '📚 Italiano', 
-        'english': '🌍 English',
-        'operazioni': '➕ Operazioni',
-        'lettura': '📖 Lettura',
-        'vocabulary': '📝 Vocabulary',
-        'stories': '📚 Stories',
-        'conversation': '🗣️ Speaking',
-        'grammatica': '✏️ Grammatica',
-        'storia': '🏛️ Storia',
+        // Main subjects
+        'italiano': '📚 Italiano',
+        'storia': '🏛️ Storia', 
         'geografia': '🌍 Geografia',
+        'english': '🇬🇧 English',
+        'matematica': '🧮 Matematica',
+        
+        // Italian topics
+        'lettura-associazione': '📖 Lettura e Associazione',
+        'ascolto-comprensione': '👂 Ascolto e Comprensione',
+        'lettura-comprensione': '📚 Lettura e Comprensione',
+        'riflessione-linguistica': '✏️ Riflessione Linguistica',
+        
+        // History topics
+        'relazioni-temporali': '⏰ Relazioni Temporali',
+        'fonti-storiche': '📜 Fonti Storiche',
+        'preistoria': '🦕 Preistoria',
+        'civilta-antiche': '🏛️ Civiltà Antiche',
+        
+        // Geography topics
+        'indicatori-topografici': '🧭 Indicatori Topografici',
+        'mappe-geografiche': '🗺️ Mappe Geografiche',
+        'tipi-paesaggio': '🏔️ Tipi di Paesaggio',
+        'settori-economici': '💼 Settori Economici',
+        
+        // English topics
+        'colors-instructions': '🎨 Colors & Instructions',
+        'descriptive-texts': '📝 Descriptive Texts',
+        'vocabulary-preferences': '⭐ Vocabulary & Preferences',
+        
+        // Math topics (keep existing)
+        'operazioni': '➕ Operazioni',
         'geometria': '📐 Geometria',
         'misure': '📏 Misure',
       };

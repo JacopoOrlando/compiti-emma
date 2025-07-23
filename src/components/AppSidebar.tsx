@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { 
   Home, BookOpen, Calculator, History, Globe, Languages, 
-  Ruler, Shapes, PenTool, Star 
+  Ruler, Shapes, PenTool, Star, Palette
 } from "lucide-react";
 
 import {
@@ -26,28 +26,39 @@ const subjects = [
     title: "Italiano",
     icon: BookOpen,
     topics: [
-      { title: "Lettura", url: "/italiano/lettura", icon: BookOpen },
-      { title: "Grammatica", url: "/italiano/grammatica", icon: PenTool },
-      { title: "Storia", url: "/italiano/storia", icon: History },
-      { title: "Geografia", url: "/italiano/geografia", icon: Globe },
+      { title: "Lettura e Associazione", url: "/italiano/lettura-associazione", icon: BookOpen },
+      { title: "Ascolto e Comprensione", url: "/italiano/ascolto-comprensione", icon: Languages },
+      { title: "Lettura e Comprensione", url: "/italiano/lettura-comprensione", icon: PenTool },
+      { title: "Riflessione Linguistica", url: "/italiano/riflessione-linguistica", icon: Star },
     ]
   },
   {
-    title: "Matematica", 
-    icon: Calculator,
+    title: "Storia", 
+    icon: History,
     topics: [
-      { title: "Operazioni", url: "/matematica/operazioni", icon: Calculator },
-      { title: "Geometria", url: "/matematica/geometria", icon: Shapes },
-      { title: "Misure", url: "/matematica/misure", icon: Ruler },
+      { title: "Relazioni Temporali", url: "/storia/relazioni-temporali", icon: History },
+      { title: "Fonti Storiche", url: "/storia/fonti-storiche", icon: BookOpen },
+      { title: "Preistoria", url: "/storia/preistoria", icon: Shapes },
+      { title: "Civiltà Antiche", url: "/storia/civilta-antiche", icon: Globe },
+    ]
+  },
+  {
+    title: "Geografia", 
+    icon: Globe,
+    topics: [
+      { title: "Indicatori Topografici", url: "/geografia/indicatori-topografici", icon: Globe },
+      { title: "Mappe Geografiche", url: "/geografia/mappe-geografiche", icon: Ruler },
+      { title: "Tipi di Paesaggio", url: "/geografia/tipi-paesaggio", icon: Shapes },
+      { title: "Settori Economici", url: "/geografia/settori-economici", icon: Calculator },
     ]
   },
   {
     title: "English", 
     icon: Languages,
     topics: [
-      { title: "Vocabulary", url: "/english/vocabulary", icon: BookOpen },
-      { title: "Stories", url: "/english/stories", icon: BookOpen },
-      { title: "Speaking", url: "/english/conversation", icon: Languages },
+      { title: "Colors & Instructions", url: "/english/colors-instructions", icon: Palette },
+      { title: "Descriptive Texts", url: "/english/descriptive-texts", icon: BookOpen },
+      { title: "Vocabulary & Preferences", url: "/english/vocabulary-preferences", icon: Star },
     ]
   }
 ];

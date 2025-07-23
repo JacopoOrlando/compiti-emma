@@ -80,18 +80,24 @@ const MatchingGame = () => {
   ];
 
   const getCurrentPairs = () => {
-    // Context-aware content selection - FIXED ENGLISH ROUTING
+    // Context-aware content selection - UPDATED FOR NEW CURRICULUM
     if (subject === 'english') {
-      if (topic === 'vocabulary') return englishVocabPairs;
-      if (topic === 'stories') return englishStoryPairs;
-      if (topic === 'conversation') return wordPairs; // Italian-English translation for conversation practice
+      if (topic === 'colors-instructions') return colorPairs;
+      if (topic === 'descriptive-texts') return englishVocabPairs;
+      if (topic === 'vocabulary-preferences') return englishStoryPairs;
       return englishVocabPairs; // default for English
+    } else if (subject === 'italiano') {
+      if (topic === 'lettura-associazione') return wordPairs; // Italian-English word association
+      if (topic === 'ascolto-comprensione') return colorPairs; // Listening comprehension with colors
+      if (topic === 'lettura-comprensione') return englishVocabPairs; // Reading comprehension
+      if (topic === 'riflessione-linguistica') return wordPairs; // Grammar reflection
+      return wordPairs;
+    } else if (subject === 'storia') {
+      return englishStoryPairs; // Historical story elements
+    } else if (subject === 'geografia') {
+      return colorPairs; // Geographic elements and colors
     } else if (subject === 'matematica') {
       return mathPairs;
-    } else if (subject === 'italiano' && topic === 'grammatica') {
-      return wordPairs; // Italian grammar pairs
-    } else if (subject === 'italiano' && topic === 'lettura') {
-      return colorPairs; // Reading comprehension with colors
     } else {
       // Default based on gameType for legacy support
       switch (gameType) {
@@ -117,11 +123,15 @@ const MatchingGame = () => {
   };
 
   useEffect(() => {
-    // Set appropriate game type based on subject context
+    // Set appropriate game type based on subject context - UPDATED
     if (subject === 'english') {
       setGameType('words');
     } else if (subject === 'matematica') {
       setGameType('math');
+    } else if (subject === 'italiano') {
+      setGameType('words');
+    } else if (subject === 'storia' || subject === 'geografia') {
+      setGameType('colors');
     }
     initializeGame();
   }, [gameType, subject, topic]);

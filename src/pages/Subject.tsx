@@ -1,96 +1,138 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Calculator, History, Globe, PenTool, Shapes, Ruler, Volume2, FileText } from "lucide-react";
+import { BookOpen, Calculator, History, Globe, PenTool, Shapes, Ruler, Volume2, FileText, Palette } from "lucide-react";
 
 const subjects = {
   italiano: {
     title: "Italiano",
-    description: "Impara la lingua italiana con storie, grammatica e cultura!",
+    description: "Impara la lingua italiana con lettura, ascolto e riflessione linguistica!",
     color: "bg-fun-green",
     topics: [
       { 
-        id: "lettura", 
-        title: "Lettura", 
-        description: "Leggi storie e impara nuove parole",
+        id: "lettura-associazione", 
+        title: "Lettura e Associazione", 
+        description: "Associa parole e frasi con le immagini corrispondenti",
         icon: BookOpen,
         color: "bg-fun-green"
       },
       { 
-        id: "grammatica", 
-        title: "Grammatica", 
-        description: "Scopri le regole della lingua italiana",
-        icon: PenTool,
+        id: "ascolto-comprensione", 
+        title: "Ascolto e Comprensione", 
+        description: "Ascolta testi narrativi e rispondi alle domande",
+        icon: Volume2,
         color: "bg-fun-blue"
       },
       { 
-        id: "storia", 
-        title: "Storia", 
-        description: "Viaggia nel tempo e scopri il passato",
+        id: "lettura-comprensione", 
+        title: "Lettura e Comprensione", 
+        description: "Leggi testi narrativi e informativi",
+        icon: FileText,
+        color: "bg-fun-purple"
+      },
+      { 
+        id: "riflessione-linguistica", 
+        title: "Riflessione Linguistica", 
+        description: "Grammatica, ortografia e analisi delle parole",
+        icon: PenTool,
+        color: "bg-fun-orange"
+      }
+    ]
+  },
+  storia: {
+    title: "Storia",
+    description: "Viaggia nel tempo e scopri le civiltà antiche!",
+    color: "bg-fun-orange",
+    topics: [
+      { 
+        id: "relazioni-temporali", 
+        title: "Relazioni Temporali", 
+        description: "Prima, dopo, infine - ordina eventi nel tempo",
         icon: History,
         color: "bg-fun-orange"
       },
       { 
-        id: "geografia", 
-        title: "Geografia", 
-        description: "Esplora il mondo e i suoi luoghi",
-        icon: Globe,
-        color: "bg-fun-blue"
-      }
-    ]
-  },
-  matematica: {
-    title: "Matematica",
-    description: "Scopri i numeri e le forme con Emma!",
-    color: "bg-fun-blue",
-    topics: [
+        id: "fonti-storiche", 
+        title: "Fonti Storiche", 
+        description: "Scopri i diversi tipi di fonti storiche",
+        icon: BookOpen,
+        color: "bg-fun-green"
+      },
       { 
-        id: "operazioni", 
-        title: "Operazioni", 
-        description: "Addizioni, sottrazioni e molto altro",
-        icon: Calculator,
+        id: "preistoria", 
+        title: "Preistoria", 
+        description: "Homo Erectus, Sapiens - Paleolitico e Neolitico",
+        icon: Shapes,
         color: "bg-fun-blue"
       },
       { 
-        id: "geometria", 
-        title: "Geometria", 
-        description: "Forme, figure e spazio",
+        id: "civilta-antiche", 
+        title: "Civiltà Antiche", 
+        description: "Sumeri, Egizi, Greci e altre civiltà",
+        icon: Globe,
+        color: "bg-fun-purple"
+      }
+    ]
+  },
+  geografia: {
+    title: "Geografia",
+    description: "Esplora il mondo, i paesaggi e l'Italia!",
+    color: "bg-fun-blue",
+    topics: [
+      { 
+        id: "indicatori-topografici", 
+        title: "Indicatori Topografici", 
+        description: "Sopra, sotto, davanti, dietro - orientati nello spazio",
+        icon: Globe,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "mappe-geografiche", 
+        title: "Mappe Geografiche", 
+        description: "Mappe fisiche e politiche d'Italia",
+        icon: Ruler,
+        color: "bg-fun-green"
+      },
+      { 
+        id: "tipi-paesaggio", 
+        title: "Tipi di Paesaggio", 
+        description: "Montagne, colline, pianure, laghi e fiumi",
         icon: Shapes,
         color: "bg-fun-purple"
       },
       { 
-        id: "misure", 
-        title: "Misure", 
-        description: "Lunghezza, peso, tempo e capacità",
-        icon: Ruler,
+        id: "settori-economici", 
+        title: "Settori Economici", 
+        description: "Primario, secondario e terziario",
+        icon: Calculator,
         color: "bg-fun-orange"
       }
     ]
   },
   english: {
     title: "English",
-    description: "Learn English with Emma! Discover words, stories and fun activities! 🌍",
+    description: "Learn English with colors, descriptions and vocabulary! 🌍",
     color: "bg-fun-purple",
     topics: [
       { 
-        id: "vocabulary", 
-        title: "Vocabulary", 
-        description: "Learn new English words and their meanings",
-        icon: BookOpen,
+        id: "colors-instructions", 
+        title: "Colors & Instructions", 
+        description: "Listen and understand simple English instructions",
+        icon: Palette,
         color: "bg-fun-purple"
       },
       { 
-        id: "stories", 
-        title: "Stories", 
-        description: "Read fun English stories and tales",
+        id: "descriptive-texts", 
+        title: "Descriptive Texts", 
+        description: "Read descriptions and talk about yourself",
         icon: FileText,
         color: "bg-fun-blue"
       },
       { 
-        id: "conversation", 
-        title: "Speaking", 
-        description: "Practice speaking English with Emma",
-        icon: Volume2,
+        id: "vocabulary-preferences", 
+        title: "Vocabulary & Preferences", 
+        description: "School supplies, food, drinks - I like/don't like",
+        icon: BookOpen,
         color: "bg-fun-green"
       }
     ]
@@ -127,7 +169,7 @@ const Subject = () => {
           <div className="space-y-2">
             <Button onClick={() => navigate('/')} variant="fun">🏠 Torna a Casa</Button>
             <p className="text-sm text-muted-foreground">
-              Materie disponibili: <strong>italiano</strong>, <strong>matematica</strong>, <strong>english</strong>
+              Materie disponibili: <strong>italiano</strong>, <strong>storia</strong>, <strong>geografia</strong>, <strong>english</strong>
             </p>
           </div>
         </div>

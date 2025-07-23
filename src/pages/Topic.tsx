@@ -32,7 +32,98 @@ const Topic = () => {
   }));
 
   function getDescriptionForLevel(subject: string, topic: string, level: number): string {
-    // Math descriptions
+    // ITALIANO - Detailed curriculum descriptions
+    if (subject === 'italiano') {
+      if (topic === 'lettura-associazione') {
+        if (level <= 3) return 'Associa parole semplici con immagini corrispondenti';
+        if (level <= 6) return 'Collega frasi brevi alle immagini giuste';
+        return 'Associa testi complessi con le immagini appropriate';
+      }
+      if (topic === 'ascolto-comprensione') {
+        if (level <= 3) return 'Ascolta brevi racconti e comprendi il significato';
+        if (level <= 6) return 'Rispondi a domande su testi ascoltati';
+        return 'Comprendi testi narrativi complessi ascoltati';
+      }
+      if (topic === 'lettura-comprensione') {
+        if (level <= 3) return 'Leggi testi narrativi brevi e comprendi';
+        if (level <= 6) return 'Identifica informazioni in testi informativi';
+        return 'Analizza personaggi e distingui vero/falso';
+      }
+      if (topic === 'riflessione-linguistica') {
+        if (level <= 3) return 'Riconosci forme corrette e ordina sillabe';
+        if (level <= 6) return 'Grammatica: articoli, nomi, verbi e aggettivi';
+        return 'Analisi grammaticale completa e discorso diretto/indiretto';
+      }
+    }
+    
+    // STORIA - Historical curriculum
+    if (subject === 'storia') {
+      if (topic === 'relazioni-temporali') {
+        if (level <= 3) return 'Prima, dopo, infine - ordina eventi semplici';
+        if (level <= 6) return 'Intanto, mentre - parole di contemporaneità';
+        return 'Giorni, mesi, stagioni - tempo ciclico';
+      }
+      if (topic === 'fonti-storiche') {
+        if (level <= 3) return 'Riconosci diversi tipi di fonti storiche';
+        if (level <= 6) return 'Fonti visive, materiali, orali e scritte';
+        return 'Analizza e classifica fonti storiche complesse';
+      }
+      if (topic === 'preistoria') {
+        if (level <= 3) return 'Homo Erectus - caratteristiche e vita';
+        if (level <= 6) return 'Homo Sapiens Sapiens - Paleolitico';
+        return 'Neolitico - trasformazioni e innovazioni';
+      }
+      if (topic === 'civilta-antiche') {
+        if (level <= 3) return 'Sumeri e Babilonesi - prime civiltà';
+        if (level <= 6) return 'Egizi e Fenici - invenzioni e culture';
+        return 'Greci, Assiri ed Ebrei - civiltà avanzate';
+      }
+    }
+    
+    // GEOGRAFIA - Geographic curriculum
+    if (subject === 'geografia') {
+      if (topic === 'indicatori-topografici') {
+        if (level <= 3) return 'Sopra, sotto, davanti, dietro - orientamento base';
+        if (level <= 6) return 'Destra, sinistra, vicino, lontano - spazio relativo';
+        return 'Orientamento complesso e descrizione di posizioni';
+      }
+      if (topic === 'mappe-geografiche') {
+        if (level <= 3) return 'Differenza tra mappe fisiche e politiche';
+        if (level <= 6) return 'Mari, regioni, capoluoghi d\'Italia';
+        return 'Laghi, fiumi, vulcani e caratteristiche geografiche';
+      }
+      if (topic === 'tipi-paesaggio') {
+        if (level <= 3) return 'Lago, fiume, collina - riconosci paesaggi';
+        if (level <= 6) return 'Montagna, pianura - caratteristiche principali';
+        return 'Elementi naturali e antropici del paesaggio';
+      }
+      if (topic === 'settori-economici') {
+        if (level <= 3) return 'Settore primario - agricoltura e allevamento';
+        if (level <= 6) return 'Settore secondario - industria e artigianato';
+        return 'Settore terziario - servizi e commercio';
+      }
+    }
+    
+    // ENGLISH - English curriculum
+    if (subject === 'english') {
+      if (topic === 'colors-instructions') {
+        if (level <= 3) return 'Listen and color - basic instructions';
+        if (level <= 6) return 'Common colors and simple commands';
+        return 'Complex instructions and color combinations';
+      }
+      if (topic === 'descriptive-texts') {
+        if (level <= 3) return 'Read descriptions and match pictures';
+        if (level <= 6) return 'Personal information: name, age, likes';
+        return 'Complex descriptions and comprehension questions';
+      }
+      if (topic === 'vocabulary-preferences') {
+        if (level <= 3) return 'School supplies - true or false';
+        if (level <= 6) return 'Food and drinks - I like/don\'t like';
+        return 'Express preferences and explain choices';
+      }
+    }
+    
+    // MATEMATICA - Keep existing math content
     if (subject === 'matematica' && topic === 'operazioni') {
       if (level <= 3) return 'Addizioni semplici con numeri piccoli (1-10)';
       if (level <= 6) return 'Sottrazioni e addizioni con numeri più grandi (1-50)';
@@ -49,50 +140,6 @@ const Topic = () => {
       if (level <= 3) return 'Centimetri, metri e ore';
       if (level <= 6) return 'Peso, capacità e tempo';
       return 'Conversioni e misure complesse';
-    }
-    
-    // Italian descriptions  
-    if (subject === 'italiano' && topic === 'lettura') {
-      if (level <= 3) return 'Parole semplici e sillabe';
-      if (level <= 6) return 'Frasi complete e racconti brevi';
-      return 'Storie lunghe e comprensione del testo';
-    }
-    
-    if (subject === 'italiano' && topic === 'grammatica') {
-      if (level <= 3) return 'Articoli e nomi semplici';
-      if (level <= 6) return 'Verbi e aggettivi';
-      return 'Analisi grammaticale completa';
-    }
-    
-    if (subject === 'italiano' && topic === 'storia') {
-      if (level <= 3) return 'La mia famiglia e la scuola';
-      if (level <= 6) return 'Il mio paese e le tradizioni';
-      return 'Storia antica e moderna';
-    }
-    
-    if (subject === 'italiano' && topic === 'geografia') {
-      if (level <= 3) return 'La mia casa e il quartiere';
-      if (level <= 6) return 'La mia città e regione';
-      return 'L\'Italia e il mondo';
-    }
-    
-    // English descriptions
-    if (subject === 'english' && topic === 'vocabulary') {
-      if (level <= 3) return 'Basic words: colors, animals, family';
-      if (level <= 6) return 'Everyday objects and actions';
-      return 'Advanced vocabulary and expressions';
-    }
-    
-    if (subject === 'english' && topic === 'stories') {
-      if (level <= 3) return 'Simple stories with pictures';
-      if (level <= 6) return 'Short tales and fairy stories';
-      return 'Longer stories with comprehension';
-    }
-    
-    if (subject === 'english' && topic === 'conversation') {
-      if (level <= 3) return 'Greetings and basic phrases';
-      if (level <= 6) return 'Questions and simple conversations';
-      return 'Complex dialogues and discussions';
     }
     
     // Fallback descriptions
