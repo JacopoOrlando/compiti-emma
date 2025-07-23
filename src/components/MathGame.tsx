@@ -9,8 +9,9 @@ import { toast } from "sonner";
 interface Question {
   num1: number;
   num2: number;
-  operation: '+' | '-';
+  operation: '+' | '-' | '*' | '÷';
   answer: number;
+  type?: 'basic' | 'advanced' | 'problems';
 }
 
 const MathGame = () => {
@@ -21,22 +22,92 @@ const MathGame = () => {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [gameType, setGameType] = useState<'basic' | 'advanced' | 'problems' | 'mental'>('basic');
 
-  const generateQuestion = (): Question => {
+  const generateBasicQuestion = (): Question => {
     const operation = Math.random() > 0.5 ? '+' : '-';
     let num1, num2, answer;
     
     if (operation === '+') {
-      num1 = Math.floor(Math.random() * 10) + 1;
-      num2 = Math.floor(Math.random() * 10) + 1;
+      num1 = Math.floor(Math.random() * 50) + 1;
+      num2 = Math.floor(Math.random() * 50) + 1;
       answer = num1 + num2;
     } else {
-      num1 = Math.floor(Math.random() * 10) + 5; // Ensure positive result
+      num1 = Math.floor(Math.random() * 50) + 20;
       num2 = Math.floor(Math.random() * num1) + 1;
       answer = num1 - num2;
     }
     
-    return { num1, num2, operation, answer };
+    return { num1, num2, operation, answer, type: 'basic' };
+  };
+
+  const generateAdvancedQuestion = (): Question => {
+    const operations = ['+', '-', '*', '÷'] as const;
+    const operation = operations[Math.floor(Math.random() * operations.length)];
+    let num1, num2, answer;
+    
+    switch (operation) {
+      case '+':
+        num1 = Math.floor(Math.random() * 100) + 1;
+        num2 = Math.floor(Math.random() * 100) + 1;
+        answer = num1 + num2;
+        break;
+      case '-':
+        num1 = Math.floor(Math.random() * 100) + 50;
+        num2 = Math.floor(Math.random() * 50) + 1;
+        answer = num1 - num2;
+        break;
+      case '*':
+        num1 = Math.floor(Math.random() * 12) + 1;
+        num2 = Math.floor(Math.random() * 12) + 1;
+        answer = num1 * num2;
+        break;
+      case '÷':
+        answer = Math.floor(Math.random() * 12) + 1;
+        num2 = Math.floor(Math.random() * 12) + 1;
+        num1 = answer * num2;
+        break;
+    }
+    
+    return { num1, num2, operation, answer, type: 'advanced' };
+  };
+
+  const generateProblemQuestion = (): Question => {
+    const problems = [
+      { text: "Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?", answer: 7 },
+      { text: "In classe ci sono 12 bambini e 14 bambine. Quanti bambini ci sono in totale?", answer: 26 },
+      { text: "Sara compra 3 pacchi di figurine. Ogni pacco contiene 8 figurine. Quante figurine ha in totale?", answer: 24 },
+      { text: "Un autobus trasporta 45 persone. Alla fermata scendono 18 persone. Quante persone rimangono?", answer: 27 }
+    ];
+    
+    const problem = problems[Math.floor(Math.random() * problems.length)];
+    return { num1: 0, num2: 0, operation: '+', answer: problem.answer, type: 'problems' };
+  };
+
+  const generateMentalQuestion = (): Question => {
+    // Calcoli mentali più semplici
+    const types = ['double', 'half', 'round'];
+    const type = types[Math.floor(Math.random() * types.length)];
+    
+    switch (type) {
+      case 'double':
+        const num = Math.floor(Math.random() * 25) + 1;
+        return { num1: num, num2: 2, operation: '*', answer: num * 2, type: 'basic' };
+      case 'half':
+        const evenNum = (Math.floor(Math.random() * 25) + 1) * 2;
+        return { num1: evenNum, num2: 2, operation: '÷', answer: evenNum / 2, type: 'basic' };
+      default:
+        return generateBasicQuestion();
+    }
+  };
+
+  const generateQuestion = (): Question => {
+    switch (gameType) {
+      case 'advanced': return generateAdvancedQuestion();
+      case 'problems': return generateProblemQuestion();
+      case 'mental': return generateMentalQuestion();
+      default: return generateBasicQuestion();
+    }
   };
 
   useEffect(() => {
@@ -123,16 +194,63 @@ const MathGame = () => {
           <Progress value={progress} className="h-3" />
         </div>
 
+        {/* Game Type Selector */}
+        <div className="mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <Button
+              variant={gameType === 'basic' ? 'fun' : 'outline'}
+              onClick={() => setGameType('basic')}
+              className="text-sm py-2"
+            >
+              🧮 Base
+            </Button>
+            <Button
+              variant={gameType === 'advanced' ? 'fun' : 'outline'}
+              onClick={() => setGameType('advanced')}
+              className="text-sm py-2"
+            >
+              🚀 Avanzato
+            </Button>
+            <Button
+              variant={gameType === 'problems' ? 'fun' : 'outline'}
+              onClick={() => setGameType('problems')}
+              className="text-sm py-2"
+            >
+              🧠 Problemi
+            </Button>
+            <Button
+              variant={gameType === 'mental' ? 'fun' : 'outline'}
+              onClick={() => setGameType('mental')}
+              className="text-sm py-2"
+            >
+              ⚡ Calcolo Mentale
+            </Button>
+          </div>
+        </div>
+
         {/* Question Card */}
         <Card className="p-8 text-center shadow-card border-4 border-primary/20">
           <h2 className="text-2xl font-bold mb-8 text-foreground">
-            Ora di Matematica! 🧮
+            {gameType === 'basic' && '🧮 Matematica Base!'}
+            {gameType === 'advanced' && '🚀 Matematica Avanzata!'}
+            {gameType === 'problems' && '🧠 Risolvi il Problema!'}
+            {gameType === 'mental' && '⚡ Calcolo Mentale!'}
           </h2>
           
           <div className="mb-8">
-            <div className="text-6xl font-bold mb-6 text-primary animate-pulse-gentle">
-              {currentQuestion.num1} {currentQuestion.operation} {currentQuestion.num2} = ?
-            </div>
+            {gameType === 'problems' ? (
+              <div className="text-lg mb-6 p-4 bg-muted/30 rounded-xl">
+                {currentQuestion.type === 'problems' && (
+                  <p className="text-left">
+                    Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?
+                  </p>
+                )}
+              </div>
+            ) : (
+              <div className="text-6xl font-bold mb-6 text-primary animate-pulse-gentle">
+                {currentQuestion.num1} {currentQuestion.operation} {currentQuestion.num2} = ?
+              </div>
+            )}
           </div>
 
           {!showResult ? (

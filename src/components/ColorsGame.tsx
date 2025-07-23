@@ -11,6 +11,7 @@ interface ColorQuestion {
   colorName: string;
   options: string[];
   correctIndex: number;
+  type?: 'colors' | 'shapes' | 'patterns' | 'mixing';
 }
 
 const ColorsGame = () => {
@@ -21,60 +22,138 @@ const ColorsGame = () => {
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [gameType, setGameType] = useState<'colors' | 'shapes' | 'patterns' | 'mixing'>('colors');
 
   const colorQuestions: ColorQuestion[] = [
     {
-      color: "#FF0000",
-      colorName: "ROSSO",
-      options: ["BLU", "ROSSO", "VERDE", "GIALLO"],
-      correctIndex: 1
+      color: "#8B4513",
+      colorName: "MARRONE",
+      options: ["NERO", "MARRONE", "GRIGIO", "VIOLA"],
+      correctIndex: 1,
+      type: 'colors'
     },
     {
-      color: "#0000FF",
-      colorName: "BLU",
-      options: ["BLU", "VIOLA", "ROSSO", "ROSA"],
-      correctIndex: 0
+      color: "#4B0082",
+      colorName: "INDACO",
+      options: ["BLU", "VIOLA", "INDACO", "NERO"],
+      correctIndex: 2,
+      type: 'colors'
     },
     {
-      color: "#00FF00",
-      colorName: "VERDE",
-      options: ["GIALLO", "ARANCIONE", "VERDE", "BLU"],
-      correctIndex: 2
-    },
-    {
-      color: "#FFFF00",
-      colorName: "GIALLO",
-      options: ["VERDE", "ARANCIONE", "ROSSO", "GIALLO"],
-      correctIndex: 3
-    },
-    {
-      color: "#800080",
-      colorName: "VIOLA",
-      options: ["VIOLA", "ROSA", "BLU", "ROSSO"],
-      correctIndex: 0
-    },
-    {
-      color: "#FFA500",
-      colorName: "ARANCIONE",
-      options: ["ROSSO", "GIALLO", "ARANCIONE", "ROSA"],
-      correctIndex: 2
-    },
-    {
-      color: "#FFC0CB",
-      colorName: "ROSA",
-      options: ["VIOLA", "ROSSO", "ROSA", "BIANCO"],
-      correctIndex: 2
-    },
-    {
-      color: "#000000",
-      colorName: "NERO",
-      options: ["GRIGIO", "NERO", "MARRONE", "BIANCO"],
-      correctIndex: 1
+      color: "#FF69B4",
+      colorName: "ROSA ACCESO",
+      options: ["ROSA", "ROSA ACCESO", "VIOLA", "ROSSO"],
+      correctIndex: 1,
+      type: 'colors'
     }
   ];
 
+  const shapeQuestions: ColorQuestion[] = [
+    {
+      color: "🔵",
+      colorName: "CERCHIO",
+      options: ["QUADRATO", "TRIANGOLO", "CERCHIO", "STELLA"],
+      correctIndex: 2,
+      type: 'shapes'
+    },
+    {
+      color: "🔺",
+      colorName: "TRIANGOLO",
+      options: ["TRIANGOLO", "CERCHIO", "QUADRATO", "ROMBO"],
+      correctIndex: 0,
+      type: 'shapes'
+    },
+    {
+      color: "⭐",
+      colorName: "STELLA",
+      options: ["CUORE", "LUNA", "STELLA", "SOLE"],
+      correctIndex: 2,
+      type: 'shapes'
+    }
+  ];
+
+  const patternQuestions: ColorQuestion[] = [
+    {
+      color: "🔴🔵🔴🔵",
+      colorName: "ROSSO-BLU",
+      options: ["🔴🔵", "🔵🔴", "🔴🔴", "🔵🔵"],
+      correctIndex: 0,
+      type: 'patterns'
+    },
+    {
+      color: "🟡🟢🟡🟢",
+      colorName: "GIALLO-VERDE",
+      options: ["🟢🟡", "🟡🟢", "🟡🟡", "🟢🟢"],
+      correctIndex: 1,
+      type: 'patterns'
+    }
+  ];
+
+  const mixingQuestions: ColorQuestion[] = [
+    {
+      color: "🔴+🟡=?",
+      colorName: "ARANCIONE",
+      options: ["VERDE", "VIOLA", "ARANCIONE", "ROSA"],
+      correctIndex: 2,
+      type: 'mixing'
+    },
+    {
+      color: "🔵+🟡=?",
+      colorName: "VERDE",
+      options: ["VERDE", "VIOLA", "ARANCIONE", "ROSA"],
+      correctIndex: 0,
+      type: 'mixing'
+    }
+  ];
+
+  const getAllQuestions = (): ColorQuestion[] => {
+    switch (gameType) {
+      case 'shapes': return shapeQuestions;
+      case 'patterns': return patternQuestions;
+      case 'mixing': return mixingQuestions;
+      default: return [
+        {
+          color: "#FF0000",
+          colorName: "ROSSO",
+          options: ["BLU", "ROSSO", "VERDE", "GIALLO"],
+          correctIndex: 1,
+          type: 'colors' as const
+        },
+        {
+          color: "#0000FF",
+          colorName: "BLU",
+          options: ["BLU", "VIOLA", "ROSSO", "ROSA"],
+          correctIndex: 0,
+          type: 'colors' as const
+        },
+        {
+          color: "#00FF00",
+          colorName: "VERDE",
+          options: ["GIALLO", "ARANCIONE", "VERDE", "BLU"],
+          correctIndex: 2,
+          type: 'colors' as const
+        },
+        {
+          color: "#FFFF00",
+          colorName: "GIALLO",
+          options: ["VERDE", "ARANCIONE", "ROSSO", "GIALLO"],
+          correctIndex: 3,
+          type: 'colors' as const
+        },
+        {
+          color: "#800080",
+          colorName: "VIOLA",
+          options: ["VIOLA", "ROSA", "BLU", "ROSSO"],
+          correctIndex: 0,
+          type: 'colors' as const
+        }
+      ];
+    }
+  };
+
   const generateQuestion = (): ColorQuestion => {
-    return colorQuestions[Math.floor(Math.random() * colorQuestions.length)];
+    const questions = getAllQuestions();
+    return questions[Math.floor(Math.random() * questions.length)];
   };
 
   useEffect(() => {
@@ -165,22 +244,72 @@ const ColorsGame = () => {
           <Progress value={progress} className="h-3" />
         </div>
 
+        {/* Game Type Selector */}
+        <div className="mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <Button
+              variant={gameType === 'colors' ? 'fun' : 'outline'}
+              onClick={() => setGameType('colors')}
+              className="text-sm py-2"
+            >
+              🎨 Colori
+            </Button>
+            <Button
+              variant={gameType === 'shapes' ? 'fun' : 'outline'}
+              onClick={() => setGameType('shapes')}
+              className="text-sm py-2"
+            >
+              🔺 Forme
+            </Button>
+            <Button
+              variant={gameType === 'patterns' ? 'fun' : 'outline'}
+              onClick={() => setGameType('patterns')}
+              className="text-sm py-2"
+            >
+              🔄 Sequenze
+            </Button>
+            <Button
+              variant={gameType === 'mixing' ? 'fun' : 'outline'}
+              onClick={() => setGameType('mixing')}
+              className="text-sm py-2"
+            >
+              🌈 Mescola Colori
+            </Button>
+          </div>
+        </div>
+
         {/* Question Card */}
         <Card className="p-8 text-center shadow-card border-4 border-fun-purple/20">
           <h2 className="text-2xl font-bold mb-8 text-foreground flex items-center justify-center gap-2">
             <Palette className="w-8 h-8" />
-            Colori e Forme! 🌈
+            {gameType === 'colors' && '🎨 Riconosci i Colori!'}
+            {gameType === 'shapes' && '🔺 Riconosci le Forme!'}
+            {gameType === 'patterns' && '🔄 Completa la Sequenza!'}
+            {gameType === 'mixing' && '🌈 Mescola i Colori!'}
           </h2>
           
           <div className="mb-8">
             <div className="flex justify-center mb-6">
-              <div 
-                className="w-32 h-32 rounded-2xl shadow-fun border-4 border-white animate-pulse-gentle"
-                style={{ backgroundColor: currentQuestion.color }}
-              ></div>
+              {gameType === 'colors' ? (
+                <div 
+                  className="w-32 h-32 rounded-2xl shadow-fun border-4 border-white animate-pulse-gentle"
+                  style={{ backgroundColor: currentQuestion.color }}
+                ></div>
+              ) : gameType === 'mixing' ? (
+                <div className="text-6xl animate-bounce-gentle">
+                  {currentQuestion.color}
+                </div>
+              ) : (
+                <div className="text-8xl animate-bounce-gentle">
+                  {currentQuestion.color}
+                </div>
+              )}
             </div>
             <div className="text-lg text-muted-foreground mb-6">
-              Che colore è questo?
+              {gameType === 'colors' && 'Che colore è questo?'}
+              {gameType === 'shapes' && 'Che forma è questa?'}
+              {gameType === 'patterns' && 'Quale sequenza continua il pattern?'}
+              {gameType === 'mixing' && 'Che colore ottieni mescolando questi colori?'}
             </div>
           </div>
 
