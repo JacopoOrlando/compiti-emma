@@ -24,7 +24,7 @@ const MatchingGame = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get context from location state
+  // Get context from location state - DEBUG ENGLISH ROUTING
   const subject = location.state?.subject || 'matematica';
   const topic = location.state?.topic || 'operazioni';
   
@@ -53,6 +53,24 @@ const MatchingGame = () => {
     { id: "5", left: { text: "Acqua", emoji: "💧" }, right: { text: "Water", emoji: "🇬🇧" }, subject: "words" },
   ];
 
+  // PURE ENGLISH PAIRS for English vocabulary
+  const englishVocabPairs: MatchingPair[] = [
+    { id: "1", left: { text: "Cat", emoji: "🐱" }, right: { text: "Animal", emoji: "🎯" }, subject: "english" },
+    { id: "2", left: { text: "Sun", emoji: "☀️" }, right: { text: "Hot", emoji: "🔥" }, subject: "english" },
+    { id: "3", left: { text: "Water", emoji: "💧" }, right: { text: "Drink", emoji: "🥤" }, subject: "english" },
+    { id: "4", left: { text: "House", emoji: "🏠" }, right: { text: "Home", emoji: "🏡" }, subject: "english" },
+    { id: "5", left: { text: "Book", emoji: "📚" }, right: { text: "Read", emoji: "👀" }, subject: "english" },
+  ];
+
+  // ENGLISH STORIES PAIRS
+  const englishStoryPairs: MatchingPair[] = [
+    { id: "1", left: { text: "Once upon", emoji: "📖" }, right: { text: "a time", emoji: "⏰" }, subject: "english" },
+    { id: "2", left: { text: "Happy", emoji: "😊" }, right: { text: "Ending", emoji: "🎬" }, subject: "english" },
+    { id: "3", left: { text: "Prince", emoji: "🤴" }, right: { text: "Princess", emoji: "👸" }, subject: "english" },
+    { id: "4", left: { text: "Magic", emoji: "✨" }, right: { text: "Wand", emoji: "🪄" }, subject: "english" },
+    { id: "5", left: { text: "Dragon", emoji: "🐉" }, right: { text: "Castle", emoji: "🏰" }, subject: "english" },
+  ];
+
   const colorPairs: MatchingPair[] = [
     { id: "1", left: { text: "Rosso", emoji: "🔴" }, right: { text: "Red", emoji: "🇬🇧" }, subject: "colors" },
     { id: "2", left: { text: "Blu", emoji: "🔵" }, right: { text: "Blue", emoji: "🇬🇧" }, subject: "colors" },
@@ -62,9 +80,12 @@ const MatchingGame = () => {
   ];
 
   const getCurrentPairs = () => {
-    // Context-aware content selection
+    // Context-aware content selection - FIXED ENGLISH ROUTING
     if (subject === 'english') {
-      return topic === 'vocabulary' ? wordPairs : colorPairs;
+      if (topic === 'vocabulary') return englishVocabPairs;
+      if (topic === 'stories') return englishStoryPairs;
+      if (topic === 'conversation') return wordPairs; // Italian-English translation for conversation practice
+      return englishVocabPairs; // default for English
     } else if (subject === 'matematica') {
       return mathPairs;
     } else if (subject === 'italiano' && topic === 'grammatica') {
@@ -268,13 +289,15 @@ const MatchingGame = () => {
           </div>
         </div>
 
-        {/* Title */}
+        {/* Title - Debug Context for English */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
-            🦄 Gioco degli Abbinamenti 🎯
+            🦄 {subject === 'english' ? 'English Matching Game' : 'Gioco degli Abbinamenti'} 🎯
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground mb-4">
-            Trascina gli elementi per creare gli abbinamenti corretti!
+            {subject === 'english' 
+              ? 'Drag and match the correct pairs!' 
+              : 'Trascina gli elementi per creare gli abbinamenti corretti!'}
           </p>
           <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
             💡 <strong>Come giocare:</strong> Prendi un elemento dalla colonna di sinistra e trascinalo verso l'elemento corrispondente nella colonna di destra!
