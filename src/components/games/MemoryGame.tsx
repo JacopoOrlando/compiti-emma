@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Star, Home, RotateCcw, Brain } from "lucide-react";
 import { toast } from "sonner";
 
@@ -16,6 +16,12 @@ interface MemoryCard {
 
 const MemoryGame = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get context from location state
+  const subject = location.state?.subject || 'matematica';
+  const topic = location.state?.topic || 'operazioni';
+  
   const [cards, setCards] = useState<MemoryCard[]>([]);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
   const [score, setScore] = useState(0);
@@ -50,12 +56,30 @@ const MemoryGame = () => {
     { content: "ARANCIONE", emoji: "🟠" },
   ];
 
+  // ENGLISH PAIRS - CRITICAL FIX
+  const englishPairs = [
+    { content: "CAT", emoji: "🐱" },
+    { content: "DOG", emoji: "🐶" },
+    { content: "HOUSE", emoji: "🏠" },
+    { content: "SUN", emoji: "☀️" },
+    { content: "MOON", emoji: "🌙" },
+    { content: "WATER", emoji: "💧" },
+  ];
+
   const getCurrentPairs = () => {
-    switch (gameType) {
-      case 'numbers': return numberPairs;
-      case 'words': return wordPairs;
-      case 'colors': return colorPairs;
-      default: return numberPairs;
+    // Context-aware content selection
+    if (subject === 'english') {
+      return topic === 'vocabulary' ? englishPairs : colorPairs;
+    } else if (subject === 'matematica') {
+      return numberPairs;
+    } else {
+      // Default based on gameType
+      switch (gameType) {
+        case 'numbers': return numberPairs;
+        case 'words': return wordPairs;
+        case 'colors': return colorPairs;
+        default: return numberPairs;
+      }
     }
   };
 
@@ -93,8 +117,14 @@ const MemoryGame = () => {
   };
 
   useEffect(() => {
+    // Set appropriate game type based on subject context
+    if (subject === 'english') {
+      setGameType('words');
+    } else if (subject === 'matematica') {
+      setGameType('numbers');
+    }
     initializeGame();
-  }, [gameType]);
+  }, [gameType, subject, topic]);
 
   useEffect(() => {
     if (flippedCards.length === 2) {
@@ -195,16 +225,25 @@ const MemoryGame = () => {
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 text-foreground">
-            🦄 Gioco della Memoria 🧠
+            🦄 {subject === 'english' ? 'English Memory Game' : 'Gioco della Memoria'} 🧠
           </h1>
           <p className="text-muted-foreground">
-            Trova le coppie girando le carte! Allena la tua memoria!
+            {subject === 'english' 
+              ? 'Find pairs by flipping cards! Train your memory!' 
+              : 'Trova le coppie girando le carte! Allena la tua memoria!'}
           </p>
         </div>
 
-        {/* Game Type Selector */}
+        {/* Game Type Selector - Context Aware */}
         <div className="flex justify-center gap-4 mb-8">
-          {(['numbers', 'words', 'colors'] as const).map((type) => (
+          {subject === 'english' ? (
+            <div className="text-center">
+              <span className="inline-block px-6 py-3 bg-fun-purple/20 rounded-full border-2 border-fun-purple text-fun-purple font-bold">
+                🇬🇧 English Memory
+              </span>
+            </div>
+          ) : (
+            (['numbers', 'words', 'colors'] as const).map((type) => (
             <Button
               key={type}
               variant={gameType === type ? "fun" : "outline"}
@@ -215,7 +254,7 @@ const MemoryGame = () => {
               {type === 'words' && '📚 Parole'}
               {type === 'colors' && '🎨 Colori'}
             </Button>
-          ))}
+          )))}
         </div>
 
         {/* Progress */}

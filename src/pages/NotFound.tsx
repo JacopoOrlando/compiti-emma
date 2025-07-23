@@ -9,11 +9,15 @@ const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Track 404s for analytics if needed in production
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
+    // Only log in development
+    if (process.env.NODE_ENV === 'development') {
+      console.error(
+        "404 Error: User attempted to access non-existent route:",
+        location.pathname
+      );
+    }
   }, [location.pathname]);
 
   return (
