@@ -77,6 +77,8 @@ const Topic = () => {
       navigate('/math');
     } else if (subject === 'italiano' && topic === 'lettura') {
       navigate('/reading');
+    } else if (subject === 'italiano' && topic === 'grammatica') {
+      navigate('/grammar');
     } else if (subject === 'italiano' && topic === 'arte') {
       navigate('/colors');
     } else if (subject === 'english' && topic === 'vocabulary') {

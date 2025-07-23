@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound";
 import MathGame from "./components/MathGame";
 import ReadingGame from "./components/ReadingGame";
 import ColorsGame from "./components/ColorsGame";
+import GrammarGame from "./components/GrammarGame";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/math" element={<MathGame />} />
             <Route path="/reading" element={<ReadingGame />} />
             <Route path="/colors" element={<ColorsGame />} />
+            <Route path="/grammar" element={<GrammarGame />} />
             
             <Route path="*" element={<NotFound />} />
           </Routes>
