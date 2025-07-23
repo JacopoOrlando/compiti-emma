@@ -22,59 +22,135 @@ const ReadingGame = () => {
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
-  const wordQuestions: WordQuestion[] = [
+  // Frasi complete per seconda elementare
+  const sentenceQuestions: WordQuestion[] = [
     {
-      word: "GATTO",
-      image: "🐱",
-      options: ["CANE", "GATTO", "UCCELLO", "PESCE"],
+      word: "IL GATTO DORME SUL DIVANO",
+      image: "🐱💤",
+      options: ["Il gatto mangia", "Il gatto dorme sul divano", "Il gatto corre", "Il gatto gioca"],
       correctIndex: 1
     },
     {
-      word: "SOLE",
-      image: "☀️",
-      options: ["LUNA", "STELLA", "SOLE", "NUVOLA"],
+      word: "LA BAMBINA LEGGE UN LIBRO",
+      image: "👧📖",
+      options: ["La bambina canta", "La bambina disegna", "La bambina legge un libro", "La bambina balla"],
       correctIndex: 2
     },
     {
-      word: "ALBERO",
-      image: "🌳",
-      options: ["ALBERO", "FIORE", "ERBA", "FOGLIA"],
+      word: "IL SOLE SPLENDE NEL CIELO",
+      image: "☀️🌤️",
+      options: ["Il sole splende nel cielo", "La luna brilla", "Le stelle cadono", "La neve cade"],
       correctIndex: 0
     },
     {
-      word: "LIBRO",
-      image: "📚",
-      options: ["PENNA", "CARTA", "LIBRO", "SCRIVANIA"],
-      correctIndex: 2
-    },
-    {
-      word: "MELA",
-      image: "🍎",
-      options: ["ARANCIA", "BANANA", "UVA", "MELA"],
+      word: "I BAMBINI GIOCANO NEL PARCO",
+      image: "👦👧🌳",
+      options: ["I bambini studiano", "I bambini dormono", "I bambini mangiano", "I bambini giocano nel parco"],
       correctIndex: 3
     },
     {
-      word: "CASA",
-      image: "🏠",
-      options: ["CASA", "AUTO", "BICI", "AEREO"],
+      word: "LA MAMMA CUCINA IN CUCINA",
+      image: "👩‍🍳🍳",
+      options: ["La mamma cucina in cucina", "Il papà lavora", "La nonna riposa", "Il nonno legge"],
       correctIndex: 0
-    },
+    }
+  ];
+
+  // Domande di comprensione più avanzate
+  const comprehensionQuestions: WordQuestion[] = [
     {
-      word: "PALLA",
-      image: "⚽",
-      options: ["GIOCO", "PALLA", "PARTITA", "GIOCARE"],
+      word: "COSA FA L'UCCELLO?",
+      image: "🐦🌳",
+      options: ["Nuota", "Vola tra gli alberi", "Cammina", "Dorme"],
       correctIndex: 1
     },
     {
-      word: "CUORE",
-      image: "❤️",
-      options: ["STELLA", "CERCHIO", "CUORE", "QUADRATO"],
+      word: "DOVE VIVONO I PESCI?",
+      image: "🐠🌊",
+      options: ["Nel cielo", "Sulla terra", "Nell'acqua", "Sugli alberi"],
+      correctIndex: 2
+    },
+    {
+      word: "CHE COLORE HA L'ERBA?",
+      image: "🌱",
+      options: ["Blu", "Rosso", "Verde", "Giallo"],
+      correctIndex: 2
+    },
+    {
+      word: "QUANDO USIAMO L'OMBRELLO?",
+      image: "☔☂️",
+      options: ["Quando piove", "Quando splende il sole", "Di notte", "In inverno"],
+      correctIndex: 0
+    }
+  ];
+
+  // Sillabe e suoni per secondo livello
+  const syllableQuestions: WordQuestion[] = [
+    {
+      word: "CA-SA",
+      image: "🏠",
+      options: ["CA-NE", "CA-SA", "GA-TO", "SO-LE"],
+      correctIndex: 1
+    },
+    {
+      word: "MA-ESTRA",
+      image: "👩‍🏫",
+      options: ["MA-ESTRA", "BA-MBINA", "SCU-OLA", "LI-BRO"],
+      correctIndex: 0
+    },
+    {
+      word: "BIC-CLETTA",
+      image: "🚲",
+      options: ["AU-TO", "TRENO", "BIC-CLETTA", "AEREO"],
       correctIndex: 2
     }
   ];
 
+  const [gameType, setGameType] = useState<'words' | 'sentences' | 'comprehension' | 'syllables'>('words');
+  
+  const getAllQuestions = () => {
+    switch (gameType) {
+      case 'sentences': return sentenceQuestions;
+      case 'comprehension': return comprehensionQuestions;
+      case 'syllables': return syllableQuestions;
+      default: return [
+        {
+          word: "DINOSAURO",
+          image: "🦕",
+          options: ["CANE", "GATTO", "DINOSAURO", "ELEFANTE"],
+          correctIndex: 2
+        },
+        {
+          word: "AUTOMOBILE",
+          image: "🚗",
+          options: ["BICICLETTA", "AUTOMOBILE", "TRENO", "AEREO"],
+          correctIndex: 1
+        },
+        {
+          word: "FARFALLA",
+          image: "🦋",
+          options: ["FARFALLA", "UCCELLO", "INSETTO", "APE"],
+          correctIndex: 0
+        },
+        {
+          word: "COMPUTER",
+          image: "💻",
+          options: ["TELEFONO", "TELEVISORE", "COMPUTER", "RADIO"],
+          correctIndex: 2
+        },
+        {
+          word: "GIRAFFA",
+          image: "🦒",
+          options: ["CAVALLO", "ZEBRA", "LEONE", "GIRAFFA"],
+          correctIndex: 3
+        }
+      ];
+    }
+  };
+
   const generateQuestion = (): WordQuestion => {
-    return wordQuestions[Math.floor(Math.random() * wordQuestions.length)];
+    const questions = getAllQuestions();
+    return questions[Math.floor(Math.random() * questions.length)];
   };
 
   useEffect(() => {
@@ -174,10 +250,47 @@ const ReadingGame = () => {
           <Progress value={progress} className="h-3" />
         </div>
 
+        {/* Game Type Selector */}
+        <div className="mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <Button
+              variant={gameType === 'words' ? 'fun' : 'outline'}
+              onClick={() => setGameType('words')}
+              className="text-sm py-2"
+            >
+              📝 Parole
+            </Button>
+            <Button
+              variant={gameType === 'sentences' ? 'fun' : 'outline'}
+              onClick={() => setGameType('sentences')}
+              className="text-sm py-2"
+            >
+              📖 Frasi
+            </Button>
+            <Button
+              variant={gameType === 'comprehension' ? 'fun' : 'outline'}
+              onClick={() => setGameType('comprehension')}
+              className="text-sm py-2"
+            >
+              🧠 Comprensione
+            </Button>
+            <Button
+              variant={gameType === 'syllables' ? 'fun' : 'outline'}
+              onClick={() => setGameType('syllables')}
+              className="text-sm py-2"
+            >
+              🔤 Sillabe
+            </Button>
+          </div>
+        </div>
+
         {/* Question Card */}
         <Card className="p-8 text-center shadow-card border-4 border-fun-green/20">
           <h2 className="text-2xl font-bold mb-8 text-foreground">
-            Ora di Lettura! 📚
+            {gameType === 'words' && '📝 Lettura Parole!'}
+            {gameType === 'sentences' && '📖 Leggiamo le Frasi!'}
+            {gameType === 'comprehension' && '🧠 Comprensione!'}
+            {gameType === 'syllables' && '🔤 Dividiamo in Sillabe!'}
           </h2>
           
           <div className="mb-8">
@@ -185,7 +298,12 @@ const ReadingGame = () => {
               {currentQuestion.image}
             </div>
             <div className="flex items-center justify-center gap-4 mb-6">
-              <span className="text-lg text-muted-foreground">Quale parola corrisponde a questa immagine?</span>
+              <span className="text-lg text-muted-foreground">
+                {gameType === 'words' && 'Quale parola corrisponde a questa immagine?'}
+                {gameType === 'sentences' && 'Qual è la frase corretta?'}
+                {gameType === 'comprehension' && 'Scegli la risposta giusta!'}
+                {gameType === 'syllables' && 'Come si divide questa parola?'}
+              </span>
               <Button
                 variant="outline"
                 size="sm"
@@ -207,7 +325,7 @@ const ReadingGame = () => {
                     variant={selectedAnswer === index ? "fun" : "outline"}
                     size="lg"
                     onClick={() => handleAnswerSelect(index)}
-                    className="text-xl py-6 px-4 font-bold border-2"
+                    className={`${gameType === 'sentences' ? 'text-lg py-4 px-3' : 'text-xl py-6 px-4'} font-bold border-2`}
                   >
                     {option}
                   </Button>
