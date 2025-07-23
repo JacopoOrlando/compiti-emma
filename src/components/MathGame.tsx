@@ -25,17 +25,27 @@ const MathGame = () => {
   const [gameType, setGameType] = useState<'basic' | 'advanced' | 'problems' | 'mental'>('basic');
 
   const generateBasicQuestion = (): Question => {
-    const operation = Math.random() > 0.5 ? '+' : '-';
+    // Aumentiamo la difficoltà per la seconda elementare
+    const operations = ['+', '-', '*'] as const;
+    const operation = operations[Math.floor(Math.random() * operations.length)];
     let num1, num2, answer;
     
-    if (operation === '+') {
-      num1 = Math.floor(Math.random() * 50) + 1;
-      num2 = Math.floor(Math.random() * 50) + 1;
-      answer = num1 + num2;
-    } else {
-      num1 = Math.floor(Math.random() * 50) + 20;
-      num2 = Math.floor(Math.random() * num1) + 1;
-      answer = num1 - num2;
+    switch (operation) {
+      case '+':
+        num1 = Math.floor(Math.random() * 80) + 20; // 20-99
+        num2 = Math.floor(Math.random() * 80) + 20; // 20-99
+        answer = num1 + num2;
+        break;
+      case '-':
+        num1 = Math.floor(Math.random() * 80) + 50; // 50-129
+        num2 = Math.floor(Math.random() * 40) + 10; // 10-49
+        answer = num1 - num2;
+        break;
+      case '*':
+        num1 = Math.floor(Math.random() * 9) + 2; // 2-10
+        num2 = Math.floor(Math.random() * 9) + 2; // 2-10
+        answer = num1 * num2;
+        break;
     }
     
     return { num1, num2, operation, answer, type: 'basic' };

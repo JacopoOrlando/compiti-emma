@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
+import { Palette } from "lucide-react"; // Aggiunta per l'icona nella sezione inglese
 import { 
-  Home, BookOpen, Calculator, History, Globe, Palette, 
+  Home, BookOpen, Calculator, History, Globe, Languages, 
   Ruler, Shapes, Microscope, PenTool, Star 
 } from "lucide-react";
 
@@ -30,7 +31,6 @@ const subjects = [
       { title: "Grammatica", url: "/italiano/grammatica", icon: PenTool },
       { title: "Storia", url: "/italiano/storia", icon: History },
       { title: "Geografia", url: "/italiano/geografia", icon: Globe },
-      { title: "Arte", url: "/italiano/arte", icon: Palette },
     ]
   },
   {
@@ -41,6 +41,16 @@ const subjects = [
       { title: "Geometria", url: "/matematica/geometria", icon: Shapes },
       { title: "Misure", url: "/matematica/misure", icon: Ruler },
       { title: "Scienze", url: "/matematica/scienze", icon: Microscope },
+    ]
+  },
+  {
+    title: "Inglese",
+    icon: Languages,
+    topics: [
+      { title: "Parole", url: "/inglese/parole", icon: BookOpen },
+      { title: "Colori", url: "/inglese/colori", icon: Palette },
+      { title: "Numeri", url: "/inglese/numeri", icon: Calculator },
+      { title: "Famiglia", url: "/inglese/famiglia", icon: Home },
     ]
   }
 ];
@@ -80,7 +90,7 @@ export function AppSidebar() {
         {/* Subjects */}
         {subjects.slice(1).map((subject) => (
         <SidebarGroup key={subject.title}>
-          <SidebarGroupLabel className="flex items-center gap-2 text-lg font-bold">
+          <SidebarGroupLabel className="flex items-center gap-2 text-lg font-bold text-primary border-b pb-2 mb-2">
             <subject.icon className="h-5 w-5" />
             {open && subject.title}
             </SidebarGroupLabel>
