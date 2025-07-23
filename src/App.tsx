@@ -12,6 +12,10 @@ import MathGame from "./components/MathGame";
 import ReadingGame from "./components/ReadingGame";
 import ColorsGame from "./components/ColorsGame";
 import GrammarGame from "./components/GrammarGame";
+import MatchingGame from "./components/games/MatchingGame";
+import MemoryGame from "./components/games/MemoryGame";
+import TimedChallengeGame from "./components/games/TimedChallengeGame";
+import GameSelector from "./components/games/GameSelector";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +30,12 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/:subject" element={<Subject />} />
             <Route path="/:subject/:topic" element={<Topic />} />
+            
+            {/* Game routes */}
+            <Route path="/games" element={<GameSelector />} />
+            <Route path="/games/matching" element={<MatchingGame />} />
+            <Route path="/games/memory" element={<MemoryGame />} />
+            <Route path="/games/timed" element={<TimedChallengeGame />} />
             
             {/* Legacy routes - mantengo per compatibilità */}
             <Route path="/math" element={<MathGame />} />

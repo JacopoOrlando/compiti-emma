@@ -72,31 +72,8 @@ const Topic = () => {
   };
 
   const handleStartLevel = (levelId: number) => {
-    // Route to appropriate games based on subject and topic
-    if (subject === 'matematica' && topic === 'operazioni') {
-      navigate('/math');
-    } else if (subject === 'italiano' && topic === 'lettura') {
-      navigate('/reading');
-    } else if (subject === 'italiano' && topic === 'grammatica') {
-      navigate('/grammar');
-    } else if (subject === 'italiano' && topic === 'arte') {
-      navigate('/colors');
-    } else if (subject === 'english' && topic === 'vocabulary') {
-      navigate('/reading'); // English vocabulary game
-    } else if (subject === 'english' && topic === 'stories') {
-      navigate('/reading'); // English stories game
-    } else if (subject === 'english' && topic === 'conversation') {
-      navigate('/reading'); // English conversation practice
-    } else if (subject === 'english' && topic === 'culture') {
-      navigate('/reading'); // English culture lessons
-    } else if (subject === 'matematica') {
-      navigate('/math'); // All other math topics
-    } else if (subject === 'italiano') {
-      navigate('/reading'); // All other Italian topics
-    } else {
-      // Safe fallback - return to subject page
-      navigate(`/${subject}`);
-    }
+    // Show game selector for choice of different game styles
+    navigate('/games', { state: { subject, topic, level: levelId } });
   };
 
   const topicTitle = topic?.charAt(0).toUpperCase() + topic?.slice(1) || '';
