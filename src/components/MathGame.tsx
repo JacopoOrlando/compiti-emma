@@ -25,25 +25,60 @@ const MathGame = () => {
   const [gameType, setGameType] = useState<'basic' | 'advanced' | 'problems' | 'mental'>('basic');
 
   const generateBasicQuestion = (): Question => {
-    // Aumentiamo la difficoltà per la seconda elementare
     const operations = ['+', '-', '×'] as const;
     const operation = operations[Math.floor(Math.random() * operations.length)];
     let num1, num2, answer;
     
+    // Aggiungiamo varietà con diversi pattern di difficoltà
+    const pattern = Math.floor(Math.random() * 3);
+    
     switch (operation) {
       case '+':
-        num1 = Math.floor(Math.random() * 80) + 20; // 20-99
-        num2 = Math.floor(Math.random() * 80) + 20; // 20-99
+        if (pattern === 0) {
+          // Somme semplici
+          num1 = Math.floor(Math.random() * 20) + 1; // 1-20
+          num2 = Math.floor(Math.random() * 20) + 1; // 1-20
+        } else if (pattern === 1) {
+          // Somme con decine
+          num1 = Math.floor(Math.random() * 5) * 10 + Math.floor(Math.random() * 10); // 0-49
+          num2 = Math.floor(Math.random() * 5) * 10 + Math.floor(Math.random() * 10); // 0-49
+        } else {
+          // Somme più complesse
+          num1 = Math.floor(Math.random() * 80) + 20; // 20-99
+          num2 = Math.floor(Math.random() * 80) + 20; // 20-99
+        }
         answer = num1 + num2;
         break;
       case '-':
-        num1 = Math.floor(Math.random() * 80) + 50; // 50-129
-        num2 = Math.floor(Math.random() * 40) + 10; // 10-49
+        if (pattern === 0) {
+          // Sottrazioni semplici
+          num1 = Math.floor(Math.random() * 20) + 10; // 10-29
+          num2 = Math.floor(Math.random() * 10) + 1; // 1-10
+        } else if (pattern === 1) {
+          // Sottrazioni con decine
+          num1 = Math.floor(Math.random() * 8) * 10 + Math.floor(Math.random() * 10) + 20; // 20-99
+          num2 = Math.floor(Math.random() * 3) * 10 + Math.floor(Math.random() * 10); // 0-39
+        } else {
+          // Sottrazioni complesse
+          num1 = Math.floor(Math.random() * 80) + 50; // 50-129
+          num2 = Math.floor(Math.random() * 40) + 10; // 10-49
+        }
         answer = num1 - num2;
         break;
       case '×':
-        num1 = Math.floor(Math.random() * 9) + 2; // 2-10
-        num2 = Math.floor(Math.random() * 9) + 2; // 2-10
+        if (pattern === 0) {
+          // Tabelline base (2-5)
+          num1 = Math.floor(Math.random() * 4) + 2; // 2-5
+          num2 = Math.floor(Math.random() * 10) + 1; // 1-10
+        } else if (pattern === 1) {
+          // Moltiplicazioni per 10
+          num1 = Math.floor(Math.random() * 10) + 1; // 1-10
+          num2 = 10;
+        } else {
+          // Tabelline medie (6-10)
+          num1 = Math.floor(Math.random() * 5) + 6; // 6-10
+          num2 = Math.floor(Math.random() * 10) + 1; // 1-10
+        }
         answer = num1 * num2;
         break;
     }
@@ -87,7 +122,15 @@ const MathGame = () => {
       { text: "Marco ha 15 caramelle. Ne regala 8 ai suoi amici. Quante ne rimangono?", num1: 15, num2: 8, operation: '-' as const, answer: 7 },
       { text: "In classe ci sono 12 bambini e 14 bambine. Quanti bambini ci sono in totale?", num1: 12, num2: 14, operation: '+' as const, answer: 26 },
       { text: "Sara compra 3 pacchi di figurine. Ogni pacco contiene 8 figurine. Quante figurine ha in totale?", num1: 3, num2: 8, operation: '×' as const, answer: 24 },
-      { text: "Un autobus trasporta 45 persone. Alla fermata scendono 18 persone. Quante persone rimangono?", num1: 45, num2: 18, operation: '-' as const, answer: 27 }
+      { text: "Un autobus trasporta 45 persone. Alla fermata scendono 18 persone. Quante persone rimangono?", num1: 45, num2: 18, operation: '-' as const, answer: 27 },
+      { text: "Lucia ha 6 gruppi di amici. Ogni gruppo ha 4 persone. Quante persone ci sono in totale?", num1: 6, num2: 4, operation: '×' as const, answer: 24 },
+      { text: "Al mercato mamma compra 25 mele e 17 pere. Quanta frutta ha comprato?", num1: 25, num2: 17, operation: '+' as const, answer: 42 },
+      { text: "Papà aveva 50 euro. Ha speso 23 euro per la spesa. Quanti euro gli rimangono?", num1: 50, num2: 23, operation: '-' as const, answer: 27 },
+      { text: "In giardino ci sono 7 aiuole. In ogni aiuola ci sono 9 fiori. Quanti fiori ci sono in totale?", num1: 7, num2: 9, operation: '×' as const, answer: 63 },
+      { text: "Anna legge 18 pagine al mattino e 14 pagine al pomeriggio. Quante pagine ha letto in totale?", num1: 18, num2: 14, operation: '+' as const, answer: 32 },
+      { text: "In biblioteca ci sono 80 libri. Ne prestano 35. Quanti libri rimangono?", num1: 80, num2: 35, operation: '-' as const, answer: 45 },
+      { text: "Il nonno raccoglie 9 cestini di fragole. Ogni cestino contiene 6 fragole. Quante fragole ha raccolto?", num1: 9, num2: 6, operation: '×' as const, answer: 54 },
+      { text: "In palestra ci sono 28 bambini e 19 bambine. Quanti bambini ci sono in totale?", num1: 28, num2: 19, operation: '+' as const, answer: 47 }
     ];
     
     const problem = problems[Math.floor(Math.random() * problems.length)];
@@ -95,8 +138,7 @@ const MathGame = () => {
   };
 
   const generateMentalQuestion = (): Question => {
-    // Calcoli mentali più semplici
-    const types = ['double', 'half', 'round'];
+    const types = ['double', 'half', 'add10', 'subtract10', 'multiply5', 'count_by'];
     const type = types[Math.floor(Math.random() * types.length)];
     
     switch (type) {
@@ -106,8 +148,19 @@ const MathGame = () => {
       case 'half':
         const evenNum = (Math.floor(Math.random() * 25) + 1) * 2;
         return { num1: evenNum, num2: 2, operation: '÷', answer: evenNum / 2, type: 'basic' };
-      default:
-        return generateBasicQuestion();
+      case 'add10':
+        const baseNum = Math.floor(Math.random() * 90) + 1;
+        return { num1: baseNum, num2: 10, operation: '+', answer: baseNum + 10, type: 'basic' };
+      case 'subtract10':
+        const startNum = Math.floor(Math.random() * 80) + 20;
+        return { num1: startNum, num2: 10, operation: '-', answer: startNum - 10, type: 'basic' };
+      case 'multiply5':
+        const factor = Math.floor(Math.random() * 12) + 1;
+        return { num1: factor, num2: 5, operation: '×', answer: factor * 5, type: 'basic' };
+      default: // count_by
+        const step = [2, 3, 4, 5][Math.floor(Math.random() * 4)];
+        const times = Math.floor(Math.random() * 8) + 2;
+        return { num1: step, num2: times, operation: '×', answer: step * times, type: 'basic' };
     }
   };
 
