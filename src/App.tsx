@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AccessibilityEnhancer } from "@/components/AccessibilityEnhancer";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import Layout from "./components/Layout";
 import Index from "./pages/Index";
 import Subject from "./pages/Subject";
@@ -24,8 +25,9 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AccessibilityEnhancer>
-      <TooltipProvider>
+    <ErrorBoundary>
+      <AccessibilityEnhancer>
+        <TooltipProvider>
         <BrowserRouter>
           <a href="#main-content" className="skip-link">Vai al contenuto principale</a>
           <Layout>
@@ -58,6 +60,7 @@ const App = () => (
         <Sonner />
       </TooltipProvider>
     </AccessibilityEnhancer>
+    </ErrorBoundary>
   </QueryClientProvider>
 );
 

@@ -81,27 +81,32 @@ const MemoryGame = () => {
     const gameCards: MemoryCard[] = [];
     
     pairs.forEach((pair, index) => {
-      // Add content card
+      // FIXED: Create two different cards for the same content
+      // Card showing content as text
       gameCards.push({
         id: `${index}-content`,
         content: pair.content,
-        emoji: pair.content,
+        emoji: pair.content, // Show content as text
         isFlipped: false,
         isMatched: false,
       });
       
-      // Add emoji card
+      // Card showing emoji
       gameCards.push({
         id: `${index}-emoji`,
-        content: pair.content,
-        emoji: pair.emoji,
+        content: pair.content, // Same content for matching
+        emoji: pair.emoji, // Show as emoji
         isFlipped: false,
         isMatched: false,
       });
     });
 
-    // Shuffle cards
-    const shuffledCards = gameCards.sort(() => Math.random() - 0.5);
+    // FIXED: Proper shuffle algorithm (Fisher-Yates)
+    const shuffledCards = [...gameCards];
+    for (let i = shuffledCards.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledCards[i], shuffledCards[j]] = [shuffledCards[j], shuffledCards[i]];
+    }
     setCards(shuffledCards);
     setFlippedCards([]);
     setScore(0);

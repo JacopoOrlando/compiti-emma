@@ -107,8 +107,12 @@ const MatchingGame = () => {
       isMatched: false
     }));
 
-    // Shuffle only the right items to create the matching challenge
-    const shuffledRight = [...rightItems].sort(() => Math.random() - 0.5);
+    // FIXED: Proper shuffle algorithm (Fisher-Yates)
+    const shuffledRight = [...rightItems];
+    for (let i = shuffledRight.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledRight[i], shuffledRight[j]] = [shuffledRight[j], shuffledRight[i]];
+    }
     
     setLeftItems(leftItems);
     setRightItems(shuffledRight);

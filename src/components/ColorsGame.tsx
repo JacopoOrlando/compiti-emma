@@ -318,7 +318,7 @@ const ColorsGame = () => {
               <div className="grid grid-cols-2 gap-4">
                 {currentQuestion.options.map((option, index) => (
                   <Button
-                    key={index}
+                    key={`color-option-${index}-${option}`}
                     variant={selectedAnswer === index ? "fun" : "outline"}
                     size="lg"
                     onClick={() => handleAnswerSelect(index)}

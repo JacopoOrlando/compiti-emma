@@ -243,13 +243,6 @@ const TimedChallengeGame = () => {
     
     const correct = selectedAnswer === currentQuestion.correctIndex;
     
-    console.log('Answer validation:', {
-      selectedAnswer,
-      correctIndex: currentQuestion.correctIndex,
-      isCorrect: correct,
-      question: currentQuestion.question
-    });
-    
     if (correct) {
       const bonusPoints = Math.ceil(timeLeft * 2); // Bonus for speed
       const totalPoints = currentQuestion.points + bonusPoints;
@@ -381,7 +374,7 @@ const TimedChallengeGame = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {currentQuestion.options.map((option, index) => (
               <Button
-                key={index}
+                key={`option-${index}-${option}`}
                 variant={selectedAnswer === index ? "fun" : "outline"}
                 onClick={() => handleAnswerSelect(index)}
                 disabled={!gameActive || showResult}

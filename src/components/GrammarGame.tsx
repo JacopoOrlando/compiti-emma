@@ -351,7 +351,7 @@ const GrammarGame = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
             {currentQuestion.options.map((option, index) => (
               <Button
-                key={index}
+                key={`grammar-option-${index}-${option}`}
                 variant={selectedAnswer === index ? "fun" : "outline"}
                 onClick={() => handleAnswerSelect(index)}
                 disabled={showResult}

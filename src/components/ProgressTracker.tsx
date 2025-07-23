@@ -200,7 +200,7 @@ export const ProgressTracker = ({ currentSession }: ProgressTrackerProps) => {
               .sort((a, b) => b.timestamp - a.timestamp)
               .slice(0, 5)
               .map((progress, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                <div key={`progress-${progress.timestamp}-${index}`} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                   <div>
                     <div className="font-medium capitalize">
                       {progress.subject} • {progress.topic.replace('-', ' ')}
