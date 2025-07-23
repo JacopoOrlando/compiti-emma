@@ -275,14 +275,14 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
           <div className="flex flex-wrap justify-center gap-3">
             <Button 
               variant="fun" 
-              onClick={() => navigate('/games/memory', { state: { subject: currentSubject, topic: currentTopic } })}
+              onClick={() => navigate(currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/memory` : '/games/memory')}
               className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
             >
               🧠 Memoria
             </Button>
             <Button 
               variant="fun" 
-              onClick={() => navigate('/games/matching', { state: { subject: currentSubject, topic: currentTopic } })}
+              onClick={() => navigate(currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/matching` : '/games/matching')}
               className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
             >
               🎯 Abbinamenti
