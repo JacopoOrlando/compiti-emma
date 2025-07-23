@@ -17,9 +17,9 @@ export default function Layout({ children }: LayoutProps) {
         <AppSidebar />
         
         <div className="flex-1 flex flex-col">
-          <header className="h-16 flex items-center border-b bg-background px-4 md:px-6">
+          <header className="h-14 sm:h-16 flex items-center border-b bg-background px-3 md:px-4 lg:px-6">
             <SidebarTrigger className="mr-2 md:mr-4" />
-            <h1 className="text-lg md:text-2xl font-bold text-primary">🦄 Compiti di Emma 🌈</h1>
+            <h1 className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold text-primary truncate">🦄 Compiti di Emma 🌈</h1>
           </header>
           
           {showBreadcrumbs && <Breadcrumbs />}

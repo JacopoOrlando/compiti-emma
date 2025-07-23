@@ -264,23 +264,23 @@ const MatchingGame = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 md:p-6">
+    <div className="min-h-screen bg-background p-3 md:p-4 lg:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 md:mb-6 gap-3 md:gap-4">
           <Button 
             variant="outline" 
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-lg px-6 py-3"
+            className="flex items-center gap-2 text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
           >
-            <Home className="w-5 h-5" />
+            <Home className="w-4 h-4 md:w-5 md:h-5" />
             <span className="hidden sm:inline">Casa</span>
           </Button>
           
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-fun-yellow/20 px-4 py-2 rounded-full border-2 border-fun-yellow/50">
-              <Star className="w-6 h-6 text-fun-yellow" />
-              <span className="font-bold text-xl">{score}/{currentPairs.length}</span>
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-2 bg-fun-yellow/20 px-3 md:px-4 py-2 rounded-full border-2 border-fun-yellow/50">
+              <Star className="w-5 h-5 md:w-6 md:h-6 text-fun-yellow" />
+              <span className="font-bold text-lg md:text-xl">{score}/{currentPairs.length}</span>
             </div>
             
             <Button 
@@ -305,16 +305,16 @@ const MatchingGame = () => {
         </div>
 
         {/* Title - Debug Context for English */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
+        <div className="text-center mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 text-foreground">
             🦄 {subject === 'english' ? 'English Matching Game' : 'Gioco degli Abbinamenti'} 🎯
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground mb-4">
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground mb-3 md:mb-4 px-4">
             {subject === 'english' 
               ? 'Drag and match the correct pairs!' 
               : 'Trascina gli elementi per creare gli abbinamenti corretti!'}
           </p>
-          <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+          <p className="text-xs md:text-sm text-muted-foreground bg-muted/50 p-2 md:p-3 rounded-lg mx-4">
             💡 <strong>Come giocare:</strong> Prendi un elemento dalla colonna di sinistra e trascinalo verso l'elemento corrispondente nella colonna di destra!
           </p>
         </div>
@@ -352,20 +352,20 @@ const MatchingGame = () => {
         </div>
 
         {/* Game Area - Enhanced for touch */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 lg:gap-6 xl:gap-8 mb-6 md:mb-8">
           {/* Left Column */}
-          <Card className="p-4 md:p-6 border-4 border-fun-blue/30">
-            <h3 className="text-xl md:text-2xl font-bold mb-4 text-center text-foreground flex items-center justify-center gap-2">
-              <span className="text-2xl">👆</span> Prendi da qui
+          <Card className="p-3 md:p-4 lg:p-6 border-4 border-fun-blue/30">
+            <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4 text-center text-foreground flex items-center justify-center gap-2">
+              <span className="text-xl md:text-2xl">👆</span> Prendi da qui
             </h3>
-            <div className="space-y-3">
+            <div className="space-y-2 md:space-y-3">
               {leftItems.map((item) => (
                 <div
                   key={item.id}
                   draggable={!item.isMatched}
                   onDragStart={() => handleDragStart(item)}
                   onTouchStart={() => handleTouchStart(item)}
-                  className={`p-4 md:p-6 border-4 rounded-xl cursor-pointer transition-all duration-300 touch-manipulation animate-fade-in ${
+                  className={`p-3 md:p-4 lg:p-6 border-4 rounded-xl cursor-pointer transition-all duration-300 touch-manipulation animate-fade-in ${
                     item.isMatched
                       ? 'bg-fun-green/30 border-fun-green scale-95 opacity-60 animate-pulse'
                       : draggedItem?.id === item.id
@@ -373,9 +373,9 @@ const MatchingGame = () => {
                       : 'bg-muted border-dashed border-primary hover:border-primary hover:bg-primary/5 hover:scale-105 active:scale-95 hover-scale'
                   }`}
                 >
-                  <div className="flex items-center gap-3 justify-center">
-                    <span className="text-3xl md:text-4xl">{item.emoji}</span>
-                    <span className="font-bold text-lg md:text-xl">{item.text}</span>
+                  <div className="flex items-center gap-2 md:gap-3 justify-center">
+                    <span className="text-2xl md:text-3xl lg:text-4xl">{item.emoji}</span>
+                    <span className="font-bold text-base md:text-lg lg:text-xl">{item.text}</span>
                   </div>
                 </div>
               ))}
