@@ -26,14 +26,11 @@ const Breadcrumbs = () => {
         'vocabulary': '📝 Vocabulary',
         'stories': '📚 Stories',
         'conversation': '🗣️ Speaking',
-        'culture': '🏛️ Culture',
         'grammatica': '✏️ Grammatica',
         'storia': '🏛️ Storia',
         'geografia': '🌍 Geografia',
-        'arte': '🎨 Arte',
         'geometria': '📐 Geometria',
         'misure': '📏 Misure',
-        'scienze': '🔬 Scienze'
       };
       
       return {

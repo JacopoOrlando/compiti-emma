@@ -1,8 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { Palette } from "lucide-react"; // Aggiunta per l'icona nella sezione inglese
 import { 
   Home, BookOpen, Calculator, History, Globe, Languages, 
-  Ruler, Shapes, Microscope, PenTool, Star 
+  Ruler, Shapes, PenTool, Star 
 } from "lucide-react";
 
 import {
@@ -31,7 +30,6 @@ const subjects = [
       { title: "Grammatica", url: "/italiano/grammatica", icon: PenTool },
       { title: "Storia", url: "/italiano/storia", icon: History },
       { title: "Geografia", url: "/italiano/geografia", icon: Globe },
-      { title: "Arte", url: "/italiano/arte", icon: Palette },
     ]
   },
   {
@@ -41,7 +39,6 @@ const subjects = [
       { title: "Operazioni", url: "/matematica/operazioni", icon: Calculator },
       { title: "Geometria", url: "/matematica/geometria", icon: Shapes },
       { title: "Misure", url: "/matematica/misure", icon: Ruler },
-      { title: "Scienze", url: "/matematica/scienze", icon: Microscope },
     ]
   },
   {
@@ -51,7 +48,6 @@ const subjects = [
       { title: "Vocabulary", url: "/english/vocabulary", icon: BookOpen },
       { title: "Stories", url: "/english/stories", icon: BookOpen },
       { title: "Speaking", url: "/english/conversation", icon: Languages },
-      { title: "Culture", url: "/english/culture", icon: Globe },
     ]
   }
 ];

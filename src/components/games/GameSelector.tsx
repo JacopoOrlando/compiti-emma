@@ -82,7 +82,6 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
     if (subject === 'matematica' && topic === 'operazioni') return '/math';
     if (subject === 'italiano' && topic === 'lettura') return '/reading';
     if (subject === 'italiano' && topic === 'grammatica') return '/grammar';
-    if (subject === 'italiano' && topic === 'arte') return '/colors';
     if (subject === 'english') return '/reading';
     return '/math'; // fallback
   }
