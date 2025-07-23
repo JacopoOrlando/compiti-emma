@@ -121,19 +121,32 @@ const MathGame = () => {
   };
 
   useEffect(() => {
-    setCurrentQuestion(generateQuestion());
-  }, [gameType]); // Aggiungiamo gameType come dipendenza
+    console.log("Game type changed to:", gameType);
+    const newQuestion = generateQuestion();
+    console.log("Generated question for new game type:", newQuestion);
+    setCurrentQuestion(newQuestion);
+    setUserAnswer("");
+    setShowResult(false);
+    setIsCorrect(false);
+  }, [gameType]); // Rigenerare quando cambia il tipo di gioco
 
   useEffect(() => {
     if (!currentQuestion) {
-      setCurrentQuestion(generateQuestion());
+      console.log("No current question, generating initial question");
+      const initialQuestion = generateQuestion();
+      console.log("Initial question generated:", initialQuestion);
+      setCurrentQuestion(initialQuestion);
     }
   }, []);
 
   const handleAnswerSubmit = () => {
     if (!currentQuestion || userAnswer === "") return;
     
-    console.log("User answer:", userAnswer, "Correct answer:", currentQuestion.answer, "Type:", typeof userAnswer, typeof currentQuestion.answer);
+    console.log("=== ANSWER SUBMISSION ===");
+    console.log("Current question:", currentQuestion);
+    console.log("User answer:", userAnswer, "Type:", typeof userAnswer);
+    console.log("Correct answer:", currentQuestion.answer, "Type:", typeof currentQuestion.answer);
+    console.log("Question: ", currentQuestion.num1, currentQuestion.operation, currentQuestion.num2, "=", currentQuestion.answer);
     
     const numAnswer = parseInt(userAnswer);
     const correct = numAnswer === currentQuestion.answer;
@@ -156,8 +169,11 @@ const MathGame = () => {
   };
 
   const handleNextQuestion = () => {
+    console.log("=== GENERATING NEXT QUESTION ===");
+    console.log("Current game type:", gameType);
     const newQuestion = generateQuestion();
-    console.log("Generated new question:", newQuestion);
+    console.log("New question generated:", newQuestion);
+    console.log("Calculation check:", newQuestion.num1, newQuestion.operation, newQuestion.num2, "should equal", newQuestion.answer);
     setCurrentQuestion(newQuestion);
     setUserAnswer("");
     setShowResult(false);
