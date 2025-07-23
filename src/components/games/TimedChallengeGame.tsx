@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Star, Home, RotateCcw, Timer } from "lucide-react";
 import { toast } from "sonner";
+import { getGameContent } from "@/lib/gameContent";
 
 interface ChallengeQuestion {
   question: string;
@@ -170,31 +171,18 @@ const TimedChallengeGame = () => {
     }
   ];
 
-  const getCurrentQuestions = () => {
-    // Context-aware question selection
-    if (subject === 'english') {
-      return englishQuestions;
-    } else if (subject === 'matematica') {
-      return mathQuestions;
-    } else if (subject === 'italiano' && topic === 'grammatica') {
-      return logicQuestions; // Italian grammar logic
-    } else if (subject === 'italiano' && topic === 'lettura') {
-      return quickQuestions; // Reading comprehension
-    } else {
-      // Default based on gameType for legacy support
-      switch (gameType) {
-        case 'math': return mathQuestions;
-        case 'quick': return quickQuestions;
-        case 'logic': return logicQuestions;
-        case 'english': return englishQuestions;
-        default: return mathQuestions;
-      }
-    }
-  };
+  // Get game content based on subject and topic
+  const gameContent = getGameContent(subject || "", topic || "");
+  const currentQuestions = gameContent?.timed.map(q => ({
+    question: q.question,
+    options: q.options,
+    correctIndex: q.correct,
+    points: q.points,
+    timeLimit: q.timeLimit
+  })) || mathQuestions.slice(0, 3); // Fallback to a few math questions
 
   const generateQuestion = (): ChallengeQuestion => {
-    const questions = getCurrentQuestions();
-    return questions[Math.floor(Math.random() * questions.length)];
+    return currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
   };
 
   const startNewQuestion = () => {

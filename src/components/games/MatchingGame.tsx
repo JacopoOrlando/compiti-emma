@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Star, Home, RotateCcw, Target, Volume2 } from "lucide-react";
 import { toast } from "sonner";
+import { getGameContent } from "@/lib/gameContent";
 
 interface MatchingPair {
   id: string;
@@ -79,58 +80,17 @@ const MatchingGame = () => {
     { id: "5", left: { text: "Viola", emoji: "🟣" }, right: { text: "Purple", emoji: "🇬🇧" }, subject: "colors" },
   ];
 
-  const getCurrentPairs = () => {
-    // Context-aware content selection - COMPREHENSIVE CURRICULUM
-    if (subject === 'matematica') {
-      if (topic === 'numeri-fino-20') return mathPairs;
-      if (topic === 'addizioni-fino-20') return mathPairs; 
-      if (topic === 'sottrazioni-fino-20') return mathPairs;
-      if (topic === 'problemi-fino-20') return mathPairs;
-      if (topic === 'numeri-fino-100') return mathPairs;
-      if (topic === 'operazioni-fino-100') return mathPairs;
-      if (topic === 'frazioni') return colorPairs; // Fractions with visual aids
-      if (topic === 'numeri-decimali') return englishVocabPairs; // Number concepts
-      if (topic === 'geometria-avanzata') return englishStoryPairs; // Geometric shapes
-      return mathPairs;
-    } else if (subject === 'scienze') {
-      if (topic === 'esseri-viventi-non-viventi') return wordPairs; // Living/non-living classification
-      if (topic === 'cicli-vitali') return englishStoryPairs; // Life cycle sequences  
-      if (topic === 'caratteristiche-viventi') return colorPairs; // Animal characteristics
-      if (topic === 'classificazione-piante-animali') return englishVocabPairs; // Classification matching
-      return wordPairs;
-    } else if (subject === 'tecnologia') {
-      if (topic === 'materiali-oggetti') return wordPairs; // Material-object matching
-      if (topic === 'strumenti-misura') return englishVocabPairs; // Tool-purpose matching
-      if (topic === 'ciclo-vita-prodotti') return englishStoryPairs; // Process sequences
-      return wordPairs;
-    } else if (subject === 'english') {
-      if (topic === 'colors-instructions') return colorPairs;
-      if (topic === 'descriptive-texts') return englishVocabPairs;
-      if (topic === 'vocabulary-preferences') return englishStoryPairs;
-      return englishVocabPairs; // default for English
-    } else if (subject === 'italiano') {
-      if (topic === 'lettura-associazione') return wordPairs; // Italian-English word association
-      if (topic === 'ascolto-comprensione') return colorPairs; // Listening comprehension with colors
-      if (topic === 'lettura-comprensione') return englishVocabPairs; // Reading comprehension
-      if (topic === 'riflessione-linguistica') return wordPairs; // Grammar reflection
-      return wordPairs;
-    } else if (subject === 'storia') {
-      return englishStoryPairs; // Historical story elements
-    } else if (subject === 'geografia') {
-      return colorPairs; // Geographic elements and colors
-    } else {
-      // Default based on gameType for legacy support
-      switch (gameType) {
-        case 'math': return mathPairs;
-        case 'words': return wordPairs;
-        case 'colors': return colorPairs;
-        default: return wordPairs; // Changed default to wordPairs for Italian content
-      }
-    }
-  };
+  // Get game content based on subject and topic
+  const gameContent = getGameContent(subject || "", topic || "");
+  const currentPairs = gameContent?.matching.map(pair => ({
+    id: Math.random().toString(),
+    left: { text: pair.left, emoji: pair.emoji || "🎯" },
+    right: { text: pair.right, emoji: pair.emoji || "✨" },
+    subject: subject || "default"
+  })) || mathPairs.slice(0, 4); // Fallback to a few math pairs
 
   const initializeGame = () => {
-    const pairs = getCurrentPairs();
+    const pairs = currentPairs;
     const shuffledRight = [...pairs.map(p => ({ ...p.right, id: p.id, isMatched: false }))].sort(() => Math.random() - 0.5);
     
     setLeftItems(pairs.map(p => ({ ...p.left, id: p.id, isMatched: false })));
@@ -239,11 +199,11 @@ const MatchingGame = () => {
       });
 
       // Check if game is completed
-      if (Object.keys(matches).length + 1 >= getCurrentPairs().length) {
+      if (Object.keys(matches).length + 1 >= currentPairs.length) {
         setGameCompleted(true);
         setTimeout(() => {
           toast("🎉 Fantastico! Hai completato tutti gli abbinamenti!", {
-            description: `Punteggio finale: ${score + 1}/${getCurrentPairs().length}`,
+            description: `Punteggio finale: ${score + 1}/${currentPairs.length}`,
             duration: 4000,
           });
         }, 500);
@@ -266,7 +226,7 @@ const MatchingGame = () => {
     });
   };
 
-  const progress = (score / getCurrentPairs().length) * 100;
+  const progress = (score / currentPairs.length) * 100;
 
   // Accessibility: read instructions aloud
   const readInstructions = () => {
@@ -297,7 +257,7 @@ const MatchingGame = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 bg-fun-yellow/20 px-4 py-2 rounded-full border-2 border-fun-yellow/50">
               <Star className="w-6 h-6 text-fun-yellow" />
-              <span className="font-bold text-xl">{score}/{getCurrentPairs().length}</span>
+              <span className="font-bold text-xl">{score}/{currentPairs.length}</span>
             </div>
             
             <Button 
@@ -360,7 +320,7 @@ const MatchingGame = () => {
           </div>
           <Progress value={progress} className="h-4 border-2 border-primary/20" />
           <div className="flex justify-center mt-2">
-            {Array.from({ length: getCurrentPairs().length }, (_, i) => (
+            {Array.from({ length: currentPairs.length }, (_, i) => (
               <span key={i} className={`text-2xl mx-1 ${i < score ? 'animate-bounce' : ''}`}>
                 {i < score ? '⭐' : '⚪'}
               </span>
@@ -440,7 +400,7 @@ const MatchingGame = () => {
               🎉 Fantastico! Hai completato tutto! 🎉
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground mb-6">
-              Punteggio perfetto: {score}/{getCurrentPairs().length} abbinamenti! 🌟
+              Punteggio perfetto: {score}/{currentPairs.length} abbinamenti! 🌟
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={handleRestart} variant="fun" size="lg" className="text-xl px-8 py-4">

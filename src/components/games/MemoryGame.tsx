@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Star, Home, RotateCcw, Brain } from "lucide-react";
 import { toast } from "sonner";
+import { getGameContent } from "@/lib/gameContent";
 
 interface MemoryCard {
   id: string;
@@ -66,29 +67,17 @@ const MemoryGame = () => {
     { content: "WATER", emoji: "💧" },
   ];
 
-  const getCurrentPairs = () => {
-    // Context-aware content selection
-    if (subject === 'english') {
-      return topic === 'vocabulary' ? englishPairs : colorPairs;
-    } else if (subject === 'matematica') {
-      return numberPairs;
-    } else if (subject === 'italiano' && topic === 'grammatica') {
-      return wordPairs; // Italian words
-    } else if (subject === 'italiano' && topic === 'lettura') {
-      return colorPairs; // Colors for reading
-    } else {
-      // Default based on gameType for legacy support
-      switch (gameType) {
-        case 'numbers': return numberPairs;
-        case 'words': return wordPairs;
-        case 'colors': return colorPairs;
-        default: return numberPairs;
-      }
-    }
-  };
+  // Get game content based on subject and topic
+  const gameContent = getGameContent(subject || "", topic || "");
+  const currentPairs = gameContent?.memory || [
+    { content: "1", emoji: "1️⃣" },
+    { content: "2", emoji: "2️⃣" },
+    { content: "3", emoji: "3️⃣" },
+    { content: "4", emoji: "4️⃣" }
+  ];
 
   const initializeGame = () => {
-    const pairs = getCurrentPairs();
+    const pairs = currentPairs.slice(0, 8); // Take first 8 pairs
     const gameCards: MemoryCard[] = [];
     
     pairs.forEach((pair, index) => {
@@ -191,7 +180,7 @@ const MemoryGame = () => {
     initializeGame();
   };
 
-  const progress = (score / getCurrentPairs().length) * 100;
+  const progress = (score / currentPairs.length) * 100;
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -209,7 +198,7 @@ const MemoryGame = () => {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2 bg-fun-yellow/20 px-4 py-2 rounded-full">
               <Star className="w-5 h-5 text-fun-yellow" />
-              <span className="font-bold">{score}/{getCurrentPairs().length}</span>
+              <span className="font-bold">{score}/{currentPairs.length}</span>
             </div>
             <div className="flex items-center gap-2 bg-fun-blue/20 px-4 py-2 rounded-full">
               <Brain className="w-5 h-5 text-fun-blue" />
@@ -308,7 +297,7 @@ const MemoryGame = () => {
               🎉 Incredibile memoria! Hai vinto!
             </h2>
             <p className="text-xl text-muted-foreground mb-6">
-              Completato in {moves} mosse con {score}/{getCurrentPairs().length} coppie!
+              Completato in {moves} mosse con {score}/{currentPairs.length} coppie!
             </p>
             <div className="flex gap-4 justify-center">
               <Button onClick={handleRestart} variant="fun" size="lg">
