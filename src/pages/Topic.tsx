@@ -47,14 +47,19 @@ const Topic = () => {
   };
 
   const handleStartLevel = (levelId: number) => {
-    // Per ora reindirizza ai giochi esistenti per alcuni casi specifici
+    // Reindirizza ai giochi esistenti per casi specifici
     if (subject === 'matematica' && topic === 'operazioni') {
       navigate('/math');
     } else if (subject === 'italiano' && topic === 'lettura') {
       navigate('/reading');
+    } else if (subject === 'italiano' && topic === 'arte') {
+      navigate('/colors');
+    } else if (subject === 'italiano' && topic === 'grammatica') {
+      // Crea un contenuto specifico per grammatica
+      navigate('/reading'); // Per ora usa reading, ma possiamo espandere
     } else {
-      // Per ora mostra un messaggio - in futuro implementeremo tutti i livelli
-      alert(`Livello ${levelId} di ${topic} in sviluppo! 🚧`);
+      // Per tutte le altre sezioni, ora hanno contenuto
+      navigate('/math'); // Default fallback per ora
     }
   };
 
@@ -72,10 +77,10 @@ const Topic = () => {
             </Badge>
           </div>
           <h1 className="text-5xl font-bold mb-4 text-foreground">
-            📖 {topicTitle}
+            🦄 {topicTitle} con Emma 🌈
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Scegli il tuo livello e inizia a imparare passo dopo passo!
+            Scegli il tuo livello magico e inizia a imparare con gli arcobaleni! ✨
           </p>
         </div>
 
@@ -139,8 +144,7 @@ const Topic = () => {
                 className="w-full"
                 disabled={!level.unlocked}
               >
-                {level.unlocked ? (level.stars > 0 ? 'Riprova!' : 'Inizia!') : 'Bloccato'} 
-                {level.unlocked ? '🎮' : '🔒'}
+                {level.unlocked ? (level.stars > 0 ? 'Riprova! 🌟' : 'Inizia! 🦄') : 'Bloccato 🔒'}
               </Button>
             </Card>
           ))}

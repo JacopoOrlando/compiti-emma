@@ -106,10 +106,10 @@ const Subject = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-5xl font-bold mb-4 text-foreground">
-            📚 {subjectData.title}
+            🦄 {subjectData.title} con Emma 🌈
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            {subjectData.description}
+            {subjectData.description} ✨
           </p>
         </div>
 
@@ -127,7 +127,7 @@ const Subject = () => {
               <h3 className="text-2xl font-bold mb-4 text-foreground">{topic.title}</h3>
               <p className="text-muted-foreground mb-6 text-lg">{topic.description}</p>
               <Button variant="game" className="w-full">
-                Inizia! 🚀
+                Iniziamo! 🌟🦄
               </Button>
             </Card>
           ))}

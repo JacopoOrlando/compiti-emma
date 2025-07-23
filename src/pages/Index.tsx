@@ -2,7 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { BookOpen, Calculator, Star, Trophy, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import heroImage from "@/assets/hero-kids-learning.jpg";
+import heroImage from "@/assets/rainbow-unicorns-hero.jpg";
+import unicornCelebration from "@/assets/unicorn-celebration.jpg";
 
 export default function Index() {
   const navigate = useNavigate();
@@ -37,10 +38,10 @@ export default function Index() {
         </div>
         <div className="relative z-10 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-bounce-gentle">
-            🌟 Imparare è Divertente! 🌟
+            🦄 Compiti di Emma 🌈
           </h1>
           <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-            Benvenuto nella tua magica avventura di apprendimento! Esplora le materie, completa i livelli e diventa un super studente!
+            Benvenuti nel mondo magico di Emma! Impara con arcobaleni, unicorni e tanta magia! ✨
           </p>
           <Button 
             variant="fun" 
@@ -48,7 +49,7 @@ export default function Index() {
             className="text-2xl py-6 px-12 animate-pulse-gentle"
             onClick={() => navigate('/matematica')}
           >
-            Inizia la tua Avventura! 🚀
+            Inizia l'Avventura Magica! 🦄✨
           </Button>
         </div>
       </section>
@@ -57,7 +58,7 @@ export default function Index() {
       <section className="py-16 px-6">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-foreground">
-            Scegli la tua Materia!
+            🌈 Scegli la tua Materia Magica! 🦄
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -73,7 +74,7 @@ export default function Index() {
                 <h3 className="text-3xl font-bold mb-4 text-foreground">{subject.title}</h3>
                 <p className="text-muted-foreground mb-6 text-lg">{subject.description}</p>
                 <Button variant="game" className="w-full text-xl py-4">
-                  Esplora! 🎮
+                  Iniziamo! 🌟🦄
                 </Button>
               </Card>
             ))}
