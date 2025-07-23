@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Star, Home, RotateCcw, Target, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -22,6 +22,12 @@ interface DragItem {
 
 const MatchingGame = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get context from location state
+  const subject = location.state?.subject || 'matematica';
+  const topic = location.state?.topic || 'operazioni';
+  
   const [leftItems, setLeftItems] = useState<DragItem[]>([]);
   const [rightItems, setRightItems] = useState<DragItem[]>([]);
   const [matches, setMatches] = useState<Record<string, string>>({});
@@ -56,11 +62,19 @@ const MatchingGame = () => {
   ];
 
   const getCurrentPairs = () => {
-    switch (gameType) {
-      case 'math': return mathPairs;
-      case 'words': return wordPairs;
-      case 'colors': return colorPairs;
-      default: return mathPairs;
+    // Context-aware content selection
+    if (subject === 'english') {
+      return topic === 'vocabulary' ? wordPairs : colorPairs;
+    } else if (subject === 'matematica') {
+      return mathPairs;
+    } else {
+      // Default based on gameType
+      switch (gameType) {
+        case 'math': return mathPairs;
+        case 'words': return wordPairs;
+        case 'colors': return colorPairs;
+        default: return mathPairs;
+      }
     }
   };
 
@@ -78,8 +92,14 @@ const MatchingGame = () => {
   };
 
   useEffect(() => {
+    // Set appropriate game type based on subject context
+    if (subject === 'english') {
+      setGameType('words');
+    } else if (subject === 'matematica') {
+      setGameType('math');
+    }
     initializeGame();
-  }, [gameType]);
+  }, [gameType, subject, topic]);
 
   // Enhanced feedback with audio
   const playMatchSound = () => {

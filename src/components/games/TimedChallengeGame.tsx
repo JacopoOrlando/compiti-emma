@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Star, Home, RotateCcw, Timer } from "lucide-react";
 import { toast } from "sonner";
 
@@ -16,6 +16,12 @@ interface ChallengeQuestion {
 
 const TimedChallengeGame = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get context from location state
+  const subject = location.state?.subject || 'matematica';
+  const topic = location.state?.topic || 'operazioni';
+  
   const [currentQuestion, setCurrentQuestion] = useState<ChallengeQuestion | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [score, setScore] = useState(0);
@@ -23,7 +29,7 @@ const TimedChallengeGame = () => {
   const [timeLeft, setTimeLeft] = useState(0);
   const [gameActive, setGameActive] = useState(true);
   const [showResult, setShowResult] = useState(false);
-  const [gameType, setGameType] = useState<'math' | 'quick' | 'logic'>('math');
+  const [gameType, setGameType] = useState<'math' | 'quick' | 'logic' | 'english'>('math');
 
   const mathQuestions: ChallengeQuestion[] = [
     {
@@ -118,11 +124,63 @@ const TimedChallengeGame = () => {
     }
   ];
 
+  // ENGLISH QUESTIONS - CRITICAL FIX
+  const englishQuestions: ChallengeQuestion[] = [
+    {
+      question: "What color is the sun?",
+      options: ["Blue", "Yellow", "Green", "Red"],
+      correctIndex: 1,
+      points: 10,
+      timeLimit: 6
+    },
+    {
+      question: "How do you say 'Cane' in English?",
+      options: ["Cat", "Dog", "Bird", "Fish"],
+      correctIndex: 1,
+      points: 15,
+      timeLimit: 5
+    },
+    {
+      question: "What is the English word for 'Casa'?",
+      options: ["Car", "Tree", "House", "Book"],
+      correctIndex: 2,
+      points: 15,
+      timeLimit: 5
+    },
+    {
+      question: "How many letters are in 'HELLO'?",
+      options: ["4", "5", "6", "7"],
+      correctIndex: 1,
+      points: 10,
+      timeLimit: 4
+    },
+    {
+      question: "What is the opposite of 'BIG'?",
+      options: ["Large", "Small", "Huge", "Tall"],
+      correctIndex: 1,
+      points: 20,
+      timeLimit: 6
+    },
+    {
+      question: "How do you say 'Buongiorno' in English?",
+      options: ["Goodbye", "Good morning", "Good night", "Thank you"],
+      correctIndex: 1,
+      points: 15,
+      timeLimit: 5
+    }
+  ];
+
   const getCurrentQuestions = () => {
+    // Context-aware question selection
+    if (subject === 'english') {
+      return englishQuestions;
+    }
+    
     switch (gameType) {
       case 'math': return mathQuestions;
       case 'quick': return quickQuestions;
       case 'logic': return logicQuestions;
+      case 'english': return englishQuestions;
       default: return mathQuestions;
     }
   };
@@ -142,8 +200,16 @@ const TimedChallengeGame = () => {
   };
 
   useEffect(() => {
+    // Set appropriate game type based on subject
+    if (subject === 'english') {
+      setGameType('english');
+    } else if (subject === 'matematica') {
+      setGameType('math');
+    } else {
+      setGameType('quick');
+    }
     startNewQuestion();
-  }, [gameType]);
+  }, [subject, topic]);
 
   useEffect(() => {
     if (timeLeft > 0 && gameActive && !showResult) {
@@ -247,16 +313,25 @@ const TimedChallengeGame = () => {
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 text-foreground">
-            🦄 Sfida Veloce ⚡
+            🦄 {subject === 'english' ? 'English Speed Challenge' : 'Sfida Veloce'} ⚡
           </h1>
           <p className="text-muted-foreground">
-            Rispondi il più velocemente possibile per ottenere più punti!
+            {subject === 'english' 
+              ? 'Answer English questions as quickly as possible for bonus points!' 
+              : 'Rispondi il più velocemente possibile per ottenere più punti!'}
           </p>
         </div>
 
-        {/* Game Type Selector */}
+        {/* Game Type Selector - Context Aware */}
         <div className="flex justify-center gap-4 mb-8">
-          {(['math', 'quick', 'logic'] as const).map((type) => (
+          {subject === 'english' ? (
+            <div className="text-center">
+              <span className="inline-block px-6 py-3 bg-fun-purple/20 rounded-full border-2 border-fun-purple text-fun-purple font-bold">
+                🇬🇧 English Challenge
+              </span>
+            </div>
+          ) : (
+            (['math', 'quick', 'logic'] as const).map((type) => (
             <Button
               key={type}
               variant={gameType === type ? "fun" : "outline"}
@@ -267,7 +342,7 @@ const TimedChallengeGame = () => {
               {type === 'quick' && '⚡ Veloce'}
               {type === 'logic' && '🧠 Logica'}
             </Button>
-          ))}
+          )))}
         </div>
 
         {/* Progress */}
