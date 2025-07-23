@@ -179,32 +179,22 @@ const MathGame = () => {
   };
 
   useEffect(() => {
-    console.log("Game type changed to:", gameType);
     const newQuestion = generateQuestion();
-    console.log("Generated question for new game type:", newQuestion);
     setCurrentQuestion(newQuestion);
     setUserAnswer("");
     setShowResult(false);
     setIsCorrect(false);
-  }, [gameType]); // Rigenerare quando cambia il tipo di gioco
+  }, [gameType]);
 
   useEffect(() => {
     if (!currentQuestion) {
-      console.log("No current question, generating initial question");
       const initialQuestion = generateQuestion();
-      console.log("Initial question generated:", initialQuestion);
       setCurrentQuestion(initialQuestion);
     }
   }, []);
 
   const handleAnswerSubmit = () => {
     if (!currentQuestion || userAnswer === "") return;
-    
-    console.log("=== ANSWER SUBMISSION ===");
-    console.log("Current question:", currentQuestion);
-    console.log("User answer:", userAnswer, "Type:", typeof userAnswer);
-    console.log("Correct answer:", currentQuestion.answer, "Type:", typeof currentQuestion.answer);
-    console.log("Question: ", currentQuestion.num1, currentQuestion.operation, currentQuestion.num2, "=", currentQuestion.answer);
     
     const numAnswer = parseInt(userAnswer);
     const correct = numAnswer === currentQuestion.answer;

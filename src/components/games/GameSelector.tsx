@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useNavigate, useLocation } from "react-router-dom";
 import { 
-  Target, Brain, Timer, Puzzle, 
-  Book, Gamepad2, Star, Play 
+  Target, Brain, Timer, 
+  Book, Gamepad2, Star, Play, Volume2, Home
 } from "lucide-react";
 
 interface GameStyle {
@@ -14,7 +14,8 @@ interface GameStyle {
   color: string;
   route: string;
   difficulty: 'Facile' | 'Medio' | 'Difficile';
-  features: string[];
+  ageGroup: string;
+  estimatedTime: string;
 }
 
 interface GameSelectorProps {
@@ -34,42 +35,46 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
     {
       id: "matching",
       title: "Abbinamenti",
-      description: "Trascina e collega gli elementi per creare le coppie corrette",
+      description: "Trascina e collega per imparare divertendoti",
       icon: Target,
       color: "bg-fun-blue",
       route: "/games/matching",
       difficulty: "Facile",
-      features: ["Drag & Drop", "Apprendimento visivo", "Feedback immediato"]
+      ageGroup: "6+ anni",
+      estimatedTime: "5-10 min"
     },
     {
       id: "memory",
       title: "Memoria",
-      description: "Trova le coppie nascoste e allena la tua memoria",
+      description: "Trova le coppie e allena la memoria",
       icon: Brain,
       color: "bg-fun-purple",
       route: "/games/memory",
       difficulty: "Medio", 
-      features: ["Carte da girare", "Allenamento memoria", "Punteggio basato su mosse"]
+      ageGroup: "7+ anni",
+      estimatedTime: "5-15 min"
     },
     {
       id: "timed",
       title: "Sfida Veloce",
-      description: "Rispondi rapidamente per ottenere punti bonus!",
+      description: "Rispondi velocemente per più punti!",
       icon: Timer,
       color: "bg-fun-orange",
       route: "/games/timed",
       difficulty: "Difficile",
-      features: ["Timer countdown", "Punti bonus velocità", "Pressione temporale"]
+      ageGroup: "8+ anni",
+      estimatedTime: "3-8 min"
     },
     {
       id: "classic",
       title: "Classico",
-      description: "Il formato tradizionale con domande a scelta multipla",
+      description: "Domande tradizionali con spiegazioni",
       icon: Book,
       color: "bg-fun-green",
       route: getClassicRoute(currentSubject, currentTopic),
       difficulty: "Medio",
-      features: ["Domande tradizionali", "Spiegazioni dettagliate", "Progressione graduale"]
+      ageGroup: "6+ anni",
+      estimatedTime: "10-20 min"
     }
   ];
 
@@ -91,124 +96,205 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
     }
   };
 
+  // Accessibility: read game descriptions aloud
+  const readGameDescription = (game: GameStyle) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(
+        `${game.title}. ${game.description}. Difficoltà: ${game.difficulty}. Tempo stimato: ${game.estimatedTime}.`
+      );
+      utterance.rate = 0.8;
+      utterance.pitch = 1.1;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
+  const readInstructions = () => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(
+        "Scegli il tuo stile di gioco preferito. Ogni gioco ha un modo diverso e divertente di imparare. Premi su un gioco per iniziare!"
+      );
+      utterance.rate = 0.8;
+      utterance.pitch = 1.1;
+      speechSynthesis.speak(utterance);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-background p-4 md:p-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold mb-4 text-foreground">
-            🦄 Scegli il Tuo Stile di Gioco! 🎮
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ogni stile di gioco offre un modo diverso e divertente di imparare. 
-            Quale preferisci oggi?
-          </p>
+        {/* Header with better navigation */}
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+          <Button 
+            variant="outline" 
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-lg px-6 py-3"
+          >
+            <Home className="w-5 h-5" />
+            <span>Casa</span>
+          </Button>
+          
+          <Button 
+            variant="outline" 
+            onClick={readInstructions}
+            className="flex items-center gap-2"
+            title="Ascolta le istruzioni"
+          >
+            <Volume2 className="w-4 h-4" />
+            <span>Ascolta Istruzioni</span>
+          </Button>
         </div>
 
-        {/* Subject/Topic Info */}
-        {currentSubject && currentTopic && (
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full">
-              <Gamepad2 className="w-5 h-5 text-primary" />
-              <span className="font-bold text-primary capitalize">
+        {/* Title - More engaging for children */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
+            🦄 Quale Gioco Vuoi Fare? 🎮
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
+            Ogni gioco è un'avventura diversa! Scegli quello che ti piace di più oggi! ✨
+          </p>
+          
+          {/* Subject/Topic Info - More prominent */}
+          {currentSubject && currentTopic && (
+            <div className="inline-flex items-center gap-3 bg-primary/10 px-6 py-3 rounded-full border-2 border-primary/20 mb-4">
+              <Gamepad2 className="w-6 h-6 text-primary" />
+              <span className="font-bold text-primary text-lg capitalize">
                 {currentSubject} • {currentTopic}
               </span>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        {/* Game Styles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mb-12">
+        {/* Simplified Game Selection - Better for children */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-12 max-w-4xl mx-auto">
           {gameStyles.map((game) => (
             <Card 
               key={game.id}
-              className="p-6 text-center hover:shadow-hover transition-all duration-300 transform hover:scale-105 border-4 border-opacity-20 shadow-card cursor-pointer group"
+              className="p-6 md:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border-4 border-opacity-20 shadow-card cursor-pointer group bg-gradient-to-br from-background to-muted/30"
               onClick={() => navigate(game.route)}
             >
-              {/* Icon */}
-              <div className={`w-20 h-20 ${game.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-fun group-hover:animate-wiggle`}>
-                <game.icon className="w-10 h-10 text-white" />
+              {/* Icon - Larger and more prominent */}
+              <div className={`w-20 h-20 md:w-24 md:h-24 ${game.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-fun group-hover:animate-wiggle`}>
+                <game.icon className="w-10 h-10 md:w-12 md:h-12 text-white" />
               </div>
 
-              {/* Title & Difficulty */}
+              {/* Title & Tags */}
               <div className="mb-4">
-                <h3 className="text-2xl font-bold mb-2 text-foreground">{game.title}</h3>
-                <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${getDifficultyColor(game.difficulty)}`}>
-                  {game.difficulty}
-                </span>
+                <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">{game.title}</h3>
+                <div className="flex flex-wrap justify-center gap-2 mb-3">
+                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${getDifficultyColor(game.difficulty)}`}>
+                    {game.difficulty}
+                  </span>
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-muted text-foreground">
+                    {game.ageGroup}
+                  </span>
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-bold bg-fun-blue/20 text-fun-blue">
+                    {game.estimatedTime}
+                  </span>
+                </div>
               </div>
 
-              {/* Description */}
-              <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
+              {/* Description - Simplified for children */}
+              <p className="text-muted-foreground mb-6 text-base md:text-lg leading-relaxed">
                 {game.description}
               </p>
 
-              {/* Features */}
-              <div className="space-y-2 mb-6">
-                {game.features.map((feature, index) => (
-                  <div key={index} className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Star className="w-3 h-3 text-fun-yellow" />
-                    <span>{feature}</span>
-                  </div>
-                ))}
+              {/* Action Buttons */}
+              <div className="space-y-3">
+                <Button 
+                  variant="game" 
+                  className="w-full group-hover:scale-105 transition-transform text-lg md:text-xl py-3 md:py-4"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigate(game.route);
+                  }}
+                >
+                  <Play className="w-5 h-5 mr-2" />
+                  Inizia! 🌟
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  className="w-full"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    readGameDescription(game);
+                  }}
+                >
+                  <Volume2 className="w-4 h-4 mr-2" />
+                  Ascolta
+                </Button>
               </div>
-
-              {/* Play Button */}
-              <Button variant="game" className="w-full group-hover:scale-105 transition-transform">
-                <Play className="w-4 h-4 mr-2" />
-                Gioca! 🌟
-              </Button>
             </Card>
           ))}
         </div>
 
-        {/* Fun Stats */}
-        <Card className="p-8 text-center bg-muted/30 border-4 border-primary/10">
-          <h3 className="text-2xl font-bold mb-6 text-foreground">
-            🌈 Perché Variare lo Stile di Gioco?
+        {/* Educational Benefits - Simplified */}
+        <Card className="p-6 md:p-8 text-center bg-muted/30 border-4 border-primary/10 mb-8">
+          <h3 className="text-2xl md:text-3xl font-bold mb-6 text-foreground">
+            🌈 Perché Giocare in Modi Diversi?
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-fun-blue rounded-full flex items-center justify-center mb-4">
-                <Brain className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-fun-blue rounded-full flex items-center justify-center mb-4">
+                <Brain className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <h4 className="font-bold mb-2">Stimola Diverse Abilità</h4>
-              <p className="text-sm text-muted-foreground">
-                Memoria, velocità, ragionamento e creatività
+              <h4 className="font-bold text-lg md:text-xl mb-2">Allena la Mente</h4>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Ogni gioco stimola parti diverse del cervello
               </p>
             </div>
             
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-fun-green rounded-full flex items-center justify-center mb-4">
-                <Target className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-fun-green rounded-full flex items-center justify-center mb-4">
+                <Target className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <h4 className="font-bold mb-2">Mantiene l'Interesse</h4>
-              <p className="text-sm text-muted-foreground">
-                La varietà rende l'apprendimento sempre divertente
+              <h4 className="font-bold text-lg md:text-xl mb-2">Sempre Divertente</h4>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Non ti annoi mai quando cambi stile di gioco!
               </p>
             </div>
             
             <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-fun-purple rounded-full flex items-center justify-center mb-4">
-                <Puzzle className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-fun-purple rounded-full flex items-center justify-center mb-4">
+                <Star className="w-8 h-8 md:w-10 md:h-10 text-white" />
               </div>
-              <h4 className="font-bold mb-2">Adatta al Tuo Stile</h4>
-              <p className="text-sm text-muted-foreground">
-                Trova il metodo che funziona meglio per te
+              <h4 className="font-bold text-lg md:text-xl mb-2">Impari Meglio</h4>
+              <p className="text-sm md:text-base text-muted-foreground">
+                Trova il modo che funziona meglio per te!
               </p>
             </div>
           </div>
         </Card>
 
-        {/* Back Button */}
-        <div className="text-center mt-8">
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/')}
-            className="text-lg px-8 py-4"
-          >
-            ← Torna alla Home
-          </Button>
+        {/* Quick Access to Popular Games */}
+        <div className="text-center">
+          <h3 className="text-xl md:text-2xl font-bold mb-4 text-foreground">
+            🔥 Giochi Più Popolari
+          </h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            <Button 
+              variant="fun" 
+              onClick={() => navigate('/games/memory')}
+              className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
+            >
+              🧠 Memoria
+            </Button>
+            <Button 
+              variant="fun" 
+              onClick={() => navigate('/games/matching')}
+              className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
+            >
+              🎯 Abbinamenti
+            </Button>
+            <Button 
+              variant="fun" 
+              onClick={() => navigate('/math')}
+              className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
+            >
+              🔢 Matematica
+            </Button>
+          </div>
         </div>
       </div>
     </div>
