@@ -170,7 +170,7 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
             <Card 
               key={game.id}
               className="p-6 md:p-8 text-center hover:shadow-2xl transition-all duration-300 transform hover:scale-105 border-4 border-opacity-20 shadow-card cursor-pointer group bg-gradient-to-br from-background to-muted/30"
-              onClick={() => navigate(game.route)}
+              onClick={() => navigate(game.route, { state: { subject: currentSubject, topic: currentTopic } })}
             >
               {/* Icon - Larger and more prominent */}
               <div className={`w-20 h-20 md:w-24 md:h-24 ${game.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-fun group-hover:animate-wiggle`}>
@@ -205,7 +205,7 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
                   className="w-full group-hover:scale-105 transition-transform text-lg md:text-xl py-3 md:py-4"
                   onClick={(e) => {
                     e.stopPropagation();
-                    navigate(game.route);
+                    navigate(game.route, { state: { subject: currentSubject, topic: currentTopic } });
                   }}
                 >
                   <Play className="w-5 h-5 mr-2" />
@@ -275,21 +275,21 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
           <div className="flex flex-wrap justify-center gap-3">
             <Button 
               variant="fun" 
-              onClick={() => navigate('/games/memory')}
+              onClick={() => navigate('/games/memory', { state: { subject: currentSubject, topic: currentTopic } })}
               className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
             >
               🧠 Memoria
             </Button>
             <Button 
               variant="fun" 
-              onClick={() => navigate('/games/matching')}
+              onClick={() => navigate('/games/matching', { state: { subject: currentSubject, topic: currentTopic } })}
               className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
             >
               🎯 Abbinamenti
             </Button>
             <Button 
               variant="fun" 
-              onClick={() => navigate('/math')}
+              onClick={() => navigate('/math', { state: { subject: currentSubject, topic: currentTopic } })}
               className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
             >
               🔢 Matematica

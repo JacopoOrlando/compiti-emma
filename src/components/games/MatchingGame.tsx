@@ -387,7 +387,7 @@ const MatchingGame = () => {
               <Button onClick={handleRestart} variant="fun" size="lg" className="text-xl px-8 py-4">
                 Gioca Ancora 🌟
               </Button>
-              <Button onClick={() => navigate('/games')} variant="outline" size="lg" className="text-xl px-8 py-4">
+              <Button onClick={() => navigate('/games', { state: { subject, topic } })} variant="outline" size="lg" className="text-xl px-8 py-4">
                 Altri Giochi 🎮
               </Button>
             </div>
