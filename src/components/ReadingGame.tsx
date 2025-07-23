@@ -25,13 +25,13 @@ const ReadingGame = () => {
   // Frasi più complesse per seconda elementare
   const sentenceQuestions: WordQuestion[] = [
     {
-      word: "IL GATTO BIANCO DORME COMODAMENTE SUL DIVANO ROSSO",
-      image: "🐱💤🛋️",
+      word: "Il gatto bianco dorme comodamente sul divano rosso",
+      image: "🐱💤🛋️", 
       options: ["Il gatto mangia sul tavolo", "Il gatto bianco dorme comodamente sul divano rosso", "Il cane corre nel giardino", "Il gatto gioca con la palla"],
       correctIndex: 1
     },
     {
-      word: "LA BAMBINA CURIOSA LEGGE ATTENTAMENTE UN LIBRO INTERESSANTE",
+      word: "La bambina curiosa legge attentamente un libro interessante",
       image: "👧📖✨",
       options: ["La bambina canta una canzone", "La bambina disegna un fiore", "La bambina curiosa legge attentamente un libro interessante", "La bambina balla nella stanza"],
       correctIndex: 2

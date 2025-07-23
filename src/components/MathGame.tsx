@@ -111,9 +111,11 @@ const MathGame = () => {
         answer = num1 * num2;
         break;
       case '÷':
-        answer = Math.floor(Math.random() * 12) + 1;
-        num2 = Math.floor(Math.random() * 12) + 1;
-        num1 = answer * num2;
+        // Generate division that results in whole numbers
+        const quotient = Math.floor(Math.random() * 12) + 1; // 1-12
+        num2 = Math.floor(Math.random() * 12) + 1;           // 1-12 
+        num1 = quotient * num2;                              // dividend
+        answer = quotient;                                   // correct answer is quotient
         break;
     }
     
@@ -225,11 +227,7 @@ const MathGame = () => {
   };
 
   const handleNextQuestion = () => {
-    console.log("=== GENERATING NEXT QUESTION ===");
-    console.log("Current game type:", gameType);
     const newQuestion = generateQuestion();
-    console.log("New question generated:", newQuestion);
-    console.log("Calculation check:", newQuestion.num1, newQuestion.operation, newQuestion.num2, "should equal", newQuestion.answer);
     setCurrentQuestion(newQuestion);
     setUserAnswer("");
     setShowResult(false);
@@ -242,7 +240,6 @@ const MathGame = () => {
     setUserAnswer("");
     setShowResult(false);
     const newQuestion = generateQuestion();
-    console.log("Restart - new question:", newQuestion);
     setCurrentQuestion(newQuestion);
   };
 
