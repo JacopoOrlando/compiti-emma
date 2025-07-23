@@ -8,13 +8,13 @@ const Topic = () => {
   const { subject, topic } = useParams<{ subject: string; topic: string }>();
   const navigate = useNavigate();
 
-  // Per ora creiamo 10 livelli per ogni argomento
+  // Tutti i 10 livelli sono ora accessibili
   const levels = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     title: `Livello ${i + 1}`,
     description: getDescriptionForLevel(subject, topic, i + 1),
     difficulty: i < 3 ? 'Facile' : i < 7 ? 'Medio' : 'Difficile',
-    unlocked: i < 3, // Prime 3 sempre sbloccate
+    unlocked: true, // Tutti i livelli sono sbloccati
     stars: Math.floor(Math.random() * 4), // Stelle simulate
   }));
 
@@ -152,16 +152,16 @@ const Topic = () => {
             <h3 className="text-xl font-bold mb-4">I tuoi Progressi</h3>
             <div className="flex justify-around">
               <div>
-                <div className="text-2xl font-bold text-fun-green">3</div>
-                <div className="text-sm text-muted-foreground">Livelli Sbloccati</div>
+                <div className="text-2xl font-bold text-fun-green">10</div>
+                <div className="text-sm text-muted-foreground">Livelli Disponibili</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-fun-yellow">★ 7</div>
+                <div className="text-2xl font-bold text-fun-yellow">★ 12</div>
                 <div className="text-sm text-muted-foreground">Stelle Totali</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-fun-purple">30%</div>
-                <div className="text-sm text-muted-foreground">Completamento</div>
+                <div className="text-2xl font-bold text-fun-purple">🎯</div>
+                <div className="text-sm text-muted-foreground">Scegli il Tuo Livello!</div>
               </div>
             </div>
           </Card>
