@@ -174,14 +174,21 @@ const TimedChallengeGame = () => {
     // Context-aware question selection
     if (subject === 'english') {
       return englishQuestions;
-    }
-    
-    switch (gameType) {
-      case 'math': return mathQuestions;
-      case 'quick': return quickQuestions;
-      case 'logic': return logicQuestions;
-      case 'english': return englishQuestions;
-      default: return mathQuestions;
+    } else if (subject === 'matematica') {
+      return mathQuestions;
+    } else if (subject === 'italiano' && topic === 'grammatica') {
+      return logicQuestions; // Italian grammar logic
+    } else if (subject === 'italiano' && topic === 'lettura') {
+      return quickQuestions; // Reading comprehension
+    } else {
+      // Default based on gameType for legacy support
+      switch (gameType) {
+        case 'math': return mathQuestions;
+        case 'quick': return quickQuestions;
+        case 'logic': return logicQuestions;
+        case 'english': return englishQuestions;
+        default: return mathQuestions;
+      }
     }
   };
 

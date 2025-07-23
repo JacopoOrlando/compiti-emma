@@ -72,8 +72,12 @@ const MemoryGame = () => {
       return topic === 'vocabulary' ? englishPairs : colorPairs;
     } else if (subject === 'matematica') {
       return numberPairs;
+    } else if (subject === 'italiano' && topic === 'grammatica') {
+      return wordPairs; // Italian words
+    } else if (subject === 'italiano' && topic === 'lettura') {
+      return colorPairs; // Colors for reading
     } else {
-      // Default based on gameType
+      // Default based on gameType for legacy support
       switch (gameType) {
         case 'numbers': return numberPairs;
         case 'words': return wordPairs;

@@ -32,31 +32,70 @@ const Topic = () => {
   }));
 
   function getDescriptionForLevel(subject: string, topic: string, level: number): string {
+    // Math descriptions
     if (subject === 'matematica' && topic === 'operazioni') {
-      if (level <= 3) return 'Addizioni semplici con numeri piccoli';
-      if (level <= 6) return 'Sottrazioni e addizioni con numeri più grandi';
-      return 'Problemi complessi con tutte le operazioni';
+      if (level <= 3) return 'Addizioni semplici con numeri piccoli (1-10)';
+      if (level <= 6) return 'Sottrazioni e addizioni con numeri più grandi (1-50)';
+      return 'Problemi complessi con tutte le operazioni (1-100)';
     }
     
+    if (subject === 'matematica' && topic === 'geometria') {
+      if (level <= 3) return 'Forme base: cerchio, quadrato, triangolo';
+      if (level <= 6) return 'Figure complesse e spazi';
+      return 'Perimetri, aree e misure avanzate';
+    }
+    
+    if (subject === 'matematica' && topic === 'misure') {
+      if (level <= 3) return 'Centimetri, metri e ore';
+      if (level <= 6) return 'Peso, capacità e tempo';
+      return 'Conversioni e misure complesse';
+    }
+    
+    // Italian descriptions  
     if (subject === 'italiano' && topic === 'lettura') {
       if (level <= 3) return 'Parole semplici e sillabe';
       if (level <= 6) return 'Frasi complete e racconti brevi';
       return 'Storie lunghe e comprensione del testo';
     }
     
+    if (subject === 'italiano' && topic === 'grammatica') {
+      if (level <= 3) return 'Articoli e nomi semplici';
+      if (level <= 6) return 'Verbi e aggettivi';
+      return 'Analisi grammaticale completa';
+    }
+    
+    if (subject === 'italiano' && topic === 'storia') {
+      if (level <= 3) return 'La mia famiglia e la scuola';
+      if (level <= 6) return 'Il mio paese e le tradizioni';
+      return 'Storia antica e moderna';
+    }
+    
+    if (subject === 'italiano' && topic === 'geografia') {
+      if (level <= 3) return 'La mia casa e il quartiere';
+      if (level <= 6) return 'La mia città e regione';
+      return 'L\'Italia e il mondo';
+    }
+    
+    // English descriptions
     if (subject === 'english' && topic === 'vocabulary') {
-      if (level <= 3) return 'Basic English words and colors';
-      if (level <= 6) return 'Family, animals and everyday objects';
+      if (level <= 3) return 'Basic words: colors, animals, family';
+      if (level <= 6) return 'Everyday objects and actions';
       return 'Advanced vocabulary and expressions';
     }
     
     if (subject === 'english' && topic === 'stories') {
-      if (level <= 3) return 'Simple English stories with pictures';
+      if (level <= 3) return 'Simple stories with pictures';
       if (level <= 6) return 'Short tales and fairy stories';
       return 'Longer stories with comprehension';
     }
     
-    // Descrizioni generiche per altri argomenti
+    if (subject === 'english' && topic === 'conversation') {
+      if (level <= 3) return 'Greetings and basic phrases';
+      if (level <= 6) return 'Questions and simple conversations';
+      return 'Complex dialogues and discussions';
+    }
+    
+    // Fallback descriptions
     if (level <= 3) return 'Concetti base e primi esercizi';
     if (level <= 6) return 'Esercizi intermedi e approfondimenti';
     return 'Esercizi avanzati e sfide complesse';

@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Calculator, History, Globe, Palette, PenTool, Shapes, Ruler, Microscope, Volume2, FileText, Users } from "lucide-react";
+import { BookOpen, Calculator, History, Globe, PenTool, Shapes, Ruler, Volume2, FileText } from "lucide-react";
 
 const subjects = {
   italiano: {
@@ -36,19 +36,12 @@ const subjects = {
         description: "Esplora il mondo e i suoi luoghi",
         icon: Globe,
         color: "bg-fun-blue"
-      },
-      { 
-        id: "arte", 
-        title: "Arte e Immagine", 
-        description: "Crea e scopri l'arte italiana",
-        icon: Palette,
-        color: "bg-fun-purple"
       }
     ]
   },
   matematica: {
     title: "Matematica",
-    description: "Scopri i numeri, le forme e il mondo della scienza!",
+    description: "Scopri i numeri e le forme con Emma!",
     color: "bg-fun-blue",
     topics: [
       { 
@@ -71,13 +64,6 @@ const subjects = {
         description: "Lunghezza, peso, tempo e capacità",
         icon: Ruler,
         color: "bg-fun-orange"
-      },
-      { 
-        id: "scienze", 
-        title: "Scienze", 
-        description: "Esperimenti e scoperte scientifiche",
-        icon: Microscope,
-        color: "bg-fun-green"
       }
     ]
   },
@@ -106,13 +92,6 @@ const subjects = {
         description: "Practice speaking English with Emma",
         icon: Volume2,
         color: "bg-fun-green"
-      },
-      { 
-        id: "culture", 
-        title: "Culture", 
-        description: "Discover English culture and traditions",
-        icon: Users,
-        color: "bg-fun-orange"
       }
     ]
   }

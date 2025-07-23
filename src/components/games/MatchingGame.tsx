@@ -67,8 +67,12 @@ const MatchingGame = () => {
       return topic === 'vocabulary' ? wordPairs : colorPairs;
     } else if (subject === 'matematica') {
       return mathPairs;
+    } else if (subject === 'italiano' && topic === 'grammatica') {
+      return wordPairs; // Italian grammar pairs
+    } else if (subject === 'italiano' && topic === 'lettura') {
+      return colorPairs; // Reading comprehension with colors
     } else {
-      // Default based on gameType
+      // Default based on gameType for legacy support
       switch (gameType) {
         case 'math': return mathPairs;
         case 'words': return wordPairs;
