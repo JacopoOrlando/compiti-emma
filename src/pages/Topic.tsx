@@ -8,6 +8,19 @@ const Topic = () => {
   const { subject, topic } = useParams<{ subject: string; topic: string }>();
   const navigate = useNavigate();
 
+  // Validazione parametri di sicurezza
+  if (!subject || !topic || typeof subject !== 'string' || typeof topic !== 'string') {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">🦄 Parametri non validi</h1>
+          <p className="text-muted-foreground mb-4">Emma non capisce questo percorso!</p>
+          <Button onClick={() => navigate('/')} variant="fun">🏠 Torna a Casa</Button>
+        </div>
+      </div>
+    );
+  }
+
   // Tutti i 10 livelli sono ora accessibili
   const levels = Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,

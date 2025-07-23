@@ -122,14 +122,35 @@ const Subject = () => {
   const { subject } = useParams<{ subject: string }>();
   const navigate = useNavigate();
   
-  const subjectData = subject ? subjects[subject as keyof typeof subjects] : null;
-
-  if (!subjectData) {
+  // Validazione parametri di sicurezza
+  if (!subject || typeof subject !== 'string') {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Materia non trovata</h1>
-          <Button onClick={() => navigate('/')}>Torna alla Home</Button>
+          <h1 className="text-4xl font-bold mb-4">🦄 Parametro non valido</h1>
+          <p className="text-muted-foreground mb-4">Emma non capisce questo percorso!</p>
+          <Button onClick={() => navigate('/')}>🏠 Torna a Casa</Button>
+        </div>
+      </div>
+    );
+  }
+  
+  const subjectData = subjects[subject as keyof typeof subjects];
+
+  if (!subjectData) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <div className="text-center max-w-md">
+          <h1 className="text-4xl font-bold mb-4">🦄 Materia non trovata</h1>
+          <p className="text-muted-foreground mb-4">
+            Emma non conosce ancora la materia "<span className="font-mono bg-muted px-2 py-1 rounded">{subject}</span>"
+          </p>
+          <div className="space-y-2">
+            <Button onClick={() => navigate('/')} variant="fun">🏠 Torna a Casa</Button>
+            <p className="text-sm text-muted-foreground">
+              Materie disponibili: <strong>italiano</strong>, <strong>matematica</strong>, <strong>english</strong>
+            </p>
+          </div>
         </div>
       </div>
     );
