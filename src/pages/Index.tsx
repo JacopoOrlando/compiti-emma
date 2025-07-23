@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { BookOpen, Calculator, Star, Trophy, Heart } from "lucide-react";
+import { BookOpen, Calculator, Star, Trophy, Heart, Globe } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/rainbow-unicorns-hero.jpg";
 import unicornCelebration from "@/assets/unicorn-celebration.jpg";
@@ -22,6 +22,13 @@ export default function Index() {
       icon: Calculator,
       color: "bg-fun-blue",
       path: "/matematica"
+    },
+    {
+      title: "English",
+      description: "Learn English with Emma! Words, Stories & Fun",
+      icon: Globe,
+      color: "bg-fun-purple",
+      path: "/english"
     }
   ];
 
@@ -61,7 +68,7 @@ export default function Index() {
             🌈 Scegli la tua Materia Magica! 🦄
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {subjects.map((subject) => (
               <Card 
                 key={subject.title}

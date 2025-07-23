@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Calculator, History, Globe, Palette, PenTool, Shapes, Ruler, Microscope } from "lucide-react";
+import { BookOpen, Calculator, History, Globe, Palette, PenTool, Shapes, Ruler, Microscope, Volume2, FileText, Users } from "lucide-react";
 
 const subjects = {
   italiano: {
@@ -78,6 +78,41 @@ const subjects = {
         description: "Esperimenti e scoperte scientifiche",
         icon: Microscope,
         color: "bg-fun-green"
+      }
+    ]
+  },
+  english: {
+    title: "English",
+    description: "Learn English with Emma! Discover words, stories and fun activities! 🌍",
+    color: "bg-fun-purple",
+    topics: [
+      { 
+        id: "vocabulary", 
+        title: "Vocabulary", 
+        description: "Learn new English words and their meanings",
+        icon: BookOpen,
+        color: "bg-fun-purple"
+      },
+      { 
+        id: "stories", 
+        title: "Stories", 
+        description: "Read fun English stories and tales",
+        icon: FileText,
+        color: "bg-fun-blue"
+      },
+      { 
+        id: "conversation", 
+        title: "Speaking", 
+        description: "Practice speaking English with Emma",
+        icon: Volume2,
+        color: "bg-fun-green"
+      },
+      { 
+        id: "culture", 
+        title: "Culture", 
+        description: "Discover English culture and traditions",
+        icon: Users,
+        color: "bg-fun-orange"
       }
     ]
   }

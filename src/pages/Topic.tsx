@@ -31,6 +31,18 @@ const Topic = () => {
       return 'Storie lunghe e comprensione del testo';
     }
     
+    if (subject === 'english' && topic === 'vocabulary') {
+      if (level <= 3) return 'Basic English words and colors';
+      if (level <= 6) return 'Family, animals and everyday objects';
+      return 'Advanced vocabulary and expressions';
+    }
+    
+    if (subject === 'english' && topic === 'stories') {
+      if (level <= 3) return 'Simple English stories with pictures';
+      if (level <= 6) return 'Short tales and fairy stories';
+      return 'Longer stories with comprehension';
+    }
+    
     // Descrizioni generiche per altri argomenti
     if (level <= 3) return 'Concetti base e primi esercizi';
     if (level <= 6) return 'Esercizi intermedi e approfondimenti';
@@ -54,9 +66,10 @@ const Topic = () => {
       navigate('/reading');
     } else if (subject === 'italiano' && topic === 'arte') {
       navigate('/colors');
-    } else if (subject === 'italiano' && topic === 'grammatica') {
-      // Crea un contenuto specifico per grammatica
-      navigate('/reading'); // Per ora usa reading, ma possiamo espandere
+    } else if (subject === 'english' && (topic === 'vocabulary' || topic === 'stories')) {
+      navigate('/reading'); // Usa il gioco di lettura per l'inglese
+    } else if (subject === 'english' && topic === 'conversation') {
+      navigate('/reading'); // Per ora usa reading, in futuro possiamo fare un gioco specifico
     } else {
       // Per tutte le altre sezioni, ora hanno contenuto
       navigate('/math'); // Default fallback per ora

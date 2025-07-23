@@ -117,37 +117,17 @@ All colors MUST be HSL.
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
+/* Custom animations */
+.animate-wiggle {
+  animation: wiggle 2s ease-in-out infinite;
 }
 
-/* Custom animations for kids theme */
-@layer components {
-  .animate-wiggle {
-    animation: wiggle 2s ease-in-out infinite;
-  }
-  
-  .animate-bounce-gentle {
-    animation: bounce-gentle 3s ease-in-out infinite;
-  }
-  
-  .animate-pulse-gentle {
-    animation: pulse-gentle 2s ease-in-out infinite;
-  }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .animate-spin-slow {
-    animation: spin 8s linear infinite;
-  }
+.animate-bounce-gentle {
+  animation: bounce-gentle 3s ease-in-out infinite;
+}
+
+.animate-pulse-gentle {
+  animation: pulse-gentle 2s ease-in-out infinite;
 }
 
 @keyframes wiggle {
@@ -166,57 +146,11 @@ All colors MUST be HSL.
   50% { transform: scale(1.05); opacity: 0.9; }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(1deg); }
-  66% { transform: translateY(-5px) rotate(-1deg); }
-}
+@layer base {
+  * {
+    @apply border-border;
+  }
 
-/* Responsive improvements */
-@media (max-width: 768px) {
-  .text-6xl {
-    @apply text-4xl;
+  body {
+    @apply bg-background text-foreground;
   }
-  
-  .text-5xl {
-    @apply text-3xl;
-  }
-  
-  .text-4xl {
-    @apply text-2xl;
-  }
-  
-  .py-16 {
-    @apply py-8;
-  }
-  
-  .px-12 {
-    @apply px-6;
-  }
-  
-  .gap-8 {
-    @apply gap-4;
-  }
-}
-
-@media (max-width: 640px) {
-  .text-3xl {
-    @apply text-xl;
-  }
-  
-  .text-2xl {
-    @apply text-lg;
-  }
-  
-  .p-8 {
-    @apply p-4;
-  }
-  
-  .mb-8 {
-    @apply mb-4;
-  }
-  
-  .mb-6 {
-    @apply mb-3;
-  }
-}
