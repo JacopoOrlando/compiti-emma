@@ -64,7 +64,7 @@ const subjects = [
       { title: "Lettura e Associazione", url: "/italiano/lettura-associazione", icon: BookOpen },
       { title: "Ascolto e Comprensione", url: "/italiano/ascolto-comprensione", icon: Languages },
       { title: "Lettura e Comprensione", url: "/italiano/lettura-comprensione", icon: PenTool },
-      { title: "Riflessione Linguistica", url: "/italiano/riflessione-linguistica", icon: Star },
+      { title: "Grammatica e Ortografia", url: "/italiano/riflessione-linguistica", icon: Star },
     ]
   },
   {

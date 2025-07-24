@@ -193,8 +193,8 @@ const subjects = {
       },
       { 
         id: "riflessione-linguistica", 
-        title: "Riflessione Linguistica", 
-        description: "Grammatica, ortografia e analisi delle parole",
+        title: "Grammatica e Ortografia", 
+        description: "Impara nomi, verbi, aggettivi e regole grammaticali",
         icon: PenTool,
         color: "bg-fun-orange"
       }

@@ -68,6 +68,38 @@ export const gameContentMap: Record<string, Record<string, GameContent>> = {
         { question: "Cosa si mangia d'estate?", options: ["Sciarpa", "Cappotto", "Gelato", "Guanti"], correct: 2, points: 10, timeLimit: 15 },
         { question: "Dove si gioca all'aperto?", options: ["Parco", "Frigorifero", "Armadio", "Televisore"], correct: 0, points: 10, timeLimit: 15 }
       ]
+    },
+    "riflessione-linguistica": {
+      matching: [
+        { left: "NOME", right: "gatto, casa, libro", emoji: "📝" },
+        { left: "VERBO", right: "correre, mangiare, leggere", emoji: "🏃" },
+        { left: "AGGETTIVO", right: "bello, grande, rosso", emoji: "🎨" },
+        { left: "ARTICOLO", right: "il, la, un, una", emoji: "📰" },
+        { left: "SINGOLARE", right: "bambino", emoji: "1️⃣" },
+        { left: "PLURALE", right: "bambini", emoji: "👥" },
+        { left: "MASCHILE", right: "il gatto", emoji: "♂️" },
+        { left: "FEMMINILE", right: "la gatta", emoji: "♀️" }
+      ],
+      memory: [
+        { content: "NOME", emoji: "📝" },
+        { content: "VERBO", emoji: "🏃" },
+        { content: "AGGETTIVO", emoji: "🎨" },
+        { content: "ARTICOLO", emoji: "📰" },
+        { content: "SINGOLARE", emoji: "1️⃣" },
+        { content: "PLURALE", emoji: "👥" },
+        { content: "MASCHILE", emoji: "♂️" },
+        { content: "FEMMINILE", emoji: "♀️" },
+        { content: "PRESENTE", emoji: "⏰" },
+        { content: "PASSATO", emoji: "⏪" }
+      ],
+      timed: [
+        { question: "Qual è la parte del discorso di 'gatto'?", options: ["Verbo", "Nome", "Aggettivo", "Articolo"], correct: 1, points: 10, timeLimit: 20 },
+        { question: "Qual è il plurale di 'bambina'?", options: ["bambino", "bambine", "bambini", "bambina"], correct: 1, points: 10, timeLimit: 20 },
+        { question: "'Correre' è un...", options: ["Nome", "Aggettivo", "Verbo", "Articolo"], correct: 2, points: 10, timeLimit: 15 },
+        { question: "L'articolo giusto per 'casa' è:", options: ["il", "la", "un", "lo"], correct: 1, points: 10, timeLimit: 15 },
+        { question: "'Rosso' è un...", options: ["Nome", "Verbo", "Aggettivo", "Articolo"], correct: 2, points: 10, timeLimit: 15 },
+        { question: "Il femminile di 'maestro' è:", options: ["maestra", "maestri", "maestro", "maestressa"], correct: 0, points: 15, timeLimit: 20 }
+      ]
     }
   },
   matematica: {

@@ -57,7 +57,7 @@ const Breadcrumbs = () => {
         'lettura-associazione': '📖 Lettura e Associazione',
         'ascolto-comprensione': '👂 Ascolto e Comprensione',
         'lettura-comprensione': '📚 Lettura e Comprensione',
-        'riflessione-linguistica': '✏️ Riflessione Linguistica',
+        'riflessione-linguistica': '✏️ Grammatica e Ortografia',
         
         // History topics
         'relazioni-temporali': '⏰ Relazioni Temporali',
