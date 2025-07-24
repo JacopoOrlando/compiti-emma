@@ -11,25 +11,20 @@ interface MatchingPair {
   id: string;
   left: { text: string; emoji: string };
   right: { text: string; emoji: string };
-  subject: string;
 }
 
 interface DragItem {
   id: string;
   text: string;
   emoji: string;
-  pairId: string; // ADDED: To track which pair this item belongs to
+  pairId: string;
   isMatched: boolean;
 }
 
 const MatchingGame = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { subject: urlSubject, topic: urlTopic } = useParams<{ subject: string; topic: string }>();
-  
-  // Get context from URL params (preferred) or location state (fallback)
-  const subject = urlSubject || location.state?.subject || 'italiano';
-  const topic = urlTopic || location.state?.topic || 'lettura-associazione';
+  const { subject, topic, level } = useParams<{ subject: string; topic: string; level: string }>();
   
   const [leftItems, setLeftItems] = useState<DragItem[]>([]);
   const [rightItems, setRightItems] = useState<DragItem[]>([]);
@@ -37,71 +32,25 @@ const MatchingGame = () => {
   const [score, setScore] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [draggedItem, setDraggedItem] = useState<DragItem | null>(null);
-  const [gameType, setGameType] = useState<'math' | 'words' | 'colors'>('math');
   const [dragOverTarget, setDragOverTarget] = useState<string | null>(null);
 
-  const mathPairs: MatchingPair[] = [
-    { id: "1", left: { text: "5 + 3", emoji: "🔢" }, right: { text: "8", emoji: "🎯" }, subject: "math" },
-    { id: "2", left: { text: "10 - 4", emoji: "🔢" }, right: { text: "6", emoji: "🎯" }, subject: "math" },
-    { id: "3", left: { text: "3 × 2", emoji: "🔢" }, right: { text: "6", emoji: "🎯" }, subject: "math" },
-    { id: "4", left: { text: "12 ÷ 3", emoji: "🔢" }, right: { text: "4", emoji: "🎯" }, subject: "math" },
-    { id: "5", left: { text: "7 + 2", emoji: "🔢" }, right: { text: "9", emoji: "🎯" }, subject: "math" },
-  ];
-
-  const wordPairs: MatchingPair[] = [
-    { id: "1", left: { text: "Gatto", emoji: "🐱" }, right: { text: "Cat", emoji: "🇬🇧" }, subject: "words" },
-    { id: "2", left: { text: "Cane", emoji: "🐶" }, right: { text: "Dog", emoji: "🇬🇧" }, subject: "words" },
-    { id: "3", left: { text: "Casa", emoji: "🏠" }, right: { text: "House", emoji: "🇬🇧" }, subject: "words" },
-    { id: "4", left: { text: "Sole", emoji: "☀️" }, right: { text: "Sun", emoji: "🇬🇧" }, subject: "words" },
-    { id: "5", left: { text: "Acqua", emoji: "💧" }, right: { text: "Water", emoji: "🇬🇧" }, subject: "words" },
-  ];
-
-  // PURE ENGLISH PAIRS for English vocabulary
-  const englishVocabPairs: MatchingPair[] = [
-    { id: "1", left: { text: "Cat", emoji: "🐱" }, right: { text: "Animal", emoji: "🎯" }, subject: "english" },
-    { id: "2", left: { text: "Sun", emoji: "☀️" }, right: { text: "Hot", emoji: "🔥" }, subject: "english" },
-    { id: "3", left: { text: "Water", emoji: "💧" }, right: { text: "Drink", emoji: "🥤" }, subject: "english" },
-    { id: "4", left: { text: "House", emoji: "🏠" }, right: { text: "Home", emoji: "🏡" }, subject: "english" },
-    { id: "5", left: { text: "Book", emoji: "📚" }, right: { text: "Read", emoji: "👀" }, subject: "english" },
-  ];
-
-  // ENGLISH STORIES PAIRS
-  const englishStoryPairs: MatchingPair[] = [
-    { id: "1", left: { text: "Once upon", emoji: "📖" }, right: { text: "a time", emoji: "⏰" }, subject: "english" },
-    { id: "2", left: { text: "Happy", emoji: "😊" }, right: { text: "Ending", emoji: "🎬" }, subject: "english" },
-    { id: "3", left: { text: "Prince", emoji: "🤴" }, right: { text: "Princess", emoji: "👸" }, subject: "english" },
-    { id: "4", left: { text: "Magic", emoji: "✨" }, right: { text: "Wand", emoji: "🪄" }, subject: "english" },
-    { id: "5", left: { text: "Dragon", emoji: "🐉" }, right: { text: "Castle", emoji: "🏰" }, subject: "english" },
-  ];
-
-  const colorPairs: MatchingPair[] = [
-    { id: "1", left: { text: "Rosso", emoji: "🔴" }, right: { text: "Red", emoji: "🇬🇧" }, subject: "colors" },
-    { id: "2", left: { text: "Blu", emoji: "🔵" }, right: { text: "Blue", emoji: "🇬🇧" }, subject: "colors" },
-    { id: "3", left: { text: "Verde", emoji: "🟢" }, right: { text: "Green", emoji: "🇬🇧" }, subject: "colors" },
-    { id: "4", left: { text: "Giallo", emoji: "🟡" }, right: { text: "Yellow", emoji: "🇬🇧" }, subject: "colors" },
-    { id: "5", left: { text: "Viola", emoji: "🟣" }, right: { text: "Purple", emoji: "🇬🇧" }, subject: "colors" },
-  ];
-
-  // Get game content based on subject and topic
-  const gameContent = getGameContent(subject || "", topic || "");
-  
-  // Determine appropriate fallback pairs based on subject
-  const getFallbackPairs = () => {
-    if (subject === 'english') return englishVocabPairs;
-    if (subject === 'matematica') return mathPairs;
-    return wordPairs;
-  };
-  
-  const currentPairs = gameContent?.matching.map((pair, index) => ({
-    id: `pair-${index}`,
-    left: { text: pair.left, emoji: pair.emoji || "🎯" },
-    right: { text: pair.right, emoji: pair.emoji || "✨" },
-    subject: subject || "default"
-  })) || getFallbackPairs().slice(0, 4);
-
   const initializeGame = () => {
-    const pairs = currentPairs;
+    const currentLevel = level?.replace('livello', '') || '1';
+    const gameContent = getGameContent(subject || "", topic || "", currentLevel);
     
+    const pairs = gameContent?.matching?.map((pair, index) => ({
+      id: `pair-${index}`,
+      left: { text: pair.left, emoji: pair.emoji || "🎯" },
+      right: { text: pair.right, emoji: pair.emoji || "✨" },
+    })) || [];
+
+    if (pairs.length === 0) {
+      // Handle case where no content is found
+      // You might want to show a message or navigate away
+      console.error("No matching content found for this level.");
+      return;
+    }
+
     const leftItems = pairs.map((pair, index) => ({
       ...pair.left,
       id: `left-${index}`,
@@ -116,7 +65,6 @@ const MatchingGame = () => {
       isMatched: false
     }));
 
-    // FIXED: Proper shuffle algorithm (Fisher-Yates)
     const shuffledRight = [...rightItems];
     for (let i = shuffledRight.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -133,24 +81,10 @@ const MatchingGame = () => {
   };
 
   useEffect(() => {
-    // Set appropriate game type based on subject context - COMPREHENSIVE
-    if (subject === 'matematica') {
-      setGameType('math');
-    } else if (subject === 'scienze' || subject === 'tecnologia') {
-      setGameType('words');
-    } else if (subject === 'english') {
-      setGameType('words');
-    } else if (subject === 'italiano') {
-      setGameType('words');
-    } else if (subject === 'storia' || subject === 'geografia') {
-      setGameType('colors');
-    }
     initializeGame();
-  }, [gameType, subject, topic]);
+  }, [subject, topic, level]);
 
-  // Enhanced feedback with audio
   const playMatchSound = () => {
-    // Create audio context for positive feedback
     if ('AudioContext' in window || 'webkitAudioContext' in window) {
       try {
         const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -160,91 +94,56 @@ const MatchingGame = () => {
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
         
-        oscillator.frequency.value = 523.25; // C note
+        oscillator.frequency.value = 523.25;
         gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
         
         oscillator.start(audioContext.currentTime);
         oscillator.stop(audioContext.currentTime + 0.3);
       } catch (e) {
-        // Fallback for browsers that don't support Web Audio API
+        console.error("Could not play sound", e);
       }
     }
   };
 
-  // Desktop drag handlers
-  const handleDragStart = (item: DragItem) => {
-    setDraggedItem(item);
-  };
-
+  const handleDragStart = (item: DragItem) => setDraggedItem(item);
   const handleDragOver = (e: React.DragEvent, targetId: string) => {
     e.preventDefault();
     setDragOverTarget(targetId);
   };
-
-  const handleDragLeave = () => {
-    setDragOverTarget(null);
-  };
-
+  const handleDragLeave = () => setDragOverTarget(null);
   const handleDrop = (e: React.DragEvent, targetItem: DragItem) => {
     e.preventDefault();
     setDragOverTarget(null);
     performMatch(targetItem);
   };
-
-  // Touch handlers for mobile
   const handleTouchStart = (item: DragItem) => {
     setDraggedItem(item);
-    // Add visual feedback
-    navigator.vibrate?.(50); // Haptic feedback if supported
+    navigator.vibrate?.(50);
   };
-
   const handleTouchEnd = (e: React.TouchEvent, targetItem: DragItem) => {
     e.preventDefault();
-    if (draggedItem) {
-      performMatch(targetItem);
-    }
+    if (draggedItem) performMatch(targetItem);
   };
 
   const performMatch = (targetItem: DragItem) => {
     if (!draggedItem) return;
 
-    // FIXED: Check if the pairId matches, not the item id
-    const isCorrectMatch = draggedItem.pairId === targetItem.pairId;
-    
-    if (isCorrectMatch) {
+    if (draggedItem.pairId === targetItem.pairId) {
       setMatches(prev => ({ ...prev, [draggedItem.pairId]: targetItem.pairId }));
-      setLeftItems(prev => prev.map(item => 
-        item.pairId === draggedItem.pairId ? { ...item, isMatched: true } : item
-      ));
-      setRightItems(prev => prev.map(item => 
-        item.pairId === targetItem.pairId ? { ...item, isMatched: true } : item
-      ));
+      setLeftItems(prev => prev.map(item => item.pairId === draggedItem.pairId ? { ...item, isMatched: true } : item));
+      setRightItems(prev => prev.map(item => item.pairId === targetItem.pairId ? { ...item, isMatched: true } : item));
       setScore(prev => prev + 1);
       
-      // Enhanced positive feedback
       playMatchSound();
-      toast("🌟 Perfetto! Abbinamento corretto!", {
-        description: "Ottimo lavoro! Continua così!",
-        duration: 2000,
-      });
+      toast("🌟 Perfetto! Abbinamento corretto!", { description: "Ottimo lavoro! Continua così!", duration: 2000 });
 
-      // Check if game is completed
-      if (Object.keys(matches).length + 1 >= currentPairs.length) {
+      if (Object.keys(matches).length + 1 >= leftItems.length) {
         setGameCompleted(true);
-        setTimeout(() => {
-          toast("🎉 Fantastico! Hai completato tutti gli abbinamenti!", {
-            description: `Punteggio finale: ${score + 1}/${currentPairs.length}`,
-            duration: 4000,
-          });
-        }, 500);
+        setTimeout(() => toast("🎉 Fantastico! Hai completato tutti gli abbinamenti!", { description: `Punteggio finale: ${score + 1}/${leftItems.length}`, duration: 4000 }), 500);
       }
     } else {
-      // Gentler negative feedback for children
-      toast("🤗 Quasi! Prova un altro abbinamento", {
-        description: "Sei sulla strada giusta!",
-        duration: 2000,
-      });
+      toast("🤗 Quasi! Prova un altro abbinamento", { description: "Sei sulla strada giusta!", duration: 2000 });
     }
     
     setDraggedItem(null);
@@ -252,114 +151,76 @@ const MatchingGame = () => {
 
   const handleRestart = () => {
     initializeGame();
-    toast("🦄 Nuovo gioco iniziato!", {
-      description: "Buona fortuna!",
-    });
+    toast("🦄 Nuovo gioco iniziato!", { description: "Buona fortuna!" });
   };
 
-  const progress = (score / currentPairs.length) * 100;
+  const progress = (score / (leftItems.length || 1)) * 100;
 
-  // Accessibility: read instructions aloud
   const readInstructions = () => {
     if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(
-        "Trascina gli elementi dalla colonna di sinistra e rilasciali nella colonna di destra per creare gli abbinamenti corretti!"
-      );
+      const utterance = new SpeechSynthesisUtterance("Trascina gli elementi dalla colonna di sinistra e rilasciali nella colonna di destra per creare gli abbinamenti corretti!");
       utterance.rate = 0.8;
       utterance.pitch = 1.1;
       speechSynthesis.speak(utterance);
     }
   };
 
+  if (leftItems.length === 0) {
+    return (
+        <div className="min-h-screen bg-background flex items-center justify-center p-6">
+            <Card className="p-8 text-center">
+                <h2 className="text-2xl font-bold mb-4">Caricamento...</h2>
+                <p>Stiamo preparando gli esercizi per te!</p>
+            </Card>
+        </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-background p-3 md:p-4 lg:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 md:mb-6 gap-3 md:gap-4">
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
-          >
+          <Button variant="outline" onClick={() => navigate(-1)} className="flex items-center gap-2 text-base md:text-lg px-4 md:px-6 py-2 md:py-3">
             <Home className="w-4 h-4 md:w-5 md:h-5" />
-            <span className="hidden sm:inline">Casa</span>
+            <span className="hidden sm:inline">Indietro</span>
           </Button>
-          
           <div className="flex items-center gap-2 md:gap-4">
             <div className="flex items-center gap-2 bg-fun-yellow/20 px-3 md:px-4 py-2 rounded-full border-2 border-fun-yellow/50">
               <Star className="w-5 h-5 md:w-6 md:h-6 text-fun-yellow" />
-              <span className="font-bold text-lg md:text-xl">{score}/{currentPairs.length}</span>
+              <span className="font-bold text-lg md:text-xl">{score}/{leftItems.length}</span>
             </div>
-            
-            <Button 
-              variant="outline" 
-              onClick={readInstructions}
-              className="flex items-center gap-2 text-sm"
-              title="Ascolta le istruzioni"
-            >
+            <Button variant="outline" onClick={readInstructions} className="flex items-center gap-2 text-sm" title="Ascolta le istruzioni">
               <Volume2 className="w-4 h-4" />
               <span className="hidden sm:inline">Aiuto</span>
             </Button>
-            
-            <Button 
-              variant="outline" 
-              onClick={handleRestart}
-              className="flex items-center gap-2 text-lg px-4 py-2"
-            >
+            <Button variant="outline" onClick={handleRestart} className="flex items-center gap-2 text-lg px-4 py-2">
               <RotateCcw className="w-5 h-5" />
               <span className="hidden sm:inline">Riprova</span>
             </Button>
           </div>
         </div>
 
-        {/* Title - Debug Context for English */}
+        {/* Title */}
         <div className="text-center mb-6 md:mb-8">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 text-foreground">
-            🦄 {subject === 'english' ? 'English Matching Game' : 'Gioco degli Abbinamenti'} 🎯
+            🦄 Gioco degli Abbinamenti 🎯
           </h1>
           <p className="text-base md:text-lg lg:text-xl text-muted-foreground mb-3 md:mb-4 px-4">
-            {subject === 'english' 
-              ? 'Drag and match the correct pairs!' 
-              : 'Trascina gli elementi per creare gli abbinamenti corretti!'}
-          </p>
-          <p className="text-xs md:text-sm text-muted-foreground bg-muted/50 p-2 md:p-3 rounded-lg mx-4">
-            💡 <strong>Come giocare:</strong> Prendi un elemento dalla colonna di sinistra e trascinalo verso l'elemento corrispondente nella colonna di destra!
+            Trascina gli elementi per creare gli abbinamenti corretti!
           </p>
         </div>
 
-        {/* Game Type Selector - Simplified for children */}
-        <div className="flex justify-center gap-2 md:gap-4 mb-8">
-          {(['math', 'words', 'colors'] as const).map((type) => (
-            <Button
-              key={type}
-              variant={gameType === type ? "fun" : "outline"}
-              onClick={() => setGameType(type)}
-              className="px-4 py-3 text-base md:text-lg font-bold"
-            >
-              {type === 'math' && '🔢 Calcoli'}
-              {type === 'words' && '📚 Parole'}
-              {type === 'colors' && '🎨 Colori'}
-            </Button>
-          ))}
-        </div>
-
-        {/* Progress - More visual for children */}
+        {/* Progress */}
         <div className="mb-8">
           <div className="flex justify-between text-sm text-muted-foreground mb-2">
             <span className="font-bold">Abbinamenti completati: {score}</span>
             <span className="font-bold">{Math.round(progress)}% fatto!</span>
           </div>
           <Progress value={progress} className="h-4 border-2 border-primary/20" />
-          <div className="flex justify-center mt-2">
-            {Array.from({ length: currentPairs.length }, (_, i) => (
-              <span key={i} className={`text-2xl mx-1 ${i < score ? 'animate-bounce' : ''}`}>
-                {i < score ? '⭐' : '⚪'}
-              </span>
-            ))}
-          </div>
         </div>
 
-        {/* Game Area - Enhanced for touch */}
+        {/* Game Area */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 lg:gap-6 xl:gap-8 mb-6 md:mb-8">
           {/* Left Column */}
           <Card className="p-3 md:p-4 lg:p-6 border-4 border-fun-blue/30">
@@ -375,10 +236,10 @@ const MatchingGame = () => {
                   onTouchStart={() => handleTouchStart(item)}
                   className={`p-3 md:p-4 lg:p-6 border-4 rounded-xl cursor-pointer transition-all duration-300 touch-manipulation animate-fade-in ${
                     item.isMatched
-                      ? 'bg-fun-green/30 border-fun-green scale-95 opacity-60 animate-pulse'
+                      ? 'bg-fun-green/30 border-fun-green scale-95 opacity-60'
                       : draggedItem?.id === item.id
                       ? 'bg-fun-blue/30 border-fun-blue scale-105 shadow-xl animate-bounce'
-                      : 'bg-muted border-dashed border-primary hover:border-primary hover:bg-primary/5 hover:scale-105 active:scale-95 hover-scale'
+                      : 'bg-muted border-dashed border-primary hover:border-primary hover:bg-primary/5 hover:scale-105 active:scale-95'
                   }`}
                 >
                   <div className="flex items-center gap-2 md:gap-3 justify-center">
@@ -431,21 +292,7 @@ const MatchingGame = () => {
               🎉 Fantastico! Hai completato tutto! 🎉
             </h2>
             <p className="text-xl md:text-2xl text-muted-foreground mb-6">
-              Punteggio perfetto: {score}/{currentPairs.length} abbinamenti! 🌟
+              Punteggio perfetto: {score}/{leftItems.length} abbinamenti! 🌟
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={handleRestart} variant="fun" size="lg" className="text-xl px-8 py-4">
-                Gioca Ancora 🌟
-              </Button>
-              <Button onClick={() => navigate('/games', { state: { subject, topic } })} variant="outline" size="lg" className="text-xl px-8 py-4">
-                Altri Giochi 🎮
-              </Button>
-            </div>
-          </Card>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default MatchingGame;
+              <But
