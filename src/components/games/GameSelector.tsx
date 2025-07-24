@@ -72,20 +72,12 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
       description: "Domande tradizionali con spiegazioni",
       icon: Book,
       color: "bg-fun-green",
-      route: getClassicRoute(currentSubject, currentTopic),
+      route: currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/classic` : "/games/classic",
       difficulty: "Medio",
       ageGroup: "6+ anni",
       estimatedTime: "10-20 min"
     }
   ];
-
-  function getClassicRoute(subject?: string, topic?: string): string {
-    if (subject === 'matematica' && topic === 'operazioni') return '/math';
-    if (subject === 'italiano' && topic === 'lettura') return '/reading';
-    if (subject === 'italiano' && topic === 'grammatica') return '/grammar';
-    if (subject === 'english') return '/reading';
-    return '/math'; // fallback
-  }
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -289,7 +281,7 @@ const GameSelector = ({ subject, topic }: GameSelectorProps) => {
             </Button>
             <Button 
               variant="fun" 
-              onClick={() => navigate('/math', { state: { subject: currentSubject, topic: currentTopic } })}
+              onClick={() => navigate(currentSubject && currentTopic ? `/${currentSubject}/${currentTopic}/games/classic` : '/games/classic', { state: { subject: currentSubject, topic: currentTopic } })}
               className="text-base md:text-lg px-4 md:px-6 py-2 md:py-3"
             >
               🔢 Matematica
