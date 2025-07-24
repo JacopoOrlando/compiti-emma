@@ -28,32 +28,32 @@ const Exercise = () => {
 
   const gameTypes = [
     {
-      id: "matching",
+      id: "abbinamenti",
       title: "Abbinamenti",
       description: "Trascina e collega gli elementi correlati",
       icon: Target,
       color: "bg-fun-blue",
-      route: `/${subject}/${topic}/games/matching`,
+      route: `/${subject}/${topic}/abbinamenti`,
       difficulty: "Facile",
       estimatedTime: "5-10 min"
     },
     {
-      id: "memory",
+      id: "memoria",
       title: "Memoria",
       description: "Trova le coppie nascoste girando le carte",
       icon: Brain,
       color: "bg-fun-green",
-      route: `/${subject}/${topic}/games/memory`,
+      route: `/${subject}/${topic}/memoria`,
       difficulty: "Medio",
       estimatedTime: "10-15 min"
     },
     {
-      id: "timed",
+      id: "sfida-veloce",
       title: "Sfida Veloce",
       description: "Rispondi il più velocemente possibile",
       icon: Clock,
       color: "bg-fun-orange",
-      route: `/${subject}/${topic}/games/timed`,
+      route: `/${subject}/${topic}/sfida-veloce`,
       difficulty: "Difficile",
       estimatedTime: "5-8 min"
     }

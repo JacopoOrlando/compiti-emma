@@ -21,54 +21,45 @@ const Level = () => {
     );
   }
 
-  // Exercise types based on subject and topic
+  // Consistent exercise types for all topics
   const getExerciseTypes = () => {
-    if (subject === 'italiano') {
-      if (topic === 'lettura-associazione') {
-        return [
-          { id: 'associazione-parole', title: 'Associazione Parole', description: 'Associa parole con immagini', icon: BookOpen, color: 'bg-fun-green' },
-          { id: 'collegamento-frasi', title: 'Collegamento Frasi', description: 'Collega frasi con immagini', icon: Star, color: 'bg-fun-blue' },
-        ];
-      }
-      if (topic === 'ascolto-comprensione') {
-        return [
-          { id: 'comprensione', title: 'Comprensione', description: 'Rispondi a domande sui testi ascoltati', icon: Headphones, color: 'bg-fun-purple' },
-          { id: 'narrativa', title: 'Narrativa', description: 'Ascolta racconti e comprendi', icon: BookOpen, color: 'bg-fun-orange' },
-        ];
-      }
-      if (topic === 'lettura-comprensione') {
-        return [
-          { id: 'testi-narrativi', title: 'Testi Narrativi', description: 'Leggi e comprendi racconti', icon: BookOpen, color: 'bg-fun-green' },
-          { id: 'vero-falso', title: 'Vero o Falso', description: 'Distingui affermazioni vere e false', icon: Brain, color: 'bg-fun-blue' },
-        ];
-      }
-      if (topic === 'riflessione-linguistica') {
-        return [
-          { id: 'grammatica', title: 'Grammatica', description: 'Analisi grammaticale e forme corrette', icon: Star, color: 'bg-fun-purple' },
-          { id: 'ortografia', title: 'Ortografia', description: 'Correzione errori e sillabe', icon: BookOpen, color: 'bg-fun-orange' },
-        ];
-      }
-    }
-    
-    if (subject === 'english') {
-      if (topic === 'colors-instructions') {
-        return [
-          { id: 'ascolto-colori', title: 'Listen & Color', description: 'Listen and follow color instructions', icon: Headphones, color: 'bg-fun-purple' },
-          { id: 'istruzioni', title: 'Instructions', description: 'Understand simple commands', icon: Brain, color: 'bg-fun-blue' },
-        ];
-      }
-      if (topic === 'descriptive-texts') {
-        return [
-          { id: 'descrizioni', title: 'Descriptions', description: 'Read and match descriptions', icon: BookOpen, color: 'bg-fun-green' },
-          { id: 'comprensione', title: 'Comprehension', description: 'Answer questions about texts', icon: Star, color: 'bg-fun-orange' },
-        ];
-      }
-    }
-    
-    // Default exercise types
     return [
-      { id: 'pratica', title: 'Pratica', description: 'Esercizi di pratica generale', icon: BookOpen, color: 'bg-fun-green' },
-      { id: 'sfida', title: 'Sfida', description: 'Sfide più impegnative', icon: Brain, color: 'bg-fun-blue' },
+      { 
+        id: 'pratica', 
+        title: 'Pratica', 
+        description: 'Esercizi di apprendimento guidati', 
+        icon: BookOpen, 
+        color: 'bg-fun-green',
+        difficulty: 'Facile',
+        estimatedTime: '10-15 min'
+      },
+      { 
+        id: 'abbinamenti', 
+        title: 'Abbinamenti', 
+        description: 'Trascina e collega per imparare divertendoti', 
+        icon: Star, 
+        color: 'bg-fun-blue',
+        difficulty: 'Facile',
+        estimatedTime: '5-10 min'
+      },
+      { 
+        id: 'memoria', 
+        title: 'Memoria', 
+        description: 'Trova le coppie e allena la memoria', 
+        icon: Brain, 
+        color: 'bg-fun-purple',
+        difficulty: 'Medio',
+        estimatedTime: '5-15 min'
+      },
+      { 
+        id: 'sfida-veloce', 
+        title: 'Sfida Veloce', 
+        description: 'Rispondi velocemente per più punti!', 
+        icon: Headphones, 
+        color: 'bg-fun-orange',
+        difficulty: 'Difficile',
+        estimatedTime: '3-8 min'
+      }
     ];
   };
 
@@ -107,13 +98,17 @@ const Level = () => {
             <Card 
               key={exercise.id}
               className="p-8 text-center hover:shadow-hover transition-all duration-300 transform hover:scale-105 border-4 border-opacity-20 shadow-card cursor-pointer"
-              onClick={() => navigate(`/${subject}/${topic}/${level}/${exercise.id}`)}
+              onClick={() => navigate(`/${subject}/${topic}/${exercise.id}`)}
             >
               <div className={`w-20 h-20 ${exercise.color} rounded-full flex items-center justify-center mx-auto mb-6 shadow-fun animate-wiggle`}>
                 <exercise.icon className="w-10 h-10 text-white" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-foreground">{exercise.title}</h3>
               <p className="text-muted-foreground mb-6 text-lg">{exercise.description}</p>
+              <div className="flex justify-between items-center mb-4 text-sm text-muted-foreground">
+                <span>🎯 {exercise.difficulty}</span>
+                <span>⏱️ {exercise.estimatedTime}</span>
+              </div>
               <Button variant="game" className="w-full">
                 <Play className="w-5 h-5 mr-2" />
                 Inizia Esercizio! 🌟
