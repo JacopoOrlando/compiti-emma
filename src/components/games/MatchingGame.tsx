@@ -2,30 +2,33 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Target, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 import { getGameContent } from "@/lib/gameContent";
 
+// Interface for a pair of items to be matched
 interface MatchingPair {
   id: string;
   left: { text: string; emoji: string };
   right: { text: string; emoji: string };
 }
 
+// Interface for a draggable item in the game
 interface DragItem {
   id: string;
   text: string;
   emoji: string;
-  pairId: string;
+  pairId: string; // To link back to the original pair
   isMatched: boolean;
 }
 
 const MatchingGame = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  // Get subject, topic, and level from the URL
   const { subject, topic, level } = useParams<{ subject: string; topic: string; level: string }>();
   
+  // State for the game's items and progress
   const [leftItems, setLeftItems] = useState<DragItem[]>([]);
   const [rightItems, setRightItems] = useState<DragItem[]>([]);
   const [matches, setMatches] = useState<Record<string, string>>({});
@@ -34,44 +37,57 @@ const MatchingGame = () => {
   const [draggedItem, setDraggedItem] = useState<DragItem | null>(null);
   const [dragOverTarget, setDragOverTarget] = useState<string | null>(null);
 
+  /**
+   * Initializes or resets the game.
+   * Fetches content based on URL parameters and sets up the game board.
+   */
   const initializeGame = () => {
+    // Determine the current level from the URL, defaulting to '1'
     const currentLevel = level?.replace('livello', '') || '1';
+    // Fetch the specific game content for the current context
     const gameContent = getGameContent(subject || "", topic || "", currentLevel);
     
+    // Create pairs from the fetched content
     const pairs = gameContent?.matching?.map((pair, index) => ({
       id: `pair-${index}`,
       left: { text: pair.left, emoji: pair.emoji || "🎯" },
       right: { text: pair.right, emoji: pair.emoji || "✨" },
     })) || [];
 
+    // Handle cases where no content is found for the level
     if (pairs.length === 0) {
-      // Handle case where no content is found
-      // You might want to show a message or navigate away
       console.error("No matching content found for this level.");
+      // Optionally, navigate back or show an error message
+      // For now, we'll just show a loading/error state in the render.
+      setLeftItems([]); // Clear items to trigger the loading state
       return;
     }
 
-    const leftItems = pairs.map((pair, index) => ({
+    // Create the items for the left column
+    const leftSideItems = pairs.map((pair, index) => ({
       ...pair.left,
       id: `left-${index}`,
       pairId: pair.id,
       isMatched: false
     }));
 
-    const rightItems = pairs.map((pair, index) => ({
+    // Create the items for the right column
+    const rightSideItems = pairs.map((pair, index) => ({
       ...pair.right,
       id: `right-${index}`,
       pairId: pair.id,
       isMatched: false
     }));
 
-    const shuffledRight = [...rightItems];
+    // Shuffle the right column items for randomness
+    const shuffledRight = [...rightSideItems];
     for (let i = shuffledRight.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [shuffledRight[i], shuffledRight[j]] = [shuffledRight[j], shuffledRight[i]];
     }
     
-    setLeftItems(leftItems);
+    // Set the initial state for the game
+    setLeftItems(leftSideItems);
     setRightItems(shuffledRight);
     setMatches({});
     setScore(0);
@@ -80,10 +96,14 @@ const MatchingGame = () => {
     setDragOverTarget(null);
   };
 
+  // Initialize the game when the component mounts or the context changes
   useEffect(() => {
     initializeGame();
   }, [subject, topic, level]);
 
+  /**
+   * Plays a sound effect for a correct match.
+   */
   const playMatchSound = () => {
     if ('AudioContext' in window || 'webkitAudioContext' in window) {
       try {
@@ -94,7 +114,7 @@ const MatchingGame = () => {
         oscillator.connect(gainNode);
         gainNode.connect(audioContext.destination);
         
-        oscillator.frequency.value = 523.25;
+        oscillator.frequency.value = 523.25; // C5 note for a pleasant sound
         gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
         
@@ -106,6 +126,7 @@ const MatchingGame = () => {
     }
   };
 
+  // Drag and Drop Event Handlers
   const handleDragStart = (item: DragItem) => setDraggedItem(item);
   const handleDragOver = (e: React.DragEvent, targetId: string) => {
     e.preventDefault();
@@ -119,17 +140,22 @@ const MatchingGame = () => {
   };
   const handleTouchStart = (item: DragItem) => {
     setDraggedItem(item);
-    navigator.vibrate?.(50);
+    navigator.vibrate?.(50); // Haptic feedback on touch devices
   };
   const handleTouchEnd = (e: React.TouchEvent, targetItem: DragItem) => {
     e.preventDefault();
     if (draggedItem) performMatch(targetItem);
   };
 
+  /**
+   * Logic to check if a dragged item matches a target item.
+   * @param targetItem The item being dropped onto.
+   */
   const performMatch = (targetItem: DragItem) => {
     if (!draggedItem) return;
 
     if (draggedItem.pairId === targetItem.pairId) {
+      // Correct match
       setMatches(prev => ({ ...prev, [draggedItem.pairId]: targetItem.pairId }));
       setLeftItems(prev => prev.map(item => item.pairId === draggedItem.pairId ? { ...item, isMatched: true } : item));
       setRightItems(prev => prev.map(item => item.pairId === targetItem.pairId ? { ...item, isMatched: true } : item));
@@ -138,17 +164,20 @@ const MatchingGame = () => {
       playMatchSound();
       toast("🌟 Perfetto! Abbinamento corretto!", { description: "Ottimo lavoro! Continua così!", duration: 2000 });
 
+      // Check for game completion
       if (Object.keys(matches).length + 1 >= leftItems.length) {
         setGameCompleted(true);
         setTimeout(() => toast("🎉 Fantastico! Hai completato tutti gli abbinamenti!", { description: `Punteggio finale: ${score + 1}/${leftItems.length}`, duration: 4000 }), 500);
       }
     } else {
+      // Incorrect match
       toast("🤗 Quasi! Prova un altro abbinamento", { description: "Sei sulla strada giusta!", duration: 2000 });
     }
     
     setDraggedItem(null);
   };
 
+  // Restart the game
   const handleRestart = () => {
     initializeGame();
     toast("🦄 Nuovo gioco iniziato!", { description: "Buona fortuna!" });
@@ -156,6 +185,7 @@ const MatchingGame = () => {
 
   const progress = (score / (leftItems.length || 1)) * 100;
 
+  // Accessibility function to read instructions aloud
   const readInstructions = () => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance("Trascina gli elementi dalla colonna di sinistra e rilasciali nella colonna di destra per creare gli abbinamenti corretti!");
@@ -165,6 +195,7 @@ const MatchingGame = () => {
     }
   };
 
+  // Loading state while content is being prepared
   if (leftItems.length === 0) {
     return (
         <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -203,15 +234,15 @@ const MatchingGame = () => {
 
         {/* Title */}
         <div className="text-center mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 text-foreground">
-            🦄 Gioco degli Abbinamenti 🎯
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3 text-foreground capitalize">
+            🦄 {topic?.replace(/-/g, ' ')} 🎯
           </h1>
           <p className="text-base md:text-lg lg:text-xl text-muted-foreground mb-3 md:mb-4 px-4">
             Trascina gli elementi per creare gli abbinamenti corretti!
           </p>
         </div>
 
-        {/* Progress */}
+        {/* Progress Bar */}
         <div className="mb-8">
           <div className="flex justify-between text-sm text-muted-foreground mb-2">
             <span className="font-bold">Abbinamenti completati: {score}</span>
@@ -222,7 +253,7 @@ const MatchingGame = () => {
 
         {/* Game Area */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-4 lg:gap-6 xl:gap-8 mb-6 md:mb-8">
-          {/* Left Column */}
+          {/* Left Column (Draggable Items) */}
           <Card className="p-3 md:p-4 lg:p-6 border-4 border-fun-blue/30">
             <h3 className="text-lg md:text-xl lg:text-2xl font-bold mb-3 md:mb-4 text-center text-foreground flex items-center justify-center gap-2">
               <span className="text-xl md:text-2xl">👆</span> Prendi da qui
@@ -251,7 +282,7 @@ const MatchingGame = () => {
             </div>
           </Card>
 
-          {/* Right Column */}
+          {/* Right Column (Drop Targets) */}
           <Card className="p-4 md:p-6 border-4 border-fun-green/30">
             <h3 className="text-xl md:text-2xl font-bold mb-4 text-center text-foreground flex items-center justify-center gap-2">
               <span className="text-2xl">🎯</span> Rilascia qui
@@ -282,7 +313,7 @@ const MatchingGame = () => {
           </Card>
         </div>
 
-        {/* Game Completed */}
+        {/* Game Completed Message */}
         {gameCompleted && (
           <Card className="p-6 md:p-8 text-center border-4 border-fun-green shadow-2xl animate-bounce-gentle">
             <div className="w-24 h-24 bg-fun-green rounded-full flex items-center justify-center mx-auto mb-6 animate-spin-slow">
@@ -295,4 +326,18 @@ const MatchingGame = () => {
               Punteggio perfetto: {score}/{leftItems.length} abbinamenti! 🌟
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <But
+              <Button onClick={handleRestart} variant="fun" size="lg" className="text-xl px-8 py-4">
+                Gioca Ancora 🌟
+              </Button>
+              <Button onClick={() => navigate(`/${subject}/${topic}`)} variant="outline" size="lg" className="text-xl px-8 py-4">
+                Cambia Livello
+              </Button>
+            </div>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MatchingGame;
