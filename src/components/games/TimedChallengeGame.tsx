@@ -174,13 +174,21 @@ const TimedChallengeGame = () => {
 
   // Get game content based on subject and topic
   const gameContent = getGameContent(subject || "", topic || "");
+  
+  // Determine appropriate fallback questions based on subject
+  const getFallbackQuestions = () => {
+    if (subject === 'english') return englishQuestions;
+    if (subject === 'matematica') return mathQuestions;
+    return quickQuestions;
+  };
+  
   const currentQuestions = gameContent?.timed.map(q => ({
     question: q.question,
     options: q.options,
     correctIndex: q.correct,
     points: q.points,
     timeLimit: q.timeLimit
-  })) || mathQuestions.slice(0, 3); // Fallback to a few math questions
+  })) || getFallbackQuestions();
 
   const generateQuestion = (): ChallengeQuestion => {
     return currentQuestions[Math.floor(Math.random() * currentQuestions.length)];
