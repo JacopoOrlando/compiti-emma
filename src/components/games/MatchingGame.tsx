@@ -84,12 +84,20 @@ const MatchingGame = () => {
 
   // Get game content based on subject and topic
   const gameContent = getGameContent(subject || "", topic || "");
+  
+  // Determine appropriate fallback pairs based on subject
+  const getFallbackPairs = () => {
+    if (subject === 'english') return englishVocabPairs;
+    if (subject === 'matematica') return mathPairs;
+    return wordPairs;
+  };
+  
   const currentPairs = gameContent?.matching.map((pair, index) => ({
     id: `pair-${index}`,
     left: { text: pair.left, emoji: pair.emoji || "🎯" },
     right: { text: pair.right, emoji: pair.emoji || "✨" },
     subject: subject || "default"
-  })) || mathPairs.slice(0, 4); // Fallback to a few math pairs
+  })) || getFallbackPairs().slice(0, 4);
 
   const initializeGame = () => {
     const pairs = currentPairs;

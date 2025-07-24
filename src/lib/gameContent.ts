@@ -452,6 +452,63 @@ export const gameContentMap: Record<string, Record<string, GameContent>> = {
         { question: "Il cotone è un materiale?", options: ["Artificiale", "Naturale", "Né l'uno né l'altro", "Entrambi"], correct: 1, points: 15, timeLimit: 20 },
         { question: "Quale caratteristica ha il vetro?", options: ["Opaco", "Trasparente", "Flessibile", "Morbido"], correct: 1, points: 15, timeLimit: 20 },
         { question: "Da dove viene il legno?", options: ["Fabbriche", "Laboratori", "Alberi", "Negozi"], correct: 2, points: 20, timeLimit: 25 }
+       ]
+    }
+  },
+  english: {
+    "vocabulary-preferences": {
+      matching: [
+        { left: "Cat", right: "Animal", emoji: "🐱" },
+        { left: "Dog", right: "Pet", emoji: "🐕" },
+        { left: "House", right: "Home", emoji: "🏠" },
+        { left: "Sun", right: "Bright", emoji: "☀️" },
+        { left: "Water", right: "Drink", emoji: "💧" },
+        { left: "Book", right: "Read", emoji: "📚" },
+        { left: "Apple", right: "Fruit", emoji: "🍎" },
+        { left: "Tree", right: "Plant", emoji: "🌳" }
+      ],
+      memory: [
+        { content: "Cat", emoji: "🐱" },
+        { content: "Dog", emoji: "🐕" },
+        { content: "House", emoji: "🏠" },
+        { content: "Sun", emoji: "☀️" },
+        { content: "Water", emoji: "💧" },
+        { content: "Book", emoji: "📚" },
+        { content: "Apple", emoji: "🍎" },
+        { content: "Tree", emoji: "🌳" }
+      ],
+      timed: [
+        { question: "What color is the sun?", options: ["Blue", "Yellow", "Green", "Red"], correct: 1, points: 10, timeLimit: 15 },
+        { question: "How do you say 'Cane' in English?", options: ["Cat", "Dog", "Bird", "Fish"], correct: 1, points: 15, timeLimit: 12 },
+        { question: "What is the English word for 'Casa'?", options: ["Car", "Tree", "House", "Book"], correct: 2, points: 15, timeLimit: 15 },
+        { question: "What do we call an animal that says 'meow'?", options: ["Dog", "Cat", "Bird", "Fish"], correct: 1, points: 10, timeLimit: 12 }
+      ]
+    },
+    "story-reading": {
+      matching: [
+        { left: "Once upon", right: "a time", emoji: "📖" },
+        { left: "Happy", right: "Ending", emoji: "😊" },
+        { left: "Prince", right: "Princess", emoji: "👑" },
+        { left: "Magic", right: "Wand", emoji: "✨" },
+        { left: "Dragon", right: "Castle", emoji: "🐉" },
+        { left: "Hero", right: "Adventure", emoji: "🦸" },
+        { left: "Fairy", right: "Tale", emoji: "🧚" },
+        { left: "Story", right: "Book", emoji: "📚" }
+      ],
+      memory: [
+        { content: "Hero", emoji: "🦸" },
+        { content: "Princess", emoji: "👸" },
+        { content: "Dragon", emoji: "🐉" },
+        { content: "Castle", emoji: "🏰" },
+        { content: "Magic", emoji: "✨" },
+        { content: "Fairy", emoji: "🧚" },
+        { content: "Adventure", emoji: "🗺️" },
+        { content: "Treasure", emoji: "💎" }
+      ],
+      timed: [
+        { question: "How do fairy tales usually start?", options: ["The end", "Once upon a time", "Yesterday", "Tomorrow"], correct: 1, points: 15, timeLimit: 20 },
+        { question: "Who usually saves the princess?", options: ["Dragon", "Witch", "Hero", "Monster"], correct: 2, points: 15, timeLimit: 18 },
+        { question: "Where do kings and queens live?", options: ["House", "Castle", "Farm", "Shop"], correct: 1, points: 10, timeLimit: 15 }
       ]
     }
   }

@@ -70,12 +70,15 @@ const MemoryGame = () => {
 
   // Get game content based on subject and topic
   const gameContent = getGameContent(subject || "", topic || "");
-  const currentPairs = gameContent?.memory || [
-    { content: "1", emoji: "1️⃣" },
-    { content: "2", emoji: "2️⃣" },
-    { content: "3", emoji: "3️⃣" },
-    { content: "4", emoji: "4️⃣" }
-  ];
+  
+  // Determine appropriate fallback pairs based on subject
+  const getFallbackPairs = () => {
+    if (subject === 'english') return englishPairs;
+    if (subject === 'matematica') return numberPairs;
+    return wordPairs;
+  };
+  
+  const currentPairs = gameContent?.memory || getFallbackPairs().slice(0, 6);
 
   const initializeGame = () => {
     const pairs = currentPairs.slice(0, 8); // Take first 8 pairs
