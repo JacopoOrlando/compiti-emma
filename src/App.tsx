@@ -12,14 +12,11 @@ import Topic from "./pages/Topic";
 import Level from "./pages/Level";
 import Exercise from "./pages/Exercise";
 import NotFound from "./pages/NotFound";
-import MathGame from "./components/MathGame";
-import ReadingGame from "./components/ReadingGame";
-import ColorsGame from "./components/ColorsGame";
-import GrammarGame from "./components/GrammarGame";
 import MatchingGame from "./components/games/MatchingGame";
 import MemoryGame from "./components/games/MemoryGame";
 import TimedChallengeGame from "./components/games/TimedChallengeGame";
 import GameSelector from "./components/games/GameSelector";
+import ClassicGameLoader from "./components/games/ClassicGameLoader";
 
 const queryClient = new QueryClient();
 
@@ -45,23 +42,18 @@ const App = () => (
                 <Route path="/:subject/:topic/memoria" element={<MemoryGame />} />
                 <Route path="/:subject/:topic/sfida-veloce" element={<TimedChallengeGame />} />
                 
-                {/* Legacy game routes - subject-specific */}
+                {/* Game routes with context */}
                 <Route path="/:subject/:topic/games" element={<GameSelector />} />
                 <Route path="/:subject/:topic/games/matching" element={<MatchingGame />} />
                 <Route path="/:subject/:topic/games/memory" element={<MemoryGame />} />
                 <Route path="/:subject/:topic/games/timed" element={<TimedChallengeGame />} />
-                
-                {/* Legacy game routes - keep for backward compatibility */}
+                <Route path="/:subject/:topic/games/classic" element={<ClassicGameLoader />} />
+
+                {/* Legacy game routes (fallback) */}
                 <Route path="/games" element={<GameSelector />} />
                 <Route path="/games/matching" element={<MatchingGame />} />
                 <Route path="/games/memory" element={<MemoryGame />} />
                 <Route path="/games/timed" element={<TimedChallengeGame />} />
-                
-                {/* Legacy routes - keep for backward compatibility */}
-                <Route path="/math" element={<MathGame />} />
-                <Route path="/reading" element={<ReadingGame />} />
-                <Route path="/colors" element={<ColorsGame />} />
-                <Route path="/grammar" element={<GrammarGame />} />
                 
                 <Route path="*" element={<NotFound />} />
               </Routes>
