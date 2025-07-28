@@ -33,7 +33,10 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
   const [showResult, setShowResult] = useState(false);
 
   const initializeGame = () => {
-    const gameQuestions = topicContent.content.timed || [];
+    const gameQuestions = topicContent.content.timed?.map(q => ({
+      ...q,
+      correctIndex: q.correct
+    })) || [];
     
     if (gameQuestions.length > 0) {
       setQuestions(gameQuestions);

@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Brain } from "lucide-react";
 import { toast } from "sonner";
-import { getGameContent } from "@/lib/gameContent";
+import { getGameContent, TopicContent } from "@/lib/gameContent";
 
 interface MemoryCard {
   id: string;
@@ -15,9 +15,13 @@ interface MemoryCard {
   isMatched: boolean;
 }
 
-const MemoryGame = () => {
+interface MemoryGameProps {
+  topicContent: TopicContent;
+}
+
+const MemoryGame = ({ topicContent }: MemoryGameProps) => {
   const navigate = useNavigate();
-  const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
+  const { subject } = useParams<{ subject: string }>();
   
   const [cards, setCards] = useState<MemoryCard[]>([]);
   const [flippedCards, setFlippedCards] = useState<string[]>([]);
@@ -25,11 +29,9 @@ const MemoryGame = () => {
   const [moves, setMoves] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [totalPairs, setTotalPairs] = useState(0);
-  const topicTitle = gameContentMap[subject!]?.[topicId!]?.title || "Gioco di Memoria";
 
   const initializeGame = () => {
-    const gameContent = getGameContent(subject || "", topicId || "", "");
-    const pairs = gameContent?.content.memory || [];
+    const pairs = topicContent.content.memory || [];
 
     if (pairs.length === 0) {
       console.error("No memory content found for this topic.");
@@ -58,7 +60,7 @@ const MemoryGame = () => {
 
   useEffect(() => {
     initializeGame();
-  }, [subject, topicId]);
+  }, [topicContent]);
 
   useEffect(() => {
     if (flippedCards.length === 2) {
@@ -143,7 +145,7 @@ const MemoryGame = () => {
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 text-foreground">
-            🦄 {topicTitle} 🧠
+            🦄 {topicContent.title} 🧠
           </h1>
           <p className="text-muted-foreground">
             Trova le coppie girando le carte! Allena la tua memoria!
