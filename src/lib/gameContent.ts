@@ -147,10 +147,9 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
   }
 };
 
-export function getGameContent(subject: string, topicId: string, level: string): TopicContent | null {
+export function getGameContent(subject: string, topicId: string): TopicContent | null {
   const subjectContent = gameContentMap[subject?.toLowerCase()];
   if (!subjectContent) return null;
   
-  // The new structure uses topicId as the key. The level parameter is ignored for now.
   return subjectContent[topicId] || null;
 }
