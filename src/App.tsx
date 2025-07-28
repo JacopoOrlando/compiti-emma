@@ -25,7 +25,7 @@ const App = () => (
                 {/* Main pages */}
                 <Route path="/" element={<Index />} />
                 <Route path="/:subject" element={<Subject />} />
-                <Route path="/:subject/:level" element={<GamePage />} />
+                <Route path="/:subject/:topicId" element={<GamePage />} />
                 
                 {/* Fallback for any other route */}
                 <Route path="*" element={<NotFound />} />
