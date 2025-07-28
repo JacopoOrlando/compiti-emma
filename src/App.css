@@ -1,42 +1,43 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AccessibilityEnhancer } from "@/components/AccessibilityEnhancer";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import Layout from "./components/Layout";
+import Index from "./pages/Index";
+import Subject from "./pages/Subject";
+import GamePage from "./pages/GamePage";
+import NotFound from "./pages/NotFound";
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
+const queryClient = new QueryClient();
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <ErrorBoundary>
+      <AccessibilityEnhancer>
+        <TooltipProvider>
+        <BrowserRouter>
+          <a href="#main-content" className="skip-link">Vai al contenuto principale</a>
+          <Layout>
+            <main id="main-content" role="main">
+              <Routes>
+                {/* Main pages */}
+                <Route path="/" element={<Index />} />
+                <Route path="/:subject" element={<Subject />} />
+                <Route path="/:subject/:topicId" element={<GamePage />} />
+                
+                {/* Fallback for any other route */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </main>
+          </Layout>
+        </BrowserRouter>
+        <Toaster />
+      </TooltipProvider>
+    </AccessibilityEnhancer>
+    </ErrorBoundary>
+  </QueryClientProvider>
+);
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
+export default App;
