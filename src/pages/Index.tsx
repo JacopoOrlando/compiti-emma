@@ -1,33 +1,30 @@
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { BookOpen, Calculator, Star, Trophy, Heart, Globe } from "lucide-react";
+import { BookOpen, Calculator, Globe, Star, Trophy, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/rainbow-unicorns-hero.jpg";
-import unicornCelebration from "@/assets/unicorn-celebration.jpg";
 
 export default function Index() {
   const navigate = useNavigate();
-  const [showProgress, setShowProgress] = useState(false);
 
   const subjects = [
     {
       title: "Italiano",
-      description: "Storia, Geografia, Lettura, Grammatica e Arte",
+      description: "Ortografia, Lettura, Grammatica e Scrittura!",
       icon: BookOpen,
       color: "bg-fun-green",
       path: "/italiano"
     },
     {
       title: "Matematica", 
-      description: "Operazioni, Geometria, Misure e Scienze",
+      description: "Problemi, Geometria, Numeri e Tabelline!",
       icon: Calculator,
       color: "bg-fun-blue",
       path: "/matematica"
     },
     {
       title: "English",
-      description: "Learn English with Emma! Words, Stories & Fun",
+      description: "Learn English with Words, Stories & Fun!",
       icon: Globe,
       color: "bg-fun-purple",
       path: "/english"
@@ -41,7 +38,7 @@ export default function Index() {
         <div className="absolute inset-0 opacity-20">
           <img 
             src={heroImage} 
-            alt="Bambini che imparano" 
+            alt="Unicorni magici che imparano" 
             className="w-full h-full object-cover"
           />
         </div>
@@ -95,30 +92,27 @@ export default function Index() {
       <section className="py-8 md:py-16 px-4 md:px-6 bg-muted">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 md:mb-8 text-foreground">Il tuo Viaggio di Apprendimento</h2>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8">
             <div className="flex flex-col items-center">
               <div className="w-16 h-16 bg-fun-yellow rounded-full flex items-center justify-center mb-4 shadow-fun">
                 <Star className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Completa i Livelli</h3>
-              <p className="text-muted-foreground">Progredisci attraverso livelli sempre più difficili!</p>
+              <h3 className="text-xl font-bold mb-2">Scegli un Argomento</h3>
+              <p className="text-muted-foreground">Scegli cosa vuoi imparare oggi.</p>
             </div>
-            
             <div className="flex flex-col items-center">
               <div className="w-16 h-16 bg-fun-orange rounded-full flex items-center justify-center mb-4 shadow-fun">
                 <Trophy className="w-8 h-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Guadagna Stelle</h3>
-              <p className="text-muted-foreground">Ottieni stelle per ogni livello completato!</p>
+              <h3 className="text-xl font-bold mb-2">Gioca e Impara</h3>
+              <p className="text-muted-foreground">Ogni argomento ha un gioco divertente.</p>
             </div>
-            
             <div className="flex flex-col items-center">
               <div className="w-16 h-16 bg-fun-pink rounded-full flex items-center justify-center mb-4 shadow-fun">
                 <Heart className="w-8 h-8 text-white" />
               </div>
               <h3 className="text-xl font-bold mb-2">Diventa un Esperto</h3>
-              <p className="text-muted-foreground">Padroneggia ogni materia e diventa il migliore!</p>
+              <p className="text-muted-foreground">Padroneggia ogni materia e divertiti!</p>
             </div>
           </div>
         </div>
