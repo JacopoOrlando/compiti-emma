@@ -84,7 +84,7 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
         matching: [
           { left: "Il bambino", right: "legge", emoji: "👦📖" },
           { left: "Il gatto", right: "dorme", emoji: "🐱💤" },
-          { left: "La mamma", right: "cucina", emoji: "👩‍�🍳" },
+          { left: "La mamma", right: "cucina", emoji: "👩‍🍳🍳" },
           { left: "Il cane", right: "corre", emoji: "🐕💨" },
         ]
       }
@@ -237,4 +237,3 @@ export function getGameContent(subject: string, topicId: string, level: string):
   // In our new structure, topicId is the key, and level is not needed.
   return subjectContent[topicId] || null;
 }
-�
