@@ -85,6 +85,10 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
         timed: [
             { question: "Marco ha 5 mele. Ne mangia 2. Quante ne restano?", options: ["2", "3", "5"], correct: 1, points: 10, timeLimit: 15 },
             { question: "Ci sono 7 uccelli. Ne arrivano altri 4. Quanti sono ora?", options: ["10", "11", "12"], correct: 1, points: 10, timeLimit: 15 },
+            { question: "Lucia ha 8 caramelle. Ne regala 3 alla sorella. Quante ne tiene?", options: ["5", "6", "11"], correct: 0, points: 10, timeLimit: 15 },
+            { question: "In giardino ci sono 6 fiori. Ne sbocciano altri 4. Quanti fiori in totale?", options: ["9", "10", "2"], correct: 1, points: 10, timeLimit: 15 },
+            { question: "Paolo ha 12 figurine. Ne perde 4. Quante ne rimangono?", options: ["8", "16", "7"], correct: 0, points: 10, timeLimit: 15 },
+            { question: "Nel prato corrono 9 conigli. Ne arrivano altri 3. Quanti conigli ora?", options: ["11", "12", "6"], correct: 1, points: 10, timeLimit: 15 },
         ]
       }
     },
@@ -147,9 +151,36 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
   }
 };
 
+// Generate random game variant for variety
+export function getGameVariant(content: GameContent, gameType: string): GameContent {
+  if (gameType === 'timed' && content.timed) {
+    const shuffled = [...content.timed].sort(() => Math.random() - 0.5);
+    const variantSize = Math.min(4, shuffled.length); // Show 4 random questions
+    return { timed: shuffled.slice(0, variantSize) };
+  }
+  if (gameType === 'matching' && content.matching) {
+    const shuffled = [...content.matching].sort(() => Math.random() - 0.5);
+    return { matching: shuffled };
+  }
+  if (gameType === 'memory' && content.memory) {
+    const shuffled = [...content.memory].sort(() => Math.random() - 0.5);
+    return { memory: shuffled };
+  }
+  return content;
+}
+
 export function getGameContent(subject: string, topicId: string): TopicContent | null {
   const subjectContent = gameContentMap[subject?.toLowerCase()];
   if (!subjectContent) return null;
   
-  return subjectContent[topicId] || null;
+  const baseContent = subjectContent[topicId];
+  if (!baseContent) return null;
+  
+  // Generate variant for variety
+  const variantContent = getGameVariant(baseContent.content, baseContent.gameType);
+  
+  return {
+    ...baseContent,
+    content: variantContent
+  };
 }

@@ -5,7 +5,8 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Timer } from "lucide-react";
 import { toast } from "sonner";
-import { TopicContent } from "@/lib/gameContent";
+import { TopicContent, getGameContent } from "@/lib/gameContent";
+import GameCompletionModal from "@/components/GameCompletionModal";
 
 interface ChallengeQuestion {
   question: string;
@@ -108,8 +109,9 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
         description: `+${totalPoints} punti (bonus velocità: +${bonusPoints})`,
       });
     } else {
-      toast("❌ Ops! Risposta sbagliata", {
-        description: `La risposta corretta era: ${currentQuestion.options[currentQuestion.correctIndex]}`,
+      toast.error("❌ Risposta sbagliata!", {
+        description: `La risposta corretta era: "${currentQuestion.options[currentQuestion.correctIndex]}". Studia e riprova!`,
+        duration: 3000
       });
     }
     
@@ -123,6 +125,16 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
 
   const handleRestart = () => {
     initializeGame();
+  };
+
+  const handleNewVariant = () => {
+    const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
+    if (subject && topicId) {
+      const newContent = getGameContent(subject, topicId);
+      if (newContent) {
+        window.location.reload();
+      }
+    }
   };
 
   const progress = (questionsAnswered / 10) * 100;
@@ -170,17 +182,15 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
           </div>
           {!showResult && gameActive ? (
             <Button onClick={handleAnswerSubmit} disabled={selectedAnswer === null} variant="game" size="lg" className="w-full">Conferma Risposta ⚡</Button>
-          ) : questionsAnswered >= 9 ? (
-            <div className="text-center space-y-4">
-              <h3 className="text-2xl font-bold text-foreground">🎉 Sfida completata!</h3>
-              <p className="text-xl text-muted-foreground">Punteggio finale: {score} punti</p>
-              <div className="flex gap-4 justify-center">
-                <Button onClick={handleRestart} variant="fun">Altra Sfida 🌟</Button>
-                <Button onClick={() => navigate(`/${subject}`)} variant="outline">Torna agli Argomenti</Button>
-              </div>
-            </div>
           ) : null}
         </Card>
+        
+        <GameCompletionModal
+          isVisible={questionsAnswered >= 9}
+          score={score}
+          onPlayAgain={handleRestart}
+          onNewVariant={handleNewVariant}
+        />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Brain } from "lucide-react";
 import { toast } from "sonner";
 import { getGameContent, TopicContent } from "@/lib/gameContent";
+import GameCompletionModal from "@/components/GameCompletionModal";
 
 interface MemoryCard {
   id: string;
@@ -115,6 +116,16 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
     initializeGame();
   };
 
+  const handleNewVariant = () => {
+    const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
+    if (subject && topicId) {
+      const newContent = getGameContent(subject, topicId);
+      if (newContent) {
+        window.location.reload();
+      }
+    }
+  };
+
   const progress = (score / totalPairs) * 100;
 
   return (
@@ -178,21 +189,12 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
           ))}
         </div>
 
-        {/* Game Completed */}
-        {gameCompleted && (
-          <Card className="p-8 text-center border-4 border-fun-green shadow-card">
-            <h2 className="text-3xl font-bold mb-4 text-foreground">
-              🎉 Incredibile memoria! Hai vinto!
-            </h2>
-            <p className="text-xl text-muted-foreground mb-6">
-              Completato in {moves} mosse!
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Button onClick={handleRestart} variant="fun" size="lg">Gioca Ancora 🌟</Button>
-              <Button onClick={() => navigate(`/${subject}`)} variant="outline" size="lg">Torna agli Argomenti</Button>
-            </div>
-          </Card>
-        )}
+        <GameCompletionModal
+          isVisible={gameCompleted}
+          score={score}
+          onPlayAgain={handleRestart}
+          onNewVariant={handleNewVariant}
+        />
       </div>
     </div>
   );

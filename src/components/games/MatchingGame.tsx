@@ -5,7 +5,8 @@ import { Progress } from "@/components/ui/progress";
 import { useNavigate, useParams } from "react-router-dom";
 import { Star, Home, RotateCcw, Target } from "lucide-react";
 import { toast } from "sonner";
-import { TopicContent } from "@/lib/gameContent";
+import { TopicContent, getGameContent } from "@/lib/gameContent";
+import GameCompletionModal from "@/components/GameCompletionModal";
 
 interface DragItem {
   id: string;
@@ -78,7 +79,10 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
         toast.success("Fantastico! Hai completato tutti gli abbinamenti!");
       }
     } else {
-      toast.error("Quasi! Prova un altro abbinamento.");
+      toast.error("❌ Abbinamento sbagliato!", {
+        description: `"${draggedItem.text}" non si abbina con "${targetItem.text}". Riprova!`,
+        duration: 3000
+      });
     }
     
     setDraggedItem(null);
@@ -91,6 +95,16 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
   const handleTouchStart = (item: DragItem) => { setDraggedItem(item); navigator.vibrate?.(50); };
   const handleTouchEnd = (e: React.TouchEvent, targetItem: DragItem) => { e.preventDefault(); if (draggedItem) performMatch(targetItem); };
   const handleRestart = () => initializeGame();
+  
+  const handleNewVariant = () => {
+    const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
+    if (subject && topicId) {
+      const newContent = getGameContent(subject, topicId);
+      if (newContent) {
+        window.location.reload();
+      }
+    }
+  };
   const progress = (score / (leftItems.length || 1)) * 100;
 
   if (leftItems.length === 0) {
@@ -145,15 +159,12 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
             </div>
           </Card>
         </div>
-        {gameCompleted && (
-          <Card className="p-8 text-center border-4 border-fun-green shadow-2xl">
-            <h2 className="text-3xl font-bold mb-4">🎉 Fantastico! Hai completato tutto! 🎉</h2>
-            <div className="flex gap-4 justify-center">
-              <Button onClick={handleRestart} variant="fun" size="lg">Gioca Ancora 🌟</Button>
-              <Button onClick={() => navigate(`/${subject}`)} variant="outline" size="lg">Torna agli Argomenti</Button>
-            </div>
-          </Card>
-        )}
+        <GameCompletionModal
+          isVisible={gameCompleted}
+          score={score}
+          onPlayAgain={handleRestart}
+          onNewVariant={handleNewVariant}
+        />
       </div>
     </div>
   );
