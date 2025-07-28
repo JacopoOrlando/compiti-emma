@@ -4,6 +4,7 @@ import MatchingGame from "@/components/games/MatchingGame";
 import MemoryGame from "@/components/games/MemoryGame";
 import TimedChallengeGame from "@/components/games/TimedChallengeGame";
 import NotFound from "@/pages/NotFound";
+import { TopicContent } from "@/lib/gameContent";
 
 const GamePage = () => {
   const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
@@ -12,25 +13,21 @@ const GamePage = () => {
     return <NotFound />;
   }
 
-  // Fetch content using subject and the new topicId
-  const gameContent = getGameContent(subject, topicId, ""); // Level is no longer needed
+  const topicContent = getGameContent(subject, topicId);
 
-  if (!gameContent || !gameContent.gameType) {
-    console.error(`No game content or gameType found for ${subject}, topic ${topicId}`);
+  if (!topicContent) {
+    console.error(`No game content found for ${subject}, topic ${topicId}`);
     return <NotFound />;
   }
 
-  // Render the correct game component based on the gameType defined for the topic
-  switch (gameContent.gameType) {
+  // Pass the entire topicContent object as a prop
+  switch (topicContent.gameType) {
     case 'matching':
-      return <MatchingGame />;
+      return <MatchingGame topicContent={topicContent} />;
     case 'memory':
-      return <MemoryGame />;
+      return <MemoryGame topicContent={topicContent} />;
     case 'timed':
-      return <TimedChallengeGame />;
-    // Add cases for other creative games here as they are built
-    // case 'story':
-    //   return <StoryAdventureGame />;
+      return <TimedChallengeGame topicContent={topicContent} />;
     default:
       return <NotFound />;
   }
