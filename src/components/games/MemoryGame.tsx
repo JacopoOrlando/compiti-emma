@@ -117,13 +117,9 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
   };
 
   const handleNewVariant = () => {
-    const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
-    if (subject && topicId) {
-      const newContent = getGameContent(subject, topicId);
-      if (newContent) {
-        window.location.reload();
-      }
-    }
+    // Force a new game by reinitializing
+    initializeGame();
+    setGameCompleted(false);
   };
 
   const progress = (score / totalPairs) * 100;

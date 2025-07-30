@@ -128,19 +128,25 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
   };
 
   const handleNewVariant = () => {
-    const { subject, topicId } = useParams<{ subject: string; topicId: string }>();
-    if (subject && topicId) {
-      const newContent = getGameContent(subject, topicId);
-      if (newContent) {
-        window.location.reload();
-      }
-    }
+    // Force a new game by reinitializing
+    initializeGame();
+    setQuestionsAnswered(0);
   };
 
   const progress = (questionsAnswered / 10) * 100;
   const timeProgress = currentQuestion ? (timeLeft / currentQuestion.timeLimit) * 100 : 0;
 
-  if (!currentQuestion) return <div>Caricamento...</div>;
+  if (!currentQuestion) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <Card className="p-8 text-center">
+          <div className="animate-spin text-4xl mb-4">🎮</div>
+          <h2 className="text-2xl font-bold mb-4">Caricamento...</h2>
+          <p>Stiamo preparando il gioco per te!</p>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background p-6">
