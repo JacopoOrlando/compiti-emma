@@ -1,6 +1,6 @@
 // Defines the structure for a single game's content
 export interface GameContent {
-  matching?: Array<{ left: string; right: string; emoji?: string }>;
+  matching?: Array<{ left: string; right: string; emoji?: string; leftEmoji?: string }>;
   memory?: Array<{ content: string; emoji: string }>;
   timed?: Array<{
     question: string;
@@ -34,6 +34,11 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
           { question: "Completa la parola: a...a", options: ["cqu", "cu", "qu"], correct: 0, points: 10, timeLimit: 10 },
           { question: "Completa la parola: fo...a", options: ["glia", "lia", "gla"], correct: 0, points: 10, timeLimit: 10 },
           { question: "Completa la parola: ra...o", options: ["gno", "nio", "no"], correct: 0, points: 10, timeLimit: 10 },
+          { question: "Completa la parola: ma...era", options: ["nni", "ni", "gni"], correct: 0, points: 10, timeLimit: 10 },
+          { question: "Completa la parola: ba...o", options: ["gno", "njo", "nio"], correct: 0, points: 10, timeLimit: 10 },
+          { question: "Completa la parola: sco...o", options: ["gli", "li", "glio"], correct: 0, points: 10, timeLimit: 10 },
+          { question: "Completa la parola: a...ila", options: ["qu", "cu", "cqu"], correct: 0, points: 10, timeLimit: 10 },
+          { question: "Completa la parola: so...are", options: ["gn", "gni", "ni"], correct: 0, points: 10, timeLimit: 10 },
         ]
       }
     },
@@ -43,9 +48,16 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
       gameType: 'matching',
       content: {
         matching: [
-            { left: "pala", right: "palla", emoji: " pala vs ⚽" },
-            { left: "capello", right: "cappello", emoji: " capello vs 👒" },
-            { left: "caro", right: "carro", emoji: " caro vs 🛒" },
+            { left: "pala", right: "palla", emoji: "⚽" },
+            { left: "capello", right: "cappello", emoji: "👒" },
+            { left: "caro", right: "carro", emoji: "🛒" },
+            { left: "nono", right: "nonno", emoji: "👴" },
+            { left: "belo", right: "bello", emoji: "😍" },
+            { left: "casa", right: "cassa", emoji: "📦" },
+            { left: "nota", right: "notte", emoji: "🌙" },
+            { left: "sete", right: "sette", emoji: "7️⃣" },
+            { left: "papa", right: "papà", emoji: "👨" },
+            { left: "mamma", right: "mamma", emoji: "👩" },
         ]
       }
     },
@@ -57,6 +69,10 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
           timed: [
               { question: "La volpe voleva mangiare...", options: ["il formaggio", "l'uva", "una mela"], correct: 1, points: 10, timeLimit: 20 },
               { question: "Perché la volpe dice 'l'uva è acerba'?", options: ["Perché non le piace", "Perché non riesce a prenderla", "Perché è troppo dolce"], correct: 1, points: 10, timeLimit: 20 },
+              { question: "Cappuccetto Rosso dove andava?", options: ["A scuola", "Dalla nonna", "Al mercato"], correct: 1, points: 10, timeLimit: 20 },
+              { question: "Chi incontra nel bosco?", options: ["Il lupo", "Un orso", "Un coniglio"], correct: 0, points: 10, timeLimit: 20 },
+              { question: "I tre porcellini costruiscono case di...", options: ["paglia, legno, mattoni", "carta, plastica, vetro", "sabbia, terra, rocce"], correct: 0, points: 10, timeLimit: 20 },
+              { question: "Quale casa resiste al lupo?", options: ["Di paglia", "Di legno", "Di mattoni"], correct: 2, points: 10, timeLimit: 20 },
           ]
       }
     },
@@ -66,9 +82,18 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
       gameType: 'matching',
       content: {
         matching: [
-          { left: "Il", right: "cane", emoji: "🐕" },
-          { left: "La", right: "casa", emoji: "🏠" },
-          { left: "Lo", right: "zaino", emoji: "🎒" },
+          { left: "Il", right: "cane", emoji: "🐕", leftEmoji: "" },
+          { left: "La", right: "casa", emoji: "🏠", leftEmoji: "" },
+          { left: "Lo", right: "zaino", emoji: "🎒", leftEmoji: "" },
+          { left: "Il", right: "gatto", emoji: "🐱", leftEmoji: "" },
+          { left: "La", right: "penna", emoji: "🖊️", leftEmoji: "" },
+          { left: "Lo", right: "specchio", emoji: "🪞", leftEmoji: "" },
+          { left: "Il", right: "tavolo", emoji: "🪑", leftEmoji: "" },
+          { left: "La", right: "scuola", emoji: "🏫", leftEmoji: "" },
+          { left: "Lo", right: "zucchero", emoji: "🍯", leftEmoji: "" },
+          { left: "Il", right: "libro", emoji: "📚", leftEmoji: "" },
+          { left: "La", right: "macchina", emoji: "🚗", leftEmoji: "" },
+          { left: "Lo", right: "stadio", emoji: "🏟️", leftEmoji: "" },
         ]
       }
     },
@@ -89,6 +114,10 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
             { question: "In giardino ci sono 6 fiori. Ne sbocciano altri 4. Quanti fiori in totale?", options: ["9", "10", "2"], correct: 1, points: 10, timeLimit: 15 },
             { question: "Paolo ha 12 figurine. Ne perde 4. Quante ne rimangono?", options: ["8", "16", "7"], correct: 0, points: 10, timeLimit: 15 },
             { question: "Nel prato corrono 9 conigli. Ne arrivano altri 3. Quanti conigli ora?", options: ["11", "12", "6"], correct: 1, points: 10, timeLimit: 15 },
+            { question: "Anna ha 15 adesivi. Ne usa 7. Quanti ne restano?", options: ["8", "9", "22"], correct: 0, points: 10, timeLimit: 15 },
+            { question: "In classe ci sono 18 bambini. Ne escono 5. Quanti rimangono?", options: ["13", "14", "23"], correct: 0, points: 10, timeLimit: 15 },
+            { question: "Tom ha 20 carte. Ne regala 6. Quante ne tiene?", options: ["14", "15", "26"], correct: 0, points: 10, timeLimit: 15 },
+            { question: "Nel vaso ci sono 11 fiori. Ne aggiungi 8. Quanti fiori ora?", options: ["19", "20", "3"], correct: 0, points: 10, timeLimit: 15 },
         ]
       }
     },
@@ -98,10 +127,12 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
       gameType: 'matching',
       content: {
         matching: [
-          { left: "Quadrato", right: "🟦🟦🟦\n🟦🟦🟦\n🟦🟦🟦", emoji: "📐" },
-          { left: "Triangolo", right: "🔺🔺🔺\n🔺🔺🔺", emoji: "📐" },
-          { left: "Cerchio", right: "⚫⚫⚫\n⚫⚫⚫\n⚫⚫⚫", emoji: "📐" },
-          { left: "Rettangolo", right: "🟩🟩🟩🟩\n🟩🟩🟩🟩", emoji: "📐" },
+          { left: "Quadrato", right: "🟦🟦🟦\n🟦🟦🟦\n🟦🟦🟦", emoji: "📐", leftEmoji: "" },
+          { left: "Triangolo", right: "🔺🔺🔺\n🔺🔺🔺", emoji: "📐", leftEmoji: "" },
+          { left: "Cerchio", right: "⚫⚫⚫\n⚫⚫⚫\n⚫⚫⚫", emoji: "📐", leftEmoji: "" },
+          { left: "Rettangolo", right: "🟩🟩🟩🟩\n🟩🟩🟩🟩", emoji: "📐", leftEmoji: "" },
+          { left: "Rombo", right: "🔶🔶\n🔶🔶🔶\n🔶🔶", emoji: "📐", leftEmoji: "" },
+          { left: "Pentagono", right: "⭐⭐⭐\n⭐⭐⭐⭐\n⭐⭐⭐", emoji: "📐", leftEmoji: "" },
         ]
       }
     },
@@ -113,6 +144,10 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
             timed: [
                 { question: "Quante decine ci sono in 73?", options: ["3", "7", "10"], correct: 1, points: 10, timeLimit: 10 },
                 { question: "3 da e 5 u formano il numero...", options: ["35", "53", "305"], correct: 0, points: 10, timeLimit: 10 },
+                { question: "Quante unità ci sono in 46?", options: ["4", "6", "10"], correct: 1, points: 10, timeLimit: 10 },
+                { question: "8 da e 2 u formano il numero...", options: ["28", "82", "208"], correct: 1, points: 10, timeLimit: 10 },
+                { question: "Il numero 95 è formato da...", options: ["9 da e 5 u", "5 da e 9 u", "9 u e 5 da"], correct: 0, points: 10, timeLimit: 10 },
+                { question: "Quante decine ci sono in 100?", options: ["10", "1", "100"], correct: 0, points: 10, timeLimit: 10 },
             ]
         }
     },
@@ -120,7 +155,18 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
       title: "Tabellina del 2",
       description: "Rispondi velocemente!",
       gameType: 'timed',
-      content: { timed: [ { question: "2 x 3 = ?", options: ["4", "6", "8"], correct: 1, points: 10, timeLimit: 5 } ] }
+      content: { 
+        timed: [ 
+          { question: "2 x 3 = ?", options: ["4", "6", "8"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 5 = ?", options: ["8", "10", "12"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 7 = ?", options: ["12", "14", "16"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 4 = ?", options: ["6", "8", "10"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 6 = ?", options: ["10", "12", "14"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 8 = ?", options: ["14", "16", "18"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 9 = ?", options: ["16", "18", "20"], correct: 1, points: 10, timeLimit: 5 },
+          { question: "2 x 10 = ?", options: ["18", "20", "22"], correct: 1, points: 10, timeLimit: 5 },
+        ] 
+      }
     },
   },
   // ================================================================================= //
@@ -135,6 +181,12 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
         timed: [
             { question: "Which one is the 'cat'?", options: ["🐶", "🐱", "🦁"], correct: 1, points: 10, timeLimit: 8 },
             { question: "What color is this? 🟥", options: ["Blue", "Red", "Green"], correct: 1, points: 10, timeLimit: 8 },
+            { question: "Which one is the 'bird'?", options: ["🐸", "🦅", "🐟"], correct: 1, points: 10, timeLimit: 8 },
+            { question: "What color is this? 🟦", options: ["Blue", "Red", "Yellow"], correct: 0, points: 10, timeLimit: 8 },
+            { question: "Which one is the 'fish'?", options: ["🐠", "🦋", "🐞"], correct: 0, points: 10, timeLimit: 8 },
+            { question: "What color is this? 🟨", options: ["Purple", "Green", "Yellow"], correct: 2, points: 10, timeLimit: 8 },
+            { question: "Which one is the 'elephant'?", options: ["🐘", "🦏", "🦛"], correct: 0, points: 10, timeLimit: 8 },
+            { question: "What color is this? 🟩", options: ["Orange", "Green", "Pink"], correct: 1, points: 10, timeLimit: 8 },
         ]
       }
     },
@@ -150,6 +202,10 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
           { question: "What does 'car' mean?", options: ["🚗", "🚲", "🛸"], correct: 0, points: 10, timeLimit: 8 },
           { question: "What does 'happy' mean?", options: ["😢", "😊", "😴"], correct: 1, points: 10, timeLimit: 8 },
           { question: "What does 'book' mean?", options: ["📚", "📱", "💻"], correct: 0, points: 10, timeLimit: 8 },
+          { question: "What does 'sun' mean?", options: ["🌙", "⭐", "☀️"], correct: 2, points: 10, timeLimit: 8 },
+          { question: "What does 'water' mean?", options: ["💧", "🔥", "🌪️"], correct: 0, points: 10, timeLimit: 8 },
+          { question: "What does 'tree' mean?", options: ["🌳", "🌸", "🍄"], correct: 0, points: 10, timeLimit: 8 },
+          { question: "What does 'ball' mean?", options: ["⚽", "🎮", "🎲"], correct: 0, points: 10, timeLimit: 8 },
         ]
       }
     },

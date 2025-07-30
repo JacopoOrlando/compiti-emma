@@ -35,7 +35,7 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
   const initializeGame = () => {
     const pairs = topicContent.content.matching?.map((pair, index) => ({
       id: `pair-${index}`,
-      left: { text: pair.left, emoji: pair.emoji || "🎯" },
+      left: { text: pair.left, emoji: pair.leftEmoji || "" },
       right: { text: pair.right, emoji: pair.emoji || "✨" },
     })) || [];
 
