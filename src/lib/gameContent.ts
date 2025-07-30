@@ -98,9 +98,10 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
       gameType: 'matching',
       content: {
         matching: [
-          { left: "Quadrato", right: "🟥", emoji: "Figura" },
-          { left: "Triangolo", right: "🔺", emoji: "Figura" },
-          { left: "Cerchio", right: "⚫", emoji: "Figura" },
+          { left: "Quadrato", right: "🟦🟦🟦\n🟦🟦🟦\n🟦🟦🟦", emoji: "📐" },
+          { left: "Triangolo", right: "🔺🔺🔺\n🔺🔺🔺", emoji: "📐" },
+          { left: "Cerchio", right: "⚫⚫⚫\n⚫⚫⚫\n⚫⚫⚫", emoji: "📐" },
+          { left: "Rettangolo", right: "🟩🟩🟩🟩\n🟩🟩🟩🟩", emoji: "📐" },
         ]
       }
     },
@@ -138,32 +139,53 @@ export const gameContentMap: Record<string, Record<string, TopicContent>> = {
       }
     },
     "2-simple-sentences": {
-      title: "Simple Sentences: I like...",
-      description: "Match the sentence to the picture.",
-      gameType: 'matching',
+      title: "Learn Basic Vocabulary",
+      description: "Learn words and their meanings with interactive questions.",
+      gameType: 'timed',
       content: {
-        matching: [
-          { left: "I like apples", right: "👍🍎", emoji: "😊" },
-          { left: "I have a dog", right: "🙋‍♂️🐕", emoji: "🐾" },
+        timed: [
+          { question: "What does 'apple' mean?", options: ["🍎", "🍌", "🍊"], correct: 0, points: 10, timeLimit: 8 },
+          { question: "What does 'dog' mean?", options: ["🐱", "🐶", "🐰"], correct: 1, points: 10, timeLimit: 8 },
+          { question: "What does 'house' mean?", options: ["🏠", "🚗", "✈️"], correct: 0, points: 10, timeLimit: 8 },
+          { question: "What does 'car' mean?", options: ["🚗", "🚲", "🛸"], correct: 0, points: 10, timeLimit: 8 },
+          { question: "What does 'happy' mean?", options: ["😢", "😊", "😴"], correct: 1, points: 10, timeLimit: 8 },
+          { question: "What does 'book' mean?", options: ["📚", "📱", "💻"], correct: 0, points: 10, timeLimit: 8 },
         ]
       }
     },
   }
 };
 
-// Generate random game variant for variety
+// Generate random game variant for variety with better randomization
 export function getGameVariant(content: GameContent, gameType: string): GameContent {
+  // Add timestamp to ensure different results each time
+  const seed = Date.now() + Math.random();
+  
   if (gameType === 'timed' && content.timed) {
-    const shuffled = [...content.timed].sort(() => Math.random() - 0.5);
-    const variantSize = Math.min(4, shuffled.length); // Show 4 random questions
+    // Better shuffling algorithm
+    const shuffled = [...content.timed];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor((Math.sin(seed + i) + 1) * 0.5 * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    const variantSize = Math.min(4, shuffled.length);
     return { timed: shuffled.slice(0, variantSize) };
   }
   if (gameType === 'matching' && content.matching) {
-    const shuffled = [...content.matching].sort(() => Math.random() - 0.5);
+    // Better shuffling for matching games
+    const shuffled = [...content.matching];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor((Math.sin(seed + i * 2) + 1) * 0.5 * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
     return { matching: shuffled };
   }
   if (gameType === 'memory' && content.memory) {
-    const shuffled = [...content.memory].sort(() => Math.random() - 0.5);
+    const shuffled = [...content.memory];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor((Math.sin(seed + i * 3) + 1) * 0.5 * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
     return { memory: shuffled };
   }
   return content;

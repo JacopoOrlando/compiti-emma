@@ -105,8 +105,14 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
 
   if (leftItems.length === 0) {
     return (
-        <div className="min-h-screen bg-background flex items-center justify-center p-6"><Card className="p-8 text-center"><h2 className="text-2xl font-bold mb-4">Caricamento...</h2><p>Stiamo preparando gli esercizi per te!</p></Card></div>
-    )
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <Card className="p-8 text-center">
+          <div className="animate-spin text-4xl mb-4">🎮</div>
+          <h2 className="text-2xl font-bold mb-4">Caricamento gioco...</h2>
+          <p>Preparazione in corso...</p>
+        </Card>
+      </div>
+    );
   }
 
   return (
@@ -148,8 +154,8 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
             <h3 className="text-xl font-bold mb-4 text-center">Rilascia qui</h3>
             <div className="space-y-3">
               {rightItems.map((item) => (
-                <div key={item.id} onDragOver={(e) => handleDragOver(e, item.id)} onDragLeave={handleDragLeave} onDrop={(e) => handleDrop(e, item)} onTouchEnd={(e) => handleTouchEnd(e, item)} className={`p-4 border-4 rounded-xl transition-all min-h-[80px] ${item.isMatched ? 'bg-fun-green/30 border-fun-green' : dragOverTarget === item.id ? 'bg-fun-purple/30 border-fun-purple' : 'bg-muted border-dashed border-primary'}`}>
-                  <div className="flex items-center gap-3 justify-center"><span className="text-3xl">{item.emoji}</span><span className="font-bold text-lg">{item.text}</span></div>
+                <div key={item.id} onDragOver={(e) => handleDragOver(e, item.id)} onDragLeave={handleDragLeave} onDrop={(e) => handleDrop(e, item)} onTouchEnd={(e) => handleTouchEnd(e, item)} className={`p-4 border-4 rounded-xl transition-all min-h-[120px] ${item.isMatched ? 'bg-fun-green/30 border-fun-green' : dragOverTarget === item.id ? 'bg-fun-purple/30 border-fun-purple' : 'bg-muted border-dashed border-primary'}`}>
+                  <div className="flex flex-col items-center gap-2 justify-center"><span className="text-5xl leading-tight whitespace-pre-line">{item.text}</span><span className="text-xl">{item.emoji}</span></div>
                 </div>
               ))}
             </div>
