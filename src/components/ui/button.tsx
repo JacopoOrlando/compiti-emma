@@ -18,9 +18,9 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        fun: "bg-gradient-primary text-white shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce font-bold text-lg",
-        game: "bg-gradient-secondary text-white shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce font-bold",
-        success: "bg-gradient-success text-white shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce font-bold",
+        fun: "bg-gradient-to-r from-fun-purple to-fun-blue text-white shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce font-bold text-lg",
+        game: "bg-gradient-to-r from-fun-orange to-fun-yellow text-white shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce font-bold",
+        success: "bg-gradient-to-r from-fun-green to-emerald-400 text-white shadow-fun hover:shadow-hover transform hover:scale-105 transition-bounce font-bold",
       },
       size: {
         default: "h-10 px-4 py-2",

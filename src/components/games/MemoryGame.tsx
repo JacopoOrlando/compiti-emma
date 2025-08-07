@@ -125,15 +125,15 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
   const progress = (score / totalPairs) * 100;
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-background p-4 sm:p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <Button variant="outline" onClick={() => navigate(`/${subject}`)} className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+          <Button variant="outline" onClick={() => navigate(`/${subject}`)} className="flex items-center gap-2 w-full sm:w-auto">
             <Home className="w-4 h-4" />
             Indietro
           </Button>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <div className="flex items-center gap-2 bg-fun-yellow/20 px-4 py-2 rounded-full">
               <Star className="w-5 h-5 text-fun-yellow" />
               <span className="font-bold">{score}/{totalPairs}</span>
@@ -142,7 +142,7 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
               <Brain className="w-5 h-5 text-fun-blue" />
               <span className="font-bold">{moves} mosse</span>
             </div>
-            <Button variant="outline" onClick={handleRestart} className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleRestart} className="flex items-center gap-2 w-full sm:w-auto">
               <RotateCcw className="w-4 h-4" />
               Ricomincia
             </Button>
@@ -151,12 +151,13 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
 
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-foreground">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2 text-foreground">
             🦄 {topicContent.title} 🧠
           </h1>
-          <p className="text-muted-foreground">
-            Trova le coppie girando le carte! Allena la tua memoria!
-          </p>
+          <p className="text-muted-foreground text-base sm:text-lg mb-4">{topicContent.description}</p>
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 text-sm text-muted-foreground">
+            💡 <strong>Come giocare:</strong> Clicca sulle carte per girarle e trova le coppie! Ricorda dove sono per abbinarle tutte.
+          </div>
         </div>
 
         {/* Progress */}
@@ -165,12 +166,12 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
           {cards.map((card) => (
             <Card
               key={card.id}
               onClick={() => handleCardClick(card.id)}
-              className={`aspect-square p-4 cursor-pointer transition-all duration-300 border-4 ${
+              className={`aspect-square p-2 sm:p-4 cursor-pointer transition-all duration-300 border-4 touch-manipulation ${
                 card.isFlipped || card.isMatched
                   ? card.isMatched
                     ? 'bg-fun-green/20 border-fun-green scale-105'
@@ -178,8 +179,15 @@ const MemoryGame = ({ topicContent }: MemoryGameProps) => {
                   : 'bg-fun-purple/20 border-fun-purple hover:scale-105'
               }`}
             >
-              <div className="h-full flex items-center justify-center text-3xl">
-                {card.isFlipped || card.isMatched ? card.emoji : "🎴"}
+              <div className="h-full flex flex-col items-center justify-center">
+                <div className="text-2xl sm:text-3xl mb-1">
+                  {card.isFlipped || card.isMatched ? card.emoji : "🎴"}
+                </div>
+                {(card.isFlipped || card.isMatched) && (
+                  <div className="text-xs sm:text-sm font-bold text-center leading-tight">
+                    {card.content}
+                  </div>
+                )}
               </div>
             </Card>
           ))}

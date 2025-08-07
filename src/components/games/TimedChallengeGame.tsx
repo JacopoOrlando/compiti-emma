@@ -163,25 +163,25 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-background p-4 sm:p-6">
       <div className="max-w-2xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <Button variant="outline" onClick={() => navigate(`/${subject}`)} className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+          <Button variant="outline" onClick={() => navigate(`/${subject}`)} className="flex items-center gap-2 w-full sm:w-auto">
             <Home className="w-4 h-4" /> Indietro
           </Button>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
             <div className="flex items-center gap-2 bg-fun-yellow/20 px-4 py-2 rounded-full">
               <Star className="w-5 h-5 text-fun-yellow" />
               <span className="font-bold">{score}</span>
             </div>
-            <Button variant="outline" onClick={handleRestart} className="flex items-center gap-2">
+            <Button variant="outline" onClick={handleRestart} className="flex items-center gap-2 w-full sm:w-auto">
               <RotateCcw className="w-4 h-4" /> Ricomincia
             </Button>
           </div>
         </div>
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold mb-2 text-foreground">🦄 {topicContent.title} ⚡</h1>
-          <p className="text-muted-foreground text-lg mb-4">{topicContent.description}</p>
+          <h1 className="text-2xl sm:text-4xl font-bold mb-2 text-foreground">🦄 {topicContent.title} ⚡</h1>
+          <p className="text-muted-foreground text-base sm:text-lg mb-4">{topicContent.description}</p>
           <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 text-sm text-muted-foreground">
             💡 <strong>Come giocare:</strong> Leggi la domanda, scegli la risposta corretta e clicca "Conferma". Hai tempo limitato per ogni domanda!
           </div>
@@ -194,11 +194,17 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
           </div>
           <Progress value={timeProgress} className={`h-2 ${timeLeft <= 3 ? 'animate-pulse' : ''}`} />
         </div>
-        <Card className={`p-8 text-center border-4 shadow-card mb-8 ${ timeLeft <= 3 ? 'border-fun-orange animate-pulse' : 'border-primary/20' }`}>
-          <h2 className="text-2xl font-bold mb-6 text-foreground">{currentQuestion.question}</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <Card className={`p-4 sm:p-8 text-center border-4 shadow-card mb-8 ${ timeLeft <= 3 ? 'border-fun-orange animate-pulse' : 'border-primary/20' }`}>
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 text-foreground leading-relaxed">{currentQuestion.question}</h2>
+          <div className="grid grid-cols-1 gap-4 mb-6">
             {currentQuestion.options.map((option, index) => (
-              <Button key={`${option}-${index}`} variant={selectedAnswer === index ? "fun" : "outline"} onClick={() => handleAnswerSelect(index)} disabled={!gameActive || showResult} className="p-4 text-lg h-auto">
+              <Button 
+                key={`${option}-${index}`} 
+                variant={selectedAnswer === index ? "fun" : "outline"} 
+                onClick={() => handleAnswerSelect(index)} 
+                disabled={!gameActive || showResult} 
+                className="p-4 text-base sm:text-lg h-auto min-h-[60px] w-full text-center break-words"
+              >
                 {option}
               </Button>
             ))}
