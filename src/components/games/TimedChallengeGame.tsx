@@ -181,7 +181,10 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
         </div>
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 text-foreground">🦄 {topicContent.title} ⚡</h1>
-          <p className="text-muted-foreground">{topicContent.description}</p>
+          <p className="text-muted-foreground text-lg mb-4">{topicContent.description}</p>
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 text-sm text-muted-foreground">
+            💡 <strong>Come giocare:</strong> Leggi la domanda, scegli la risposta corretta e clicca "Conferma". Hai tempo limitato per ogni domanda!
+          </div>
         </div>
         <div className="mb-8">
           <Progress value={progress} className="h-3 mb-4" />

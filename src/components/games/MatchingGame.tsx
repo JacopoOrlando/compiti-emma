@@ -134,7 +134,10 @@ const MatchingGame = ({ topicContent }: MatchingGameProps) => {
         </div>
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold mb-2 text-foreground">🦄 {topicContent.title} 🎯</h1>
-          <p className="text-muted-foreground">{topicContent.description}</p>
+          <p className="text-muted-foreground text-lg mb-4">{topicContent.description}</p>
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 text-sm text-muted-foreground">
+            💡 <strong>Come giocare:</strong> Trascina gli elementi dalla colonna di sinistra e rilasciali su quelli giusti a destra per creare gli abbinamenti corretti!
+          </div>
         </div>
         <div className="mb-8">
           <Progress value={progress} className="h-4 border-2 border-primary/20" />
