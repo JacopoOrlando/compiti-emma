@@ -224,7 +224,7 @@ export function getGameVariant(content: GameContent, gameType: string): GameCont
       const j = Math.floor((Math.sin(seed + i) + 1) * 0.5 * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    const variantSize = Math.min(4, shuffled.length);
+    const variantSize = Math.min(8, shuffled.length); // Increased to 8 for more variety
     return { timed: shuffled.slice(0, variantSize) };
   }
   if (gameType === 'matching' && content.matching) {

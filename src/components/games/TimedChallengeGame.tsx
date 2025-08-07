@@ -42,16 +42,30 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
     if (gameQuestions.length > 0) {
       setQuestions(gameQuestions);
       startNewQuestion(gameQuestions);
+      setScore(0);
+      setQuestionsAnswered(0);
     } else {
       console.error("No timed challenge content found for this topic.");
+      // Set empty states to prevent crashes
+      setQuestions([]);
+      setCurrentQuestion(null);
+      setScore(0);
+      setQuestionsAnswered(0);
     }
-
-    setScore(0);
-    setQuestionsAnswered(0);
   };
 
   const startNewQuestion = (questionSet: ChallengeQuestion[]) => {
+    if (!questionSet || questionSet.length === 0) {
+      console.error("No questions available for game");
+      return;
+    }
+    
     const question = questionSet[Math.floor(Math.random() * questionSet.length)];
+    if (!question || typeof question.timeLimit === 'undefined') {
+      console.error("Invalid question data", question);
+      return;
+    }
+    
     setCurrentQuestion(question);
     setTimeLeft(question.timeLimit);
     setSelectedAnswer(null);
@@ -136,13 +150,13 @@ const TimedChallengeGame = ({ topicContent }: TimedChallengeGameProps) => {
   const progress = (questionsAnswered / 10) * 100;
   const timeProgress = currentQuestion ? (timeLeft / currentQuestion.timeLimit) * 100 : 0;
 
-  if (!currentQuestion) {
+  if (!currentQuestion || questions.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
         <Card className="p-8 text-center">
           <div className="animate-spin text-4xl mb-4">🎮</div>
-          <h2 className="text-2xl font-bold mb-4">Caricamento...</h2>
-          <p>Stiamo preparando il gioco per te!</p>
+          <h2 className="text-2xl font-bold mb-4">Caricamento gioco...</h2>
+          <p>Preparazione domande in corso...</p>
         </Card>
       </div>
     );
